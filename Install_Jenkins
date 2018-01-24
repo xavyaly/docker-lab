@@ -1,4 +1,4 @@
-docker run --name old_jenkins -d -p 8081:8080 jenkins:1.651.3
+docker run --name jenkins -d -p 8081:8080 jenkins:1.651.3
 docker ps
 
 Verificaiton:
