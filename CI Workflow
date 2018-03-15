@@ -1,0 +1,8 @@
+The CI workflow described in this document is as follows:
+
+1. Developer pushes a commit to GitHub
+2. GitHub uses a webhook to notify Jenkins of the update
+3. Jenkins pulls the GitHub repository, including the Dockerfile describing the image, as well as the application and test code.
+4. Jenkins builds a Docker image on the Jenkins slave node
+5. Jenkins instantiates the Docker container on the slave node, and executes the appropriate tests
+6. If the tests are successful the image is then pushed up to Docker Trusted registry
