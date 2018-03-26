@@ -1,0 +1,31 @@
+apt-get install -y docker.io    Docker installation
+
+docker version                  Client and Server Description
+
+https://hub.docker.com/         Docker hub login
+
+docker daemon                   Required for docker tool to execute
+
+Example 1:
+
+docker run hello-world          Try to fetch from local
+                                Post try to fetch from web
+                                Hash code: dbcs (distributed code base)
+                                Digest: SHA Algorithmic Value
+                                Status: latest
+docker image
+docker pull busybox
+docker images
+docker run ubuntu:14.04 echo "Hello Docker"
+docker images
+docker run ubuntu:14.02 ls
+docker run ubuntu:14.02 ps -ef
+docker ps
+docker ps -l                    View the docker process long listing
+docker ps -aq                   View the container id's
+docker ps -a --filter "status=exited"     Process which are exited
+docker run -I -t ubuntu:14.04 bash        -i: stdin
+                                          -t: bash terminal
+touch sample                    Create an empty file
+exit                            To switch back to the previous terminal
+
