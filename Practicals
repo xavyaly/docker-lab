@@ -28,4 +28,36 @@ docker run -I -t ubuntu:14.04 bash        -i: stdin
                                           -t: bash terminal
 touch sample                    Create an empty file
 exit                            To switch back to the previous terminal
+ 
+docker run -d ubuntu:14.04 ping localhost -c 50     Unique id
+docker ps
+docker run -d -P nginx
+localhost:32768                     Display
+docker run -d tomcat:8              run the tomcat images
+docker ps
+localhost:8080/                     Display
+docker stop <contianer_id>          Stop the container
+docker start -a <container_id>      Start the container
+docker ps             
+docker kill <container_id>          Kill the contianer
+docker run -d ubuntu:14.04 ping localhost -c 50     Unique id
+docker attach <unique_id>           Statistics of ping command
+clear
+docker -d -it ubuntu:14.04 ping localhost -c 50     -it: create a separate terminal,Unique id 
+docker run -I -t ubuntu:14.04 bash          Different terminal
+docker ps                           No output, coz you are no more present in the previous terminal
+ps -ef                              Normal linux command will work 
+exit                                Switch back to docker prompt
+clear
+docker ps
+docker exec -i -t <container_id>        Move the terminal 
+docker logs --tail 10 <container_id>    Last 10 rows 
+docker logs -f <container_id>
+docker inspect <container_id>           JSON Format
+docker inspect <container_id> | grep "Gateway"      Used in automation
+docker inspect --format='{{.RootFS.Layers}}' ubuntu:14.04   Sha256
+docker inspect --format='{{.Config.Image}}' ubuntu:14.04    Sha256
 
+ 
+ 
+ 
