@@ -64,95 +64,97 @@ docker inspect --format='{{.Config.Image}}' ubuntu:14.04    Sha256
 Second Day:
 
  docker run -d -P nginx
-
+ 
  docker ps
-
- docker run -d -it ubuntu:14.04 ping localhost -c 50
-Ping the local host
- docker run -I -t ubuntu:14.04 bash
-Switch the terminal
+ 
+ docker run -d -it ubuntu:14.04 ping localhost -c 50      Ping the local host
+ 
+ docker run -I -t ubuntu:14.04 bash                       Switch the terminal
+ 
  exit
-
+ 
  apt-get update
-
- apt-get install -y wget vim
-Install the latest vim and wget
+ 
+ apt-get install -y wget vim                              Install the latest vim and wget
+ 
  which vim
-
- which docker
-Path where docker installed
+ 
+ which docker                                             Path where docker installed
+ 
  docker run -d busybox
-
- docker commit <container_id> <my_name>/myapp
-Sha256 unique id, placed in a staging area or temporary area, 0-9, a-f, Linux Architecture
- docker commit 476guygyuyjhjk87 alam/myapp:1.0
-Unique id generated
+ 
+ docker commit <container_id> <my_name>/myapp             Sha256 unique id, placed in a staging area or temporary area, 0-9, a-f, Linux Architecture
+ 
+ docker commit 476guygyuyjhjk87 alam/myapp:1.0            Unique id generated
+ 
  docker images
 
  docker run -I -t alam/myapp:1.0 bash
 
- cat > file1
-Echo "Hello World"
- sh file1
-For output
- vi add
-Error , coz vi is not installed in bash
+ cat > file1                                              Echo "Hello World"
+ 
+ sh file1                                                 For output
+ 
+ vi add                                                   Error , coz vi is not installed in bash
+ 
  exit
 
- docker ps -a
+ docker ps -a 
 
- docker diff <container_id>
-From root till current commit history
- vi Dockerfile
-FROM ubuntu;14.04
-Run apt-get install yum
-Run apt-get install wget
- docker build -t myimage .
-Build the image
- docker images
-<image_id> reflects 
- docker run myimage which wget
-/usr/bin/wget, will create the container
- docker build -t myimage .
-Good output
- vi Dockerfile
-FROM ubuntu;14.04
-Run apt-get install yum
-Run apt-get install wget
-Run apt-get install -y vim 
- docker build -t myimage:1.0 .
-Again build the image
+ docker diff <container_id>                                From root till current commit history
+ 
+ vi Dockerfile                                            FROM ubuntu;14.04
+                                                          Run apt-get install yum
+                                                          Run apt-get install wget
+ 
+ docker build -t myimage .                                Build the image
+ 
+ docker images                                            <image_id> reflects 
+ 
+ docker run myimage which wget                            /usr/bin/wget, will create the container
+ 
+ docker build -t myimage .                                Good output
+ 
+ vi Dockerfile                                            FROM ubuntu;14.04
+                                                          Run apt-get install yum
+                                                          Run apt-get install wget
+                                                          Run apt-get install -y vim 
+
+ docker build -t myimage:1.0 .                            Again build the image
+ 
+ 
  Example-1
 
  For multiple Dockerfile, Create a directory and put the Dockerfile inside it 
 
- mkdir Docker
-
- cd Docker
-
- vi Dockerfile
-FROM ubuntu;14.04
-Run apt-get update 
-Run apt-get curl
+ mkdir Docker; cd Docker
+ vi Dockerfile                                          FROM ubuntu;14.04
+                                                        Run apt-get update 
+                                                        Run apt-get curl
+ 
  docker build -t image /path
 
  docker run image 
 
- BIT Advanced
+------------------------------------------------------------------------------------ 
+ 
+ Advanced Docker:
 
- docker history myimage:1.0
-List all the history
+ docker history myimage:1.0                             List all the history
+
+
+
 Example:2
 
  mkdir appjava; cd appjava
 
- vi Dockerfile
-FROM java:7 
-COPY HelloWorld.java /
-RUN javac HelloWorld.java
-ENTRYPOINT ["java","Welcome"]
- vi HelloWorld
-Write a helloe world java program
+ vi Dockerfile                                          FROM java:7 
+                                                        COPY HelloWorld.java /
+                                                        RUN javac HelloWorld.java
+                                                        ENTRYPOINT ["java","Welcome"]
+ 
+ vi HelloWorld                                          Write a helloe world java program
+ 
  apt-get install java:7
 
  apt-get install default-jdk
@@ -161,50 +163,53 @@ Write a helloe world java program
  
  java HelloWorld
 
- docker build -t javawelcome:1.0 .
-Build the image and give the version to it
- docker images
-Validation
-docker run javawelcome:1.0 
-Create the container
- docker ps
- list the container
+ docker build -t javawelcome:1.0 .                      Build the image and give the version to it
+ 
+ docker images                                          Validation
+
+ docker run javawelcome:1.0                              Create the container
+ 
+ docker ps                                               list the container
+ 
+ ------------------------------------------------------------------------------------
+ 
  Example:3
 
- vi Dockerfile
-FROM java:7 
-COPY HelloWorld.java /
-RUN javac HelloWorld.java
-ENTRYPOINT ["java"]
+ vi Dockerfile                                                FROM java:7 
+                                                              COPY HelloWorld.java /
+                                                              RUN javac HelloWorld.java
+                                                              ENTRYPOINT ["java"]
+ 
  docker build alam/myimage:1.0 .
 
  docker run alam/myimage:1.0 127.0.0.1
 
+------------------------------------------------------------------------------------
+
 Example:4
 
  vi Dockerfile
-FROM java:7 
-COPY HelloWorld.java /
-RUN javac HelloWorld.java
-CMD ["127.0.0.1"]
-ENTRYPOINT ["ping","-c","30"]
- docker build alam/myimage:1.0 .
-For building an image
- docker run alam/myimage:1.0 
-For container
-Example:5
+                                                                  FROM java:7 
+                                                                  COPY HelloWorld.java /
+                                                                  RUN javac HelloWorld.java
+                                                                  CMD ["127.0.0.1"]
+                                                                  ENTRYPOINT ["ping","-c","30"]
 
+ docker build alam/myimage:1.0 .                                   For building an image
  
+ docker run alam/myimage:1.0                                       For container
 
+------------------------------------------------------------------------------------
 
-
-
+Example:5 Push your repository
 
  docker login
 
  docker tag myimage:1.0 alam/myimage:1.0
 
  docker push alam/myimage:1.0 
+
+------------------------------------------------------------------------------------
 
 Example:6 Volume Mount
 
@@ -214,7 +219,7 @@ Example:6 Volume Mount
 
  docker volume inspect test1
 
-
+------------------------------------------------------------------------------------
 
  Example: Network
 
@@ -232,7 +237,7 @@ Example:6 Volume Mount
 
  docker network inspect
 
-
+------------------------------------------------------------------------------------
 
 Example: Troubleshooting
 
