@@ -1,0 +1,138 @@
+Docker inspect hello-world
+JSON format ouput of container
+
+Docker run hello-world
+Create a container from docker image
+
+Docker run -it centos /bin/bash
+Create a container from docker image with interactive mode
+
+Docker ps -q -a
+List all containers
+
+Docker images
+List all images 
+
+Docker history ImageID
+View the history of docker images
+
+Docker top ContainerID:
+To see the top process of container 
+
+Docker ps
+To list the containers
+
+Docker stop ContainerID
+To stop the container
+
+Docker rm ContainerID
+To remove the container
+
+Docker stats ContainerID
+To see the CPU and Memory Utilization of a container
+
+Docker attach ContainerID
+To attach a running container 
+
+Docker pause ContainerID
+To pause the processes of running container
+
+Docker unpause ContainerID
+Un pause the processes of running container 
+
+Docker kill ContainerID
+Kill the processes in a running container
+
+Service docker stop
+Stop the docker daemon process
+
+Service docker start
+Start the docker daemon process
+
+Docker ps
+To list the containers
+
+Docker inspect ContainerID | grep Pid
+Grep the Pid of container
+
+Nsenter -m -u -n -p -I -t ContainerID Command
+Attach to a container without exiting the container 
+
+Docker images
+List the present images
+
+Vi Dockerfile
+'D' should be capital; creating our own image called Dockerfile
+
+Docker build
+Built the docker file
+
+Docker build -t ImageName:TagName dir
+Build their own docker images 
+
+Docker build -t myimage:0.1 .
+For an example
+
+Docker images
+List the new images which built right now
+
+Docker pull demouser/demprep
+Docker pull command
+
+Docker login
+Prompt for credentials
+
+Docker tag ImageID RepositoryName
+Tag an image to the relevant repository
+
+Docker tag 98yhwfi0809 demouser/demorep:1.0 
+For an example
+
+Docker push RepositoryName
+Push image to the docker hub
+
+Docker push demouser/demprep:1.0
+Repo name need to be pushed to the docker hub
+
+Docker pull demouser/demorep:1.0
+To pull the repository from the docker hub and placed to local
+
+Docker pull jenkins
+Downloaded newer image for jenkins
+
+Docker inspect Container/Image
+For inspecting the container and image
+
+Docker inspect jenkins
+Fetch the port in which jenkins running
+
+Docker run -p 8080:8080 -p 5000:5000 jenkins
+Map the Docker host port to Docker container port
+
+Docker run -d -p 5000:5000 --name registry registry:2
+Download the private registry
+
+Docker ps
+Register container is indeed running
+
+Docker tag ImageID localhost:5000/centos
+Tag it our private repository
+
+Docker push localhost:5000/centos
+Push the repository to our private repository
+
+Docker images
+List all the images
+
+Docker rmi centos:latest
+Remove the local images
+
+Docker rmi ImageID
+Remove the local images
+
+Docker pull localhost:5000/centos
+Pulling the centos images to the private repository
+
+Docker images
+Confirmation
+

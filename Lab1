@@ -1,0 +1,107 @@
+Docker swarm configuration 	
+Node1: Manager Node; Node2, Node3: Worker node
+Manager node is responsible for maintain the state of the swarm 
+And schedule the application swarm
+Worker node is responsible to run the application 
+
+Docker run -db ubuntu sleep infinity	
+Create a new container on node1
+
+Docker ps	
+Verify container is up and running
+
+
+1. Create a Manager Node i.e node1	
+
+Docker swarm init --advertise-addr $(hostname -I)	
+On node1, initialize a new sworm, join a single worker node
+
+Docker info	
+Verification, node1 successfully configured as swarm manger node
+
+
+2. Join worker node to swarm i.e node2, node3	
+
+docker swarm join \
+    --token SWMTKN-1-1wxyoueqgpcrc4xk2t3ec7n1poy75g4kowmwz64p7ulqx611ih-68pazn0mj8p4p4lnuf4ctp8xy \
+    10.0.0.5:2377	
+From <https://training.play-with-docker.com/orchestration-hol/> 
+Execute in node2, node3
+
+Docker node ls	
+Verify both nodes are part of the sworm
+
+
+3. Deploy applications across multiple hosts	
+Deployed the sleep-app to your new Swarm using Docker services.
+
+Docker service create --name sleep-app ubuntu sleep infinity	
+Execute it from node1
+
+Docker service ls	
+Should receive by swarm manager
+
+
+4. Scale the application	
+
+Docker service update --replicas 7 sleep-app	
+Execute from node1
+Scale the no of containers in the sleep-app service to 7 
+
+Docker service ps sleep-app	
+Execute from node1 asap
+Can see the containers come up in real time
+
+Docker service update --replicas 4 sleep-app	
+Scale the service back down just 4 containers again 
+
+Docker service ps sleep-app	
+No of container has been reduced to 4
+Successfully scaled a swarm service up and down
+
+
+5. Drain a node and reschedule the containers	
+
+Docker node ls	
+Execute on node1
+Status of your nodes
+
+Docker ps
+Execute on node2
+
+Docker node ls	
+Execute on node1
+
+Docker node update --availability drain yournodeid	
+Execute on node1
+
+Docker node ls	
+Check the status; node2 will be in drain state
+
+Docker ps	
+Execute on node2; now no containers are running
+
+Docker servcie ps sleep-app	
+Execute on node1; verify all services are running on both two nodes
+
+
+6. Cleaning Up	
+
+Docker service rm sleep-app	
+Execute from node1
+Remove the service call sleep-app from 
+
+Docker ps	
+List all the running containers
+
+Docker kill yourcontainerid	
+Kill the sleep container started at the beginning
+
+Docker swarm leave --force	
+Execute on node1
+
+Docker swarm leave --force	
+Execute on node2
+
+Docker swarm leave --force	
+Execute on node3
