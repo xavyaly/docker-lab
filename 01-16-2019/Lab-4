@@ -1,0 +1,11 @@
+Error:
+
+ubuntu@ip-172-31-24-28:~$ docker search ubuntu
+Got permission denied while trying to connect to the Docker daemon socket at unix:///var/run/docker.sock: Get http://%2Fvar%2Frun%2Fdocker.sock/v1.39/images/search?limit=25&term=ubuntu: dial unix /var/run/docker.sock: connect: permission denied
+ubuntu@ip-172-31-24-28:~$ sudo docker search ubuntu
+
+Resolution:
+
+After this step you can log out of the server and back in:
+$ sudo usermod -aG docker ${USER}
+

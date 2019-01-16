@@ -1,0 +1,16 @@
+
+Docker Installation:
+Download for Mac
+Download for windows
+https://www.docker.com/get-started
+
+Docker Installation on ubuntu:
+Create a Docker ID: <username>/<password>
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04#prerequisites
+
+# Docker commands:
+$ docker version
+$ docker info
+
+# Always use while exiting from containers:
+$ ctrl+p or ctrl+q
