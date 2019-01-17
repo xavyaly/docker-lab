@@ -1,0 +1,44 @@
+# Docker Important Commands:
+
+# To remove one image:
+$ docker rmi <image-id>
+
+# To remove multiple images:
+$ docker rmi <image-id1> <image-id2> …
+
+# List the images
+$ docker images -a
+
+# Remove all images
+$ docker rmi $(docker images -a -q)
+
+# To list all containers:
+$ docker ps -a
+$ docker container ls -a
+
+# To remove containers one by one
+$ docker rm <container-id>
+
+# To remove the multiple containers
+$ docker rm <container-id1> <container-id2> ..
+
+# To remove the exited containers:
+$ docke ps -a -f status=exited
+$ docker rm $(docke ps -a -f status=exited -q)
+O/P:
+4fb9033f1f70
+11b39229493c
+69da429c755e
+
+# Prune Images
+$ docker images prune
+
+# Prune Containers
+$ docker container prune
+O/P:
+WARNING! This will remove all stopped containers.
+Are you sure you want to continue? [y/N] y
+Deleted Containers:
+6d16747ae94133e3e425b96d7989b8798565cb85177b2dd737c3d4a8f0c64449
+0aad342b49a47a9a9e3033dd65f3c5d974aa72529b64730fde73a2e787b77d43
+

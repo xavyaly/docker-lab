@@ -1,0 +1,12 @@
+$ docker version	: verified cli can talk to docker engine
+$ docker info		: most config values of engine
+
+# Docker Syntax:
+OLD STRUCTURE: STILL WORKS
+$ docker <commands> (options)
+NEW STRUCTURE:
+$ docker <commands> <sub-commands> (options)
+
+$ docker login -u <user-name>
+Password: ****
+
