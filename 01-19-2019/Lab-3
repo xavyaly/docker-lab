@@ -1,0 +1,19 @@
+Manager + Worker Commands:
+
+# Manager
+$ docker swarm init - -advertise-addr <host-ip>		: initialise the swarm
+$ docker service ls								: list services
+$ docker service ps <name-of-service>			: list task of services
+$ docker service create <name-of-service> <image-name>	: create new services
+$ docker service rm <name-of-service>			: to remove the service
+$ docker service scale <name-of-service>=5		: scale services
+$ docker swarm leave							: leave the swarm 
+Node left the swarm.
+$ docker node rm rpy0k86k6s7jy1jcmwqxl8n98		: remove the node completely
+rpy0k86k6s7jy1jcmwqxl8n98
+
+# Worker Commands
+Google it
+
+Important:
+Dockerfile -> Docker Image -> Docker Container -> Executing Docker Services 

@@ -1,0 +1,26 @@
+Docker Swarm:
+
+Implementation of Docker Swarm
+At least 2 Machines required
+One will be the Master and another would be the Agent/Workers
+To make up and execute the services we have to implement the Docker Swarm Commands
+In Master => Fire one command to make it as Master
+In Worker => A token would be generated from Master which will going to be fired on Agents/Workers to make it as a Worker
+We will have to be execute the token generated from Master and fired on the other servers to work as a worker/Agents.
+
+ELB: Elastic Load Balancing automatically distributes incoming application traffic across multiple targets.
+In Docker Swarm it uses the default ELB to maintain the balance.
+
+Read about from google:
+Overlay Network
+Bridge Network
+
+Error comes if no Manager Present:
+$ docker service update --replicas 5 hello-world
+Error response from daemon: This node is not a swarm manager. Use "docker swarm init" or "docker swarm join" to connect this node to swarm and try again.
+
+Notes:
+If suppose you have 5 machines then try to create at least two Master and rest of them as Agent/Worker
+Else
+create at least three as Master/Leader and rest of them as Agent/Worker
+

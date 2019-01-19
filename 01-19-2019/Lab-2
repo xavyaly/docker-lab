@@ -1,0 +1,21 @@
+Swarm Implementation:
+
+Installa docker 
+
+ubuntu@ip-172-31-25-201:~$ docker swarm init 
+Swarm initialized: current node (m5p29t7sqajxglon2rasejnhx) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2ztrlfli1cfmvlwqt6y8urtxrhqee8k7djd4y0uij1r0amtavs-9b8dj1pcnhs1rpdr6c1x677l5 172.31.25.201:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+ubuntu@ip-172-31-25-201:~$ docker swarm join-token manager 
+To add a manager to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-2ztrlfli1cfmvlwqt6y8urtxrhqee8k7djd4y0uij1r0amtavs-64jw7r53ukdgtv96n074me6qx 172.31.25.201:2377
+
+ubuntu@ip-172-31-25-201:~$ 
+
+ubuntu@ip-172-31-25-201:~$ docker swarm join-token worker 	: It will give you a worker token
