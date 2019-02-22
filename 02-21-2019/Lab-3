@@ -1,0 +1,24 @@
+Docker Container Commands:
+
+# To list all the containers
+$ docker container ls -a
+$ docker ps -a
+
+# To remove a container
+$ docker rm <container-id>
+
+# To remove multiple containers
+$ docker rm <container-id1> <container-id2>
+
+# To remove all the containers
+$ docker rm $(docker ps -a -q)
+
+# To list all the containers in “exited” status
+$ docker ps -a —f status=exited
+
+# To remove all the containers in “exited” status
+$ docker rm $(docker ps -a —f status=exited)
+
+# To remove the Prune Container
+$ docker container prune
+

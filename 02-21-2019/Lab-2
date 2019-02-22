@@ -1,0 +1,22 @@
+Docker Images Commands:
+
+# To list all images
+$ docker images
+
+# To list all hidden images
+$ docker images -a
+
+# To remove a single image
+$ docker rmi <image-id>
+
+# To remove multiple images
+$ docker rmi <image-id1> <image-id2>
+
+# To remove all images
+$ docker rmi $(docker images -a -q)
+
+# To pull any images from the Docker hub		: Important
+$ docker pull <image-name>
+
+# To remove the Prune images
+$ docker images prune	
