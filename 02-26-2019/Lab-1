@@ -1,0 +1,42 @@
+Deep dive in Dockerfile:
+https://rock-it.pl/how-to-write-excellent-dockerfiles/
+
+Dockerfile Example:
+
+FROM ubuntu
+
+ADD . /app
+
+RUN apt-get update \
+	&& apt-get upgrade -y nodejs \
+	&& apt-get install -y nodejs ssh mysql \
+	&& cd /app && npm install
+
+# this should start three processes, mysql and ssh
+# in the background and node app in foreground
+# isn't it beautifully terrible? <3
+CMD mysql & sshd & npm start
+
+
+Docker Compose:
+https://docs.docker.com/compose/
+
+
+Executing Python Scripts:
+
+./<script-name>.py 
+
+./<script-name>.py 2 3 4 
+
+$0: <script-name>.py 
+$1: 2
+$2: 3
+$3: 4
+
+
+Important:
+
+docker run : used to create a container 
+docker build : used to create an image
+
+
