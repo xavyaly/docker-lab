@@ -1,0 +1,8 @@
+Docker Syntax:
+
+OLD Structure:
+	$ docker <command> (options)
+
+NEW Structure:
+	$ docker <commands> <sub-commands> (options)
+

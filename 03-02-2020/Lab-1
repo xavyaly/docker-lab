@@ -1,0 +1,33 @@
+nstallation Of Docker:
+	Mac
+	Windows
+	Ubuntu
+	….
+
+Pre-Requisites to create a Docker File:
+	Important Terms
+
+Docker Images:
+How we can create the Images
+List all the Images
+Prune all Images
+Remove an existing Images
+Re-Create the Images
+Inspect the Images
+
+Docker Containers:
+Create a Container with the help of Images
+List the Containers
+Prune the Containers
+Remove the Containers
+Re-Create the Containers
+Test the Containers
+Multiple Operations while creating a Containers
+Inspect the Containers
+
+Docker Logs:
+How to see the Container Logs
+How to debug the Container Logs
+
+Docker Swarm:
+Docker Kubernetes:
