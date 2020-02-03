@@ -1,7 +1,0 @@
-IMAGE Vs CONTAINER:
-
-An Image is the application you want to execute/run
-A Container is an instance of that image running as a process
-Can create as many as containers from the same image
-Docker default image “registry” is called Docker Hub (hub.docker.com)
-
