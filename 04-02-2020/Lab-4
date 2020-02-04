@@ -1,0 +1,113 @@
+Step-1: Installing Docker => Completed
+Step-2: Executing the Docker Command without sudo => Completed
+Step-3: Using the Docker Command => Completed
+Step-4: Working with Docker Images 
+
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+ubuntu@ip-172-31-13-237:~$ 
+
+# No existing images or containers
+
+# Pull the hello-world image:
+
+ubuntu@ip-172-31-13-237:~$ docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+1b930d010525: Pull complete 
+Digest: sha256:9572f7cdcee8591948c2963463447a53466950b3fc15a247fcad1917ca215a2f
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
+ubuntu@ip-172-31-13-237:~$ 
+
+# One Image and One Container created:
+
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+hello-world         latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                          PORTS               NAMES
+925327bc914b        hello-world         "/hello"            About a minute ago   Exited (0) About a minute ago                       brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+
+# One can search with the help of keyword of an image:
+
+ubuntu@ip-172-31-13-237:~$ docker search hello-world
+NAME                                       DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+hello-world                                Hello World! (an example of minimal Dockeriz…   1121                [OK]                
+kitematic/hello-world-nginx                A light-weight nginx container that demonstr…   138                                     
+tutum/hello-world                          Image to test docker deployments. Has Apache…   68                                      [OK]
+dockercloud/hello-world                    Hello World!                                    18                                      [OK]
+crccheck/hello-world                       Hello World web server in under 2.5 MB          12                                      [OK]
+vad1mo/hello-world-rest                    A simple REST Service that echoes back all t…   4                                       [OK]
+ppc64le/hello-world                        Hello World! (an example of minimal Dockeriz…   2                                       
+ansibleplaybookbundle/hello-world-apb      An APB which deploys a sample Hello World! a…   1                                       [OK]
+carinamarina/hello-world-app               This is a sample Python web application, run…   1                                       [OK]
+markmnei/hello-world-java-docker           Hello-World-Java-docker                         1                                       [OK]
+ansibleplaybookbundle/hello-world-db-apb   An APB which deploys a sample Hello World! a…   1                                       [OK]
+souravpatnaik/hello-world-go               hello-world in Golang                           1                                       
+burdz/hello-world-k8s                      To provide a simple webserver that can have …   0                                       [OK]
+datawire/hello-world                       Hello World! Simple Hello World implementati…   0                                       [OK]
+koudaiii/hello-world                                                                       0                                       
+businessgeeks00/hello-world-nodejs                                                         0                                       
+kevindockercompany/hello-world                                                             0                                       
+strimzi/hello-world-producer                                                               0                                       
+freddiedevops/hello-world-spring-boot                                                      0                                       
+strimzi/hello-world-consumer                                                               0                                       
+uniplaces/hello-world                                                                      0                                       
+nirmata/hello-world                                                                        0                                       [OK]
+strimzi/hello-world-streams                                                                0                                       
+infrastructureascode/hello-world           A tiny "Hello World" web server with a healt…   0                                       [OK]
+ansibleplaybookbundle/hello-world          Simple containerized application that tests …   0                                       
+ubuntu@ip-172-31-13-237:~$ 
+
+ubuntu@ip-172-31-13-237:~$ docker run ubuntu
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+5c939e3a4d10: Pull complete 
+c63719cdbe7a: Pull complete 
+19a861ea6baf: Pull complete 
+651c9d2d6c4f: Pull complete 
+Digest: sha256:8d31dad0c58f552e890d68bbfb735588b6b820a46e459672d96e585871acc110
+Status: Downloaded newer image for ubuntu:latest
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images 
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              latest              ccc6e87d482b        2 weeks ago         64.2MB
+hello-world         latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+6c48dc920f2c        ubuntu              "/bin/bash"         27 seconds ago      Exited (0) 25 seconds ago                       cranky_herschel
+925327bc914b        hello-world         "/hello"            11 minutes ago      Exited (0) 11 minutes ago                       brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+
+Step-4: Working with Docker Images => Completed
+

@@ -1,0 +1,13 @@
+Docker Root Dir: /var/lib/docker
+
+Play with Docker:
+Create an AWS Machine 16.04
+Install Docker on AWS Machine:
+	https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+
+Step-1: Installing Docker => Completed
+Step-2: Executing the Docker Command without sudo => Completed
+Step-3: Using the Docker Command
+Step-4: 
+
+Pending:

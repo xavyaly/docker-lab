@@ -1,0 +1,20 @@
+Docker Images Commands:
+
+$ docker images							# To list all Images
+$ docker images -a						# To list hidden images 
+$ docker rmi <image-id>					# To remove a single image
+$ docker rmi <image-id1> <image-id2>		# To remove 2 images
+$ docker rmi $(docker images -a -q)			# To remove all images
+$ docker pull <image-name>				# To pull any docker images from the Docker Hub
+$ docker images prune						# To remove prune images
+
+Docker Container Commands:
+
+$ docker container ls -a					# To list all the containers
+$ docker ps -a							# To list all the containers
+$ docker rm <container-id>					# To remove a single container
+$ docker rm <container-id1> <container-id2>	# To remove 2 containers
+$ docker rm $(docker ps -a -q)				# To remove all containers
+$ docker ps -a -f status=exited				# To list all the containers in “exited” state/status
+$ docker rm $(docker ps -a -f status=exited)	# To remove all the containers which are in “exited” state/status
+$ docker container prune					# To remove the prune container
