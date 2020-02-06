@@ -1,0 +1,344 @@
+Step-1: Installing Docker => Completed
+Step-2: Executing the Docker Command without sudo => Completed
+Step-3: Using the Docker Command => Completed
+Step-4: Working with Docker Images => Completed
+
+Current State:
+
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world         latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                    PORTS               NAMES
+6c48dc920f2c        ubuntu              "/bin/bash"         47 hours ago        Exited (0) 47 hours ago                       cranky_herschel
+925327bc914b        hello-world         "/hello"            47 hours ago        Exited (0) 47 hours ago                       brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -l
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                    PORTS               NAMES
+6c48dc920f2c        ubuntu              "/bin/bash"         47 hours ago        Exited (0) 47 hours ago                       cranky_herschel
+ubuntu@ip-172-31-13-237:~$ 
+
+
+Step-5: Running a Docker Container 
+
+Note: 
+Whenever you wanna to exit from container
+ctrl+pq => container keep on running and moved out
+exit => container stopped and exited {Not a good practice}
+
+
+ubuntu@ip-172-31-13-237:~$ docker run -it ubuntu
+root@e62e44f5a673:/# 
+root@e62e44f5a673:/# ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                    PORTS               NAMES
+e62e44f5a673        ubuntu              "/bin/bash"         59 seconds ago      Up 58 seconds                                 zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         47 hours ago        Exited (0) 47 hours ago                       cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                         brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker run -it ubuntu
+root@6d712d49c472:/# 
+root@6d712d49c472:/# exit 
+exit
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+6d712d49c472        ubuntu              "/bin/bash"         14 seconds ago      Exited (0) 4 seconds ago                       flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         2 minutes ago       Up 2 minutes                                   zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         47 hours ago        Exited (0) 47 hours ago                        cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                          brave_aryabhata
+
+Now:
+
+ubuntu@ip-172-31-13-237:~$ docker run -it ubuntu 
+root@5378c9414bd9:/# 
+root@5378c9414bd9:/# node -v
+bash: node: command not found
+root@5378c9414bd9:/# 
+root@5378c9414bd9:/# apt-get update
+Get:1 http://archive.ubuntu.com/ubuntu bionic InRelease [242 kB]
+Get:2 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]           
+Get:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [74.6 kB]
+Get:5 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [808 kB]
+Get:6 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [11.3 MB]
+Get:7 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [7061 B]
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [26.7 kB]
+Get:9 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [815 kB]    
+Get:10 http://archive.ubuntu.com/ubuntu bionic/restricted amd64 Packages [13.5 kB]    
+Get:11 http://archive.ubuntu.com/ubuntu bionic/main amd64 Packages [1344 kB]          
+Get:12 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [186 kB]     
+Get:13 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [40.5 kB]
+Get:14 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [1096 kB]
+Get:15 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [11.1 kB]
+Get:16 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1342 kB]
+Get:17 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [4242 B]
+Get:18 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [2496 B]
+Fetched 17.5 MB in 4s (4597 kB/s)                          
+Reading package lists... Done
+root@5378c9414bd9:/# 
+root@5378c9414bd9:/# apt-get install -y nodejs
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  ca-certificates libc-ares2 libhttp-parser2.7.1 libicu60 libnghttp2-14 libssl1.0.0 libssl1.1 libuv1 nodejs-doc openssl
+The following NEW packages will be installed:
+  ca-certificates libc-ares2 libhttp-parser2.7.1 libicu60 libnghttp2-14 libssl1.0.0 libssl1.1 libuv1 nodejs nodejs-doc openssl
+0 upgraded, 11 newly installed, 0 to remove and 18 not upgraded.
+Need to get 17.0 MB of archives.
+After this operation, 66.0 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libssl1.1 amd64 1.1.1-1ubuntu2.1~18.04.5 [1300 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 openssl amd64 1.1.1-1ubuntu2.1~18.04.5 [613 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic/main amd64 ca-certificates all 20180409 [151 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic/main amd64 libicu60 amd64 60.2-3ubuntu3 [8054 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libssl1.0.0 amd64 1.0.2n-1ubuntu5.3 [1088 kB]
+Get:6 http://archive.ubuntu.com/ubuntu bionic/main amd64 libnghttp2-14 amd64 1.30.0-1ubuntu1 [77.8 kB]
+Get:7 http://archive.ubuntu.com/ubuntu bionic/main amd64 libuv1 amd64 1.18.0-3 [64.4 kB]
+Get:8 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 nodejs-doc all 8.10.0~dfsg-2ubuntu0.4 [752 kB]
+Get:9 http://archive.ubuntu.com/ubuntu bionic/main amd64 libc-ares2 amd64 1.14.0-1 [37.1 kB]
+Get:10 http://archive.ubuntu.com/ubuntu bionic/main amd64 libhttp-parser2.7.1 amd64 2.7.1-2 [20.6 kB]
+Get:11 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 nodejs amd64 8.10.0~dfsg-2ubuntu0.4 [4796 kB]
+Fetched 17.0 MB in 2s (7326 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libssl1.1:amd64.
+(Reading database ... 4046 files and directories currently installed.)
+Preparing to unpack .../00-libssl1.1_1.1.1-1ubuntu2.1~18.04.5_amd64.deb ...
+Unpacking libssl1.1:amd64 (1.1.1-1ubuntu2.1~18.04.5) ...
+Selecting previously unselected package openssl.
+Preparing to unpack .../01-openssl_1.1.1-1ubuntu2.1~18.04.5_amd64.deb ...
+Unpacking openssl (1.1.1-1ubuntu2.1~18.04.5) ...
+Selecting previously unselected package ca-certificates.
+Preparing to unpack .../02-ca-certificates_20180409_all.deb ...
+Unpacking ca-certificates (20180409) ...
+Selecting previously unselected package libicu60:amd64.
+Preparing to unpack .../03-libicu60_60.2-3ubuntu3_amd64.deb ...
+Unpacking libicu60:amd64 (60.2-3ubuntu3) ...
+Selecting previously unselected package libssl1.0.0:amd64.
+Preparing to unpack .../04-libssl1.0.0_1.0.2n-1ubuntu5.3_amd64.deb ...
+Unpacking libssl1.0.0:amd64 (1.0.2n-1ubuntu5.3) ...
+Selecting previously unselected package libnghttp2-14:amd64.
+Preparing to unpack .../05-libnghttp2-14_1.30.0-1ubuntu1_amd64.deb ...
+Unpacking libnghttp2-14:amd64 (1.30.0-1ubuntu1) ...
+Selecting previously unselected package libuv1:amd64.
+Preparing to unpack .../06-libuv1_1.18.0-3_amd64.deb ...
+Unpacking libuv1:amd64 (1.18.0-3) ...
+Selecting previously unselected package nodejs-doc.
+Preparing to unpack .../07-nodejs-doc_8.10.0~dfsg-2ubuntu0.4_all.deb ...
+Unpacking nodejs-doc (8.10.0~dfsg-2ubuntu0.4) ...
+Selecting previously unselected package libc-ares2:amd64.
+Preparing to unpack .../08-libc-ares2_1.14.0-1_amd64.deb ...
+Unpacking libc-ares2:amd64 (1.14.0-1) ...
+Selecting previously unselected package libhttp-parser2.7.1:amd64.
+Preparing to unpack .../09-libhttp-parser2.7.1_2.7.1-2_amd64.deb ...
+Unpacking libhttp-parser2.7.1:amd64 (2.7.1-2) ...
+Selecting previously unselected package nodejs.
+Preparing to unpack .../10-nodejs_8.10.0~dfsg-2ubuntu0.4_amd64.deb ...
+Unpacking nodejs (8.10.0~dfsg-2ubuntu0.4) ...
+Setting up nodejs-doc (8.10.0~dfsg-2ubuntu0.4) ...
+Setting up libhttp-parser2.7.1:amd64 (2.7.1-2) ...
+Setting up libicu60:amd64 (60.2-3ubuntu3) ...
+Setting up libssl1.0.0:amd64 (1.0.2n-1ubuntu5.3) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.26.1 /usr/local/share/perl/5.26.1 /usr/lib/x86_64-linux-gnu/perl5/5.26 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.26 /usr/share/perl/5.26 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up libnghttp2-14:amd64 (1.30.0-1ubuntu1) ...
+Setting up libuv1:amd64 (1.18.0-3) ...
+Setting up libssl1.1:amd64 (1.1.1-1ubuntu2.1~18.04.5) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.26.1 /usr/local/share/perl/5.26.1 /usr/lib/x86_64-linux-gnu/perl5/5.26 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.26 /usr/share/perl/5.26 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up openssl (1.1.1-1ubuntu2.1~18.04.5) ...
+Setting up ca-certificates (20180409) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 76.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.26.1 /usr/local/share/perl/5.26.1 /usr/lib/x86_64-linux-gnu/perl5/5.26 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl/5.26 /usr/share/perl/5.26 /usr/local/lib/site_perl /usr/lib/x86_64-linux-gnu/perl-base) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Updating certificates in /etc/ssl/certs...
+133 added, 0 removed; done.
+Setting up libc-ares2:amd64 (1.14.0-1) ...
+Setting up nodejs (8.10.0~dfsg-2ubuntu0.4) ...
+update-alternatives: using /usr/bin/nodejs to provide /usr/bin/js (js) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/js.1.gz because associated file /usr/share/man/man1/nodejs.1.gz (of link group js) doesn't exist
+Processing triggers for libc-bin (2.27-3ubuntu1) ...
+Processing triggers for ca-certificates (20180409) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+root@5378c9414bd9:/# 
+root@5378c9414bd9:/# node -v
+v8.10.0
+root@5378c9414bd9:/# 
+root@5378c9414bd9:/# exit
+exit
+
+Step-5: Running a Docker Container  => Completed
+
+Step-6: Manage Docker Containers
+
+ubuntu@ip-172-31-13-237:~$ docker ps -l
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                     PORTS               NAMES
+5378c9414bd9        ubuntu              "/bin/bash"         About a minute ago   Exited (0) 7 seconds ago                       hopeful_williamson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED              STATUS                      PORTS               NAMES
+5378c9414bd9        ubuntu              "/bin/bash"         About a minute ago   Exited (0) 14 seconds ago                       hopeful_williamson
+6d712d49c472        ubuntu              "/bin/bash"         7 minutes ago        Exited (0) 7 minutes ago                        flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         9 minutes ago        Up 9 minutes                                    zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         2 days ago           Exited (0) 2 days ago                           cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago           Exited (0) 2 days ago                           brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker start 5378c9414bd9
+5378c9414bd9
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+5378c9414bd9        ubuntu              "/bin/bash"         2 minutes ago       Up 2 seconds                                   hopeful_williamson
+6d712d49c472        ubuntu              "/bin/bash"         8 minutes ago       Exited (0) 7 minutes ago                       flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         10 minutes ago      Up 10 minutes                                  zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         2 days ago          Exited (0) 2 days ago                          cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                          brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker stop 5378c9414bd9
+5378c9414bd9
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+5378c9414bd9        ubuntu              "/bin/bash"         2 minutes ago       Exited (0) 2 seconds ago                       hopeful_williamson
+6d712d49c472        ubuntu              "/bin/bash"         8 minutes ago       Exited (0) 8 minutes ago                       flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         10 minutes ago      Up 10 minutes                                  zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         2 days ago          Exited (0) 2 days ago                          cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                          brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker rm 5378c9414bd9
+5378c9414bd9
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                     PORTS               NAMES
+6d712d49c472        ubuntu              "/bin/bash"         8 minutes ago       Exited (0) 8 minutes ago                       flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         11 minutes ago      Up 11 minutes                                  zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         2 days ago          Exited (0) 2 days ago                          cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                          brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+
+Step-6: Manage Docker Containers => Completed
+
+Step-7: Committing Changes in a Container to a Docker 
+
+Example:
+$ docker commit -m "What did you do to the image" -a "Author Name" container-id repository/new_image_name
+
+Currently:
+
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+ubuntu              latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world         latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+6d712d49c472        ubuntu              "/bin/bash"         13 minutes ago      Exited (0) 13 minutes ago                       flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         15 minutes ago      Up 15 minutes                                   zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         2 days ago          Exited (0) 2 days ago                           cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                           brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+
+Now:
+
+ubuntu@ip-172-31-13-237:~$ docker commit -m "added node.js or install java" -a "aly" 6d712d49c472 aly/ubuntu-node-java
+sha256:dd4ba85f36049e6f20efb2cbc27dbfde74b4ae0ccd032c70aa2a07f7ab393356
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
+aly/ubuntu-node-java   latest              dd4ba85f3604        24 seconds ago      64.2MB
+ubuntu                 latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world            latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+
+Step-7: Committing Changes in a Container to a Docker => Completed
+
+Step 8 — Pushing Docker Images to a Docker Repository
+
+Create an account if don’t have:
+https://hub.docker.com/
+782782/******
+
+Now:
+
+ubuntu@ip-172-31-13-237:~$ docker login -u docker-registry-username
+Password: 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker login -u 782782
+Password: 
+WARNING! Your password will be stored unencrypted in /home/ubuntu/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ cat /home/ubuntu/.docker/config.json 
+{
+	"auths": {
+		"https://index.docker.io/v1/": {
+			"auth": "NzgyNzgyOnJlZEhBVEAxMjM="
+		}
+	},
+	"HttpHeaders": {
+		"User-Agent": "Docker-Client/19.03.5 (linux)"
+	}
+}ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images | grep "aly*"
+aly/ubuntu-node-java   latest              dd4ba85f3604        5 minutes ago       64.2MB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker tag sammy/ubuntu-nodejs docker-registry-username/ubuntu-nodejs
+Error response from daemon: No such image: sammy/ubuntu-nodejs:latest
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker tag aly/ubuntu-node-java 782782/ubuntu-node-java
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+782782/ubuntu-node-java   latest              dd4ba85f3604        7 minutes ago       64.2MB
+aly/ubuntu-node-java      latest              dd4ba85f3604        7 minutes ago       64.2MB
+ubuntu                    latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world               latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                      PORTS               NAMES
+6d712d49c472        ubuntu              "/bin/bash"         22 minutes ago      Exited (0) 22 minutes ago                       flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"         25 minutes ago      Up 25 minutes                                   zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"         2 days ago          Exited (0) 2 days ago                           cranky_herschel
+925327bc914b        hello-world         "/hello"            2 days ago          Exited (0) 2 days ago                           brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker push 782782/ubuntu-node-java
+The push refers to repository [docker.io/782782/ubuntu-node-java]
+afb1dda9fb7a: Pushed 
+f55aa0bd26b8: Mounted from library/ubuntu 
+1d0dfb259f6a: Mounted from library/ubuntu 
+21ec61b65b20: Mounted from library/ubuntu 
+43c67172d1d1: Mounted from library/ubuntu 
+latest: digest: sha256:b5e15e57572cbb99d03cdbcf10a98f96ad4d172d7570c0d14cf50ed4391045a2 size: 1359
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+782782/ubuntu-node-java   latest              dd4ba85f3604        8 minutes ago       64.2MB
+aly/ubuntu-node-java      latest              dd4ba85f3604        8 minutes ago       64.2MB
+ubuntu                    latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world               latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+
+Step 8 — Pushing Docker Images to a Docker Repository => Completed

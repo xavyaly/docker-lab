@@ -1,0 +1,40 @@
+How to create a Container ?
+
+Dockerfile -> Docker Images -> Docker Containers
+
+ubuntu@ip-172-31-13-237:~$ docker container run --publish 80:80 nginx
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+bc51dd8edc1b: Pull complete 
+66ba67045f57: Pull complete 
+bf317aa10aa5: Pull complete 
+Digest: sha256:ad5552c786f128e389a0263104ae39f3d3c7895579d45ae716f528185b36bc6f
+
+Status: Downloaded newer image for nginx:latest
+
+# Stuck at here then we hit the browser like:
+
+https://localhost:80 => refresh it for logs in the console
+
+# Below are the logs generated
+
+15.206.179.63 - - [06/Feb/2020:16:01:00 +0000] "GET /root/JAVA_APPLICATION_BEST.git/info/refs?service=git-upload-pack HTTP/1.1" 404 153 "-" "git/2.23.1" "-"
+2020/02/06 16:01:00 [error] 6#6: *1 open() "/usr/share/nginx/html/root/JAVA_APPLICATION_BEST.git/info/refs" failed (2: No such file or directory), client: 15.206.179.63, server: localhost, request: "GET /root/JAVA_APPLICATION_BEST.git/info/refs?service=git-upload-pack HTTP/1.1", host: "13.235.75.203"
+
+
+2020/02/06 16:03:00 [error] 6#6: *2 open() "/usr/share/nginx/html/root/JAVA_APPLICATION_BEST.git/info/refs" failed (2: No such file or directory), client: 15.206.179.63, server: localhost, request: "GET /root/JAVA_APPLICATION_BEST.git/info/refs?service=git-upload-pack HTTP/1.1", host: "13.235.75.203"
+15.206.179.63 - - [06/Feb/2020:16:03:00 +0000] "GET /root/JAVA_APPLICATION_BEST.git/info/refs?service=git-upload-pack HTTP/1.1" 404 153 "-" "git/2.23.1" "-"
+^Cubuntu@ip-172-31-13-237:~$ 
+
+
+// Background Process:
+Download the image called “nginx” from the docker hub {https://hub.docker.com/_/nginx}
+Started a new Container from the Docker Image
+Open a port 80 on the host IP
+Route the traffic to the customer IP, Port 80
+
+// Executes on detach mode but still you can see the outputs in browser:
+ubuntu@ip-172-31-13-237:~$ docker container run --publish 80:80 --detach nginx
+f7cfb58608a773530884860e2f4bfde5118466530513cba3f659ee9f71d5eb3f
+ubuntu@ip-172-31-13-237:~$ 
+
