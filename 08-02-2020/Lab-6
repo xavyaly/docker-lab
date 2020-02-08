@@ -1,0 +1,55 @@
+Another Dockerfile:
+
+ubuntu@ip-172-31-13-237:~$ cat Dockerfile 
+# This is a sample image
+
+# BASE IMAGE
+FROM ubuntu
+
+MAINTAINER wellboy.alam13@gmail.com
+
+RUN apt-get update 
+RUN apt-get install -y nginx 
+
+CMD ["echo","Image successfully created"]
+ubuntu@ip-172-31-13-237:~$ 
+
+Save it
+
+Explanation:
+
+The following points need to be noted about the above file −
+	The first line "#This is a sample Image" is a comment. You can add comments to the Docker File with the help of the # command 	The next line has to start with the FROM keyword. It tells docker, from which base image you want to base your image from. In our example, we are creating 
+	an image from the ubuntu image. 	The next command is the person who is going to maintain this image. Here you specify the MAINTAINER keyword and just mention the email ID. 	The RUN command is used to run instructions against the image. In our case, we first update our Ubuntu system and then install the nginx server on 
+	our ubuntu image. 	The last command is used to display a message to the user. 
+
+Lets create Docker Image, Container:
+
+ubuntu@ip-172-31-13-237:~$ docker build -t ng:0.1 .
+Sending build context to Docker daemon  16.38kB
+Step 1/5 : FROM ubuntu
+ ---> ccc6e87d482b
+Step 2/5 : MAINTAINER wellboy.alam13@gmail.com
+ ---> Using cache
+ ---> c4b0dcc0157a
+Step 3/5 : RUN apt-get update
+ ---> Running in e840971b3488
+…..
+….
+…..
+Removing intermediate container eb2d66f983b1
+ ---> 2f31810e088d
+Step 5/5 : CMD ["echo","Image successfully created"]
+ ---> Running in 79c62f7a0fa4
+Removing intermediate container 79c62f7a0fa4
+ ---> 30ea14d0df3f
+Successfully built 30ea14d0df3f
+Successfully tagged ng:0.1
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+ng                        0.1                 30ea14d0df3f        5 seconds ago       152MB
+docker-run                0.1                 3e28f53f0c99        13 minutes ago      64.2MB
+ubuntu@ip-172-31-13-237:~$ docker run 30ea14d0df3f
+Image successfully created
+ubuntu@ip-172-31-13-237:~$
+

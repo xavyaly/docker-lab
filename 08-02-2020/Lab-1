@@ -1,0 +1,23 @@
+Keywords of Docker:
+	Develop 
+	Ship
+	Run Anywhere
+
+Note:
+Docker is for developers to easily develop applications, 
+Ship them into Containers which can then be deployed anywhere
+
+Components of Docker:
+
+Docker for Mac/Linux/Windows:
+	It allows one to run the Docker Containers on the Mac/Linux/Windows OS
+Docker Engine:
+	It is used for building docker images and docker containers
+Docker Hub:
+	It is the registry which is used to host various Docker Images, you can create your own docker images and host publicly
+Docker Compose:
+	This is used to define applications using multiple docker containers
+
+Official Site:
+Https://www.docker.com
+

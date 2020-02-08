@@ -1,0 +1,288 @@
+How to write an excellent Dockerfiles:
+
+https://rock-it.pl/how-to-write-excellent-dockerfiles/
+
+Our goals:
+We want to minimize image size, build time and number of layers.
+We want to maximize build cache usage and Dockerfile readability.
+We want to make working with our container as pleasant as possible.
+
+Quick summary:
+* Write .dockerignore file
+* Container should do one thing
+* Understand Docker caching! Use COPY and RUN commands in proper order to utilize that.
+* Merge multiple RUN commands into one
+* Remove unneeded files after each step
+* Use proper base image (alpine versions should be enough)
+* Set WORKDIR and CMD
+* Use ENTRYPOINT when you have more than one command and/or need to update files using runtime data
+* Use exec inside entrypoint script
+* Prefer COPY over ADD
+* Specify default environment variables, ports, and volumes inside Dockerfile
+
+Example-1:
+
+FROM ubuntu
+
+ADD . /app
+
+RUN apt-get update
+RUN apt-get upgrade -y
+RUN apt-get install -y nodejs ssh mysql
+RUN cd /app && npm install
+
+# this should start three processes, mysql and ssh
+# in the background and node app in foreground
+# isn't it beautifully terrible? <3
+CMD mysql & sshd & npm start
+
+Create an image:
+docker build -t wtf .
+
+Read Docker Compose:
+https://docs.docker.com/compose/
+
+
+Example-2:
+FROM ubuntu
+
+ADD . /app
+
+RUN apt-get update
+RUN apt-get upgrade -y
+
+# we should remove ssh and mysql, and use
+# separate container for database 
+RUN apt-get install -y nodejs  # ssh mysql
+RUN cd /app && npm install
+
+CMD npm start
+
+Example-3:
+Merge multiple RUN commands into one:
+FROM ubuntu
+
+ADD . /app
+
+RUN apt-get update \
+    && apt-get install -y nodejs \
+    && cd /app \
+    && npm install
+
+CMD npm start
+
+Example-3: Better Option
+FROM ubuntu
+
+RUN apt-get update && apt-get install -y nodejs 
+ADD . /app
+RUN cd /app && npm install
+
+CMD npm start
+
+Example-4:
+FROM ubuntu:latest == FROM ubuntu
+
+FROM ubuntu:16.04  # it's that easy!		# If you need 16.04 
+
+RUN apt-get update && apt-get install -y nodejs 
+ADD . /app
+RUN cd /app && npm install
+
+CMD npm start
+
+Example-5:
+Remove unneeded files after each RUN step
+
+FROM ubuntu:16.04
+
+RUN apt-get update \
+    && apt-get install -y nodejs \
+    # added lines
+    && rm -rf /var/lib/apt/lists/*
+
+ADD . /app
+RUN cd /app && npm install
+
+CMD npm start
+
+Example-6:
+Use proper base image
+
+FROM node
+
+ADD . /app
+# we don't need to install node 
+# anymore and use apt-get
+RUN cd /app && npm install
+
+CMD npm start
+
+OR
+
+FROM node:7-alpine
+
+ADD . /app
+RUN cd /app && npm install
+
+CMD npm start
+
+Example-7:
+
+Set WORKDIR and CMD
+WORKDIR command changes default directory, where we run our RUN / CMD / ENTRYPOINT commands.
+
+
+FROM node:7-alpine
+
+WORKDIR /app
+ADD . /app
+RUN npm install
+
+CMD ["npm", "start"]
+
+Example-8:
+
+Use ENTRYPOINT (optional)
+
+entrypoint.sh
+#!/usr/bin/env sh
+# $0 is a script name, 
+# $1, $2, $3 etc are passed arguments
+# $1 is our command
+CMD=$1
+
+case "$CMD" in
+  "dev" )
+    npm install
+    export NODE_ENV=development
+    exec npm run dev
+    ;;
+
+  "start" )
+    # we can modify files here, using ENV variables passed in 
+    # "docker create" command. It can't be done during build process.
+    echo "db: $DATABASE_ADDRESS" >> /app/config.yml
+    export NODE_ENV=production
+    exec npm start
+    ;;
+
+   * )
+    # Run custom command. Thanks to this line we can still use 
+    # "docker run our_image /bin/bash" and it will work
+    exec $CMD ${@:2}
+    ;;
+esac
+
+Dockerfile:
+
+FROM node:7-alpine
+
+WORKDIR /app
+ADD . /app
+RUN npm install
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["start"]
+
+Now we can run this image in an executable-like way:
+docker run our-app dev
+docker run our-app start
+docker run -it our-app /bin/bash - this one will work too
+
+Example-9:
+
+Use "exec" inside entrypoint script
+
+Example-10:
+
+FROM node:7-alpine
+
+WORKDIR /app
+
+COPY . /app
+RUN npm install
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["start"]
+
+Example-11:
+
+Optimize COPY and RUN
+
+FROM node:7-alpine
+
+WORKDIR /app
+
+COPY package.json /app
+RUN npm install
+COPY . /app
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["start"]
+
+Example-12:
+
+Specify default environment variables, ports and volumes
+
+
+FROM node:7-alpine
+
+# env variables required during build
+ENV PROJECT_DIR=/app
+
+WORKDIR $PROJECT_DIR
+
+COPY package.json $PROJECT_DIR
+RUN npm install
+COPY . $PROJECT_DIR
+
+# env variables that can change
+# volume and port settings
+# and defaults for our application
+ENV MEDIA_DIR=/media \
+    NODE_ENV=production \
+    APP_PORT=3000
+
+VOLUME $MEDIA_DIR
+EXPOSE $APP_PORT
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["start"]
+
+Example-13:
+
+Add metadata to image using LABEL
+
+FROM node:7-alpine
+LABEL maintainer "jakub.skalecki@example.com"
+...
+
+Example-14:
+
+Add HEALTHCHECK
+
+FROM node:7-alpine
+LABEL maintainer "jakub.skalecki@example.com"
+
+ENV PROJECT_DIR=/app
+WORKDIR $PROJECT_DIR
+
+COPY package.json $PROJECT_DIR
+RUN npm install
+COPY . $PROJECT_DIR
+
+ENV MEDIA_DIR=/media \
+    NODE_ENV=production \
+    APP_PORT=3000
+
+VOLUME $MEDIA_DIR
+EXPOSE $APP_PORT
+HEALTHCHECK CMD curl --fail http://localhost:$APP_PORT || exit 1
+
+ENTRYPOINT ["./entrypoint.sh"]
+CMD ["start"]
+
+
+Read Properly:
+https://rock-it.pl/how-to-write-excellent-dockerfiles/

@@ -1,0 +1,57 @@
+Existing Images and Containers:
+
+ubuntu@ip-172-31-13-237:~$ docker images 
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+782782/ubuntu-node-java   latest              dd4ba85f3604        38 hours ago        64.2MB
+aly/ubuntu-node-java      latest              dd4ba85f3604        38 hours ago        64.2MB
+nginx                     latest              2073e0bcb60e        5 days ago          127MB
+ubuntu                    latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world               latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
+f7cfb58608a7        nginx               "nginx -g 'daemon of…"   38 hours ago        Exited (0) 37 hours ago                         tender_fermi
+6b8ade8d3d74        nginx               "nginx -g 'daemon of…"   38 hours ago        Exited (0) 38 hours ago                         determined_khorana
+6d712d49c472        ubuntu              "/bin/bash"              38 hours ago        Exited (0) 38 hours ago                         flamboyant_boyd
+e62e44f5a673        ubuntu              "/bin/bash"              38 hours ago        Exited (127) 37 hours ago                       zealous_hamilton
+6c48dc920f2c        ubuntu              "/bin/bash"              3 days ago          Exited (0) 3 days ago                           cranky_herschel
+925327bc914b        hello-world         "/hello"                 3 days ago          Exited (0) 3 days ago                           brave_aryabhata
+ubuntu@ip-172-31-13-237:~$ 
+
+A Small Example of Dockerfile:
+
+ubuntu@ip-172-31-13-237:~$ cat Dockerfile 
+# This is a sample image
+
+FROM ubuntu
+
+CMD ["echo","lets start playing with Docker"]
+ubuntu@ip-172-31-13-237:~$
+ubuntu@ip-172-31-13-237:~$ docker build -t docker-play:v1 .
+Sending build context to Docker daemon  16.38kB
+Step 1/2 : FROM ubuntu
+ ---> ccc6e87d482b
+Step 2/2 : CMD ["echo","lets start playing with Docker"]
+ ---> Running in b8499c802091
+Removing intermediate container b8499c802091
+ ---> ad561ec92df8
+Successfully built ad561ec92df8
+Successfully tagged docker-play:v1
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED             SIZE
+docker-play               v1                  ad561ec92df8        6 seconds ago       64.2MB
+aly/ubuntu-node-java      latest              dd4ba85f3604        38 hours ago        64.2MB
+782782/ubuntu-node-java   latest              dd4ba85f3604        38 hours ago        64.2MB
+nginx                     latest              2073e0bcb60e        5 days ago          127MB
+ubuntu                    latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world               latest              fce289e99eb9        13 months ago       1.84kB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker run ad561ec92df8
+lets start playing with Docker
+ubuntu@ip-172-31-13-237:~$ 
+
+DOCKERFILE -> IMAGES -> CONTAINERS
+
+Tag:
+https://nvie.com/posts/a-successful-git-branching-model/

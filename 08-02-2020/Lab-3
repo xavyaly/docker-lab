@@ -1,0 +1,7 @@
+Docker Life Cycle:
+
+Created -> Running (Pause <-> Unpause)
+
+Created -> Running -> Killed
+
+Created -> Running (Stop <-> Restart)
