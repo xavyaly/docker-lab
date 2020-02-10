@@ -1,0 +1,320 @@
+Docker Compose:
+
+Microservice Architecture:
+
+
+￼
+
+
+Login to your Docker Hub and click on Explore:
+
+Search for redis database
+
+Real time docker file:
+https://github.com/docker-library/redis/blob/b6d413ceff3a2bca10a430ace121597fa8fe2a2c/6.0-rc/Dockerfile
+
+
+# Difference between docker file and docker-compose file:
+
+https://www.techrepublic.com/article/what-is-the-difference-between-dockerfile-and-docker-compose-yml-files/
+
+Example:
+
+First install docker-compose: 
+ubuntu@ip-172-31-13-237:~$ docker -v
+Docker version 19.03.5, build 633a0ea838
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker-compose 
+The program 'docker-compose' is currently not installed. You can install it by typing:
+sudo apt install docker-compose
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ sudo apt install docker-compose
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+  libpython-stdlib libpython2.7-minimal libpython2.7-stdlib python python-backports.ssl-match-hostname python-cached-property python-cffi-backend
+  python-chardet python-cryptography python-docker python-dockerpty python-docopt python-enum34 python-funcsigs python-functools32 python-idna
+  python-ipaddress python-jsonschema python-minimal python-mock python-ndg-httpsclient python-openssl python-pbr python-pkg-resources python-pyasn1
+  python-requests python-six python-texttable python-urllib3 python-websocket python-yaml python2.7 python2.7-minimal
+Suggested packages:
+  python-doc python-tk python-cryptography-doc python-cryptography-vectors python-enum34-doc python-funcsigs-doc python-mock-doc python-openssl-doc
+  python-openssl-dbg python-setuptools doc-base python-ntlm python2.7-doc binutils binfmt-support
+Recommended packages:
+  docker.io
+The following NEW packages will be installed:
+  docker-compose libpython-stdlib libpython2.7-minimal libpython2.7-stdlib python python-backports.ssl-match-hostname python-cached-property
+  python-cffi-backend python-chardet python-cryptography python-docker python-dockerpty python-docopt python-enum34 python-funcsigs python-functools32
+  python-idna python-ipaddress python-jsonschema python-minimal python-mock python-ndg-httpsclient python-openssl python-pbr python-pkg-resources
+  python-pyasn1 python-requests python-six python-texttable python-urllib3 python-websocket python-yaml python2.7 python2.7-minimal
+0 upgraded, 34 newly installed, 0 to remove and 9 not upgraded.
+Need to get 5321 kB of archives.
+After this operation, 24.0 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y^C
+ubuntu@ip-172-31-13-237:~$ sudo apt install -y  docker-compose
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+The following additional packages will be installed:
+…..
+….
+ubuntu@ip-172-31-13-237:~$ docker-compose -v
+docker-compose version 1.8.0, build unknown
+ubuntu@ip-172-31-13-237:~$ 
+
+# Created a docker compose yml file
+
+ubuntu@ip-172-31-13-237:~$ mkdir dockerbuild
+ubuntu@ip-172-31-13-237:~$ cd dockerbuild/
+ubuntu@ip-172-31-13-237:~/dockerbuild$ ls -l
+total 0
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ nano docker-compose.yml
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose config 
+ERROR: The Compose file './docker-compose.yml' is invalid because:
+Unsupported config option for services: 'web'
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ nano docker-compose.yml
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose config 
+ERROR: Version in "./docker-compose.yml" is unsupported. You might be seeing this error because you're using the wrong Compose file version. Either specify a version of "2" (or "2.0") and place your service definitions under the `services` key, or omit the `version` key and place your service definitions at the root of the file to use version 1.
+For more on the Compose file format versions, see https://docs.docker.com/compose/compose-file/
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ nano docker-compose.yml
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose config 
+networks: {}
+services:
+  database:
+    image: redis
+  web:
+    image: nginx
+version: '2.0'
+volumes: {}
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ cat docker-compose.yml 
+version: '2.0'
+
+services:
+  
+  web:
+    image: nginx
+
+  database:
+    image: redis
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+# Existing containers:
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   31 minutes ago      Up 30 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   37 minutes ago      Up 22 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+# compose up:
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose up
+Creating network "dockerbuild_default" with the default driver
+Pulling database (redis:latest)...
+latest: Pulling from library/redis
+bc51dd8edc1b: Already exists
+37d80eb324ee: Pull complete
+392b7748dfaf: Pull complete
+48df82c3534d: Pull complete
+2ec2bb0b4b0e: Pull complete
+1302bce0b2cb: Pull complete
+Digest: sha256:7b84b346c01e5a8d204a5bb30d4521bcc3a8535bbf90c660b8595fad248eae82
+Status: Downloaded newer image for redis:latest
+Creating dockerbuild_database_1
+Creating dockerbuild_web_1
+Attaching to dockerbuild_database_1, dockerbuild_web_1
+database_1  | 1:C 10 Feb 2020 16:22:19.048 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+database_1  | 1:C 10 Feb 2020 16:22:19.049 # Redis version=5.0.7, bits=64, commit=00000000, modified=0, pid=1, just started
+database_1  | 1:C 10 Feb 2020 16:22:19.049 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+database_1  | 1:M 10 Feb 2020 16:22:19.052 * Running mode=standalone, port=6379.
+database_1  | 1:M 10 Feb 2020 16:22:19.052 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+database_1  | 1:M 10 Feb 2020 16:22:19.052 # Server initialized
+database_1  | 1:M 10 Feb 2020 16:22:19.052 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+database_1  | 1:M 10 Feb 2020 16:22:19.052 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis must be restarted after THP is disabled.
+database_1  | 1:M 10 Feb 2020 16:22:19.052 * Ready to accept connections
+
+
+
+^CGracefully stopping... (press Ctrl+C again to force)
+Stopping dockerbuild_web_1 ... done
+Stopping dockerbuild_database_1 ... done
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                     PORTS                                                      NAMES
+09f80e276127        nginx               "nginx -g 'daemon of…"   45 seconds ago      Exited (0) 4 seconds ago                                                              dockerbuild_web_1
+482ee3bd90ff        redis               "docker-entrypoint.s…"   45 seconds ago      Exited (0) 4 seconds ago                                                              dockerbuild_database_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   32 minutes ago      Up 32 minutes              8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   38 minutes ago      Up 24 minutes              0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+# use “-d” options, perfectly working
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose up -d
+Starting dockerbuild_database_1
+Starting dockerbuild_web_1
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+09f80e276127        nginx               "nginx -g 'daemon of…"   3 minutes ago       Up 2 seconds        80/tcp                                                     dockerbuild_web_1
+482ee3bd90ff        redis               "docker-entrypoint.s…"   3 minutes ago       Up 2 seconds        6379/tcp                                                   dockerbuild_database_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   35 minutes ago      Up 35 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   41 minutes ago      Up 27 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+# use up and down, it will affect the containers which has been created through docker-compose.yml file
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose up -d
+Starting dockerbuild_database_1
+Starting dockerbuild_web_1
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+09f80e276127        nginx               "nginx -g 'daemon of…"   3 minutes ago       Up 2 seconds        80/tcp                                                     dockerbuild_web_1
+482ee3bd90ff        redis               "docker-entrypoint.s…"   3 minutes ago       Up 2 seconds        6379/tcp                                                   dockerbuild_database_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   35 minutes ago      Up 35 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   41 minutes ago      Up 27 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+09f80e276127        nginx               "nginx -g 'daemon of…"   3 minutes ago       Up 11 seconds       80/tcp                                                     dockerbuild_web_1
+482ee3bd90ff        redis               "docker-entrypoint.s…"   3 minutes ago       Up 11 seconds       6379/tcp                                                   dockerbuild_database_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   35 minutes ago      Up 35 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   42 minutes ago      Up 27 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose down 
+Stopping dockerbuild_web_1 ... done
+Stopping dockerbuild_database_1 ... done
+Removing dockerbuild_web_1 ... done
+Removing dockerbuild_database_1 ... done
+Removing network dockerbuild_default
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   36 minutes ago      Up 36 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   42 minutes ago      Up 28 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose up -d
+Creating network "dockerbuild_default" with the default driver
+Creating dockerbuild_database_1
+Creating dockerbuild_web_1
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+44f831e7f901        nginx               "nginx -g 'daemon of…"   4 seconds ago       Up 2 seconds        80/tcp                                                     dockerbuild_web_1
+3e802f7f8be0        redis               "docker-entrypoint.s…"   4 seconds ago       Up 2 seconds        6379/tcp                                                   dockerbuild_database_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   36 minutes ago      Up 36 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   42 minutes ago      Up 28 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+# Now I want to create 2 web and 4 db like as below:
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose scale web=2 database=4
+Creating and starting dockerbuild_web_1 ... error
+Creating and starting dockerbuild_web_2 ... error
+
+ERROR: for dockerbuild_web_2  Cannot start service web: network dockerbuild_default not found
+
+ERROR: for dockerbuild_web_1  Cannot start service web: network dockerbuild_default not found
+Creating and starting dockerbuild_database_1 ... error
+Creating and starting dockerbuild_database_2 ... error
+Creating and starting dockerbuild_database_3 ... error
+Creating and starting dockerbuild_database_4 ... error
+
+ERROR: for dockerbuild_database_4  Cannot start service database: network dockerbuild_default not found
+
+ERROR: for dockerbuild_database_3  Cannot start service database: network dockerbuild_default not found
+
+ERROR: for dockerbuild_database_2  Cannot start service database: network dockerbuild_default not found
+
+ERROR: for dockerbuild_database_1  Cannot start service database: network dockerbuild_default not found
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+4bfa473068be        redis               "docker-entrypoint.s…"   7 seconds ago       Created                                                                        dockerbuild_database_4
+c60d9c478de6        redis               "docker-entrypoint.s…"   7 seconds ago       Created                                                                        dockerbuild_database_3
+cf798d4fa51e        redis               "docker-entrypoint.s…"   7 seconds ago       Created                                                                        dockerbuild_database_2
+a32f46588f28        redis               "docker-entrypoint.s…"   7 seconds ago       Created                                                                        dockerbuild_database_1
+bc94dd395885        nginx               "nginx -g 'daemon of…"   7 seconds ago       Created                                                                        dockerbuild_web_2
+e48c01433ec5        nginx               "nginx -g 'daemon of…"   7 seconds ago       Created                                                                        dockerbuild_web_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   43 minutes ago      Up 43 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   49 minutes ago      Up 34 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose up -d
+Creating network "dockerbuild_default" with the default driver
+Starting dockerbuild_database_4
+Starting dockerbuild_web_2
+Starting dockerbuild_database_3
+Starting dockerbuild_web_1
+Starting dockerbuild_database_2
+Starting dockerbuild_database_1
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+4bfa473068be        redis               "docker-entrypoint.s…"   32 seconds ago      Up 4 seconds        6379/tcp                                                   dockerbuild_database_4
+c60d9c478de6        redis               "docker-entrypoint.s…"   32 seconds ago      Up 3 seconds        6379/tcp                                                   dockerbuild_database_3
+cf798d4fa51e        redis               "docker-entrypoint.s…"   32 seconds ago      Up 2 seconds        6379/tcp                                                   dockerbuild_database_2
+a32f46588f28        redis               "docker-entrypoint.s…"   32 seconds ago      Up 2 seconds        6379/tcp                                                   dockerbuild_database_1
+bc94dd395885        nginx               "nginx -g 'daemon of…"   32 seconds ago      Up 4 seconds        80/tcp                                                     dockerbuild_web_2
+e48c01433ec5        nginx               "nginx -g 'daemon of…"   32 seconds ago      Up 3 seconds        80/tcp                                                     dockerbuild_web_1
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   43 minutes ago      Up 43 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   49 minutes ago      Up 35 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose down 
+Stopping dockerbuild_database_4 ... done
+Stopping dockerbuild_database_3 ... done
+Stopping dockerbuild_database_2 ... done
+Stopping dockerbuild_database_1 ... done
+Stopping dockerbuild_web_2 ... done
+Stopping dockerbuild_web_1 ... done
+Removing dockerbuild_database_4 ... done
+Removing dockerbuild_database_3 ... done
+Removing dockerbuild_database_2 ... done
+Removing dockerbuild_database_1 ... done
+Removing dockerbuild_web_2 ... done
+Removing dockerbuild_web_1 ... done
+Removing network dockerbuild_default
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   45 minutes ago      Up 45 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   51 minutes ago      Up 36 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+
+# down all containers:
+
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker-compose down 
+Stopping dockerbuild_database_4 ... done
+Stopping dockerbuild_database_3 ... done
+Stopping dockerbuild_database_2 ... done
+Stopping dockerbuild_database_1 ... done
+Stopping dockerbuild_web_2 ... done
+Stopping dockerbuild_web_1 ... done
+Removing dockerbuild_database_4 ... done
+Removing dockerbuild_database_3 ... done
+Removing dockerbuild_database_2 ... done
+Removing dockerbuild_database_1 ... done
+Removing dockerbuild_web_2 ... done
+Removing dockerbuild_web_1 ... done
+Removing network dockerbuild_default
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 
+ubuntu@ip-172-31-13-237:~/dockerbuild$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   45 minutes ago      Up 45 minutes       8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   51 minutes ago      Up 36 minutes       0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~/dockerbuild$ 

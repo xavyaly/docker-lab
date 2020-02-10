@@ -1,0 +1,5 @@
+How to remove multiple docker images and containers:
+
+ubuntu@ip-172-31-13-237:~$ docker rmi 30 3e -f
+
+ubuntu@ip-172-31-13-237:~$ docker rm $(docker ps -a -q)

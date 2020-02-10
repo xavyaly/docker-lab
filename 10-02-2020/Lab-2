@@ -1,0 +1,602 @@
+Important docker commands:
+
+ubuntu@ip-172-31-13-237:~$ docker run -d -p 8080:80 nginx
+9c245a37de0c09c049a7e5fde610f132dd9ab4a6f63ae1a904124aaa9dc86769
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   4 seconds ago       Up 3 seconds        0.0.0.0:8080->80/tcp   trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   8 seconds ago       Up 7 seconds        0.0.0.0:8080->80/tcp   trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker top 9c
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                3012                2995                1                   15:44               ?                   00:00:00            nginx: master process nginx -g daemon off;
+systemd+            3050                3012                0                   15:44               ?                   00:00:00            nginx: worker process
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker top 9c
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                3012                2995                0                   15:44               ?                   00:00:00            nginx: master process nginx -g daemon off;
+systemd+            3050                3012                0                   15:44               ?                   00:00:00            nginx: worker process
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   39 seconds ago      Up 38 seconds       0.0.0.0:8080->80/tcp   trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker stop 9c 
+9c
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS               NAMES
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   51 seconds ago      Exited (0) 1 second ago                       trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker start 9c
+9c
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                  NAMES
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   About a minute ago   Up 2 seconds        0.0.0.0:8080->80/tcp   trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker stats 9c
+
+CONTAINER ID        NAME                CPU %               MEM USAGE / LIMIT     MEM %               NET I/O             BLOCK I/O           PIDS
+9c245a37de0c        trusting_thompson   0.00%               1.375MiB / 990.6MiB   0.14%               828B / 0B           0B / 0B             2
+
+# without -d option: all outputs reflect in console
+
+ubuntu@ip-172-31-13-237:~$ docker run -p 8989:80 -p 50000:50000 jenkins 
+Unable to find image 'jenkins:latest' locally
+latest: Pulling from library/jenkins
+55cbf04beb70: Pull complete 
+1607093a898c: Pull complete 
+9a8ea045c926: Pull complete 
+d4eee24d4dac: Pull complete 
+c58988e753d7: Pull complete 
+794a04897db9: Pull complete 
+70fcfa476f73: Pull complete 
+0539c80a02be: Pull complete 
+54fefc6dcf80: Pull complete 
+911bc90e47a8: Pull complete 
+38430d93efed: Pull complete 
+7e46ccda148a: Pull complete 
+c0cbcb5ac747: Pull complete 
+35ade7a86a8e: Pull complete 
+aa433a6a56b1: Pull complete 
+841c1dd38d62: Pull complete 
+b865dcb08714: Pull complete 
+5a3779030005: Pull complete 
+12b47c68955c: Pull complete 
+1322ea3e7bfd: Pull complete 
+Digest: sha256:eeb4850eb65f2d92500e421b430ed1ec58a7ac909e91f518926e02473904f668
+Status: Downloaded newer image for jenkins:latest
+Running from: /usr/share/jenkins/jenkins.war
+webroot: EnvVars.masterEnvVars.get("JENKINS_HOME")
+Feb 10, 2020 3:48:47 PM Main deleteWinstoneTempContents
+WARNING: Failed to delete the temporary Winstone file /tmp/winstone/jenkins.war
+Feb 10, 2020 3:48:47 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Logging initialized @662ms
+Feb 10, 2020 3:48:47 PM winstone.Logger logInternal
+INFO: Beginning extraction from war file
+Feb 10, 2020 3:48:49 PM org.eclipse.jetty.util.log.JavaUtilLog warn
+WARNING: Empty contextPath
+Feb 10, 2020 3:48:49 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: jetty-9.2.z-SNAPSHOT
+Feb 10, 2020 3:48:50 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: NO JSP Support for /, did not find org.eclipse.jetty.jsp.JettyJspServlet
+Jenkins home directory: /var/jenkins_home found at: EnvVars.masterEnvVars.get("JENKINS_HOME")
+Feb 10, 2020 3:48:51 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Started w.@47404bea{/,file:/var/jenkins_home/war/,AVAILABLE}{/var/jenkins_home/war}
+Feb 10, 2020 3:48:51 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Started ServerConnector@1c80e49b{HTTP/1.1}{0.0.0.0:8080}
+Feb 10, 2020 3:48:51 PM org.eclipse.jetty.util.log.JavaUtilLog info
+INFO: Started @4290ms
+Feb 10, 2020 3:48:51 PM winstone.Logger logInternal
+INFO: Winstone Servlet Engine v2.0 running: controlPort=disabled
+Feb 10, 2020 3:48:52 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Started initialization
+Feb 10, 2020 3:48:52 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Listed all plugins
+Feb 10, 2020 3:48:54 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Prepared all plugins
+Feb 10, 2020 3:48:54 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Started all plugins
+Feb 10, 2020 3:48:54 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Augmented all extensions
+Feb 10, 2020 3:48:56 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Loaded all jobs
+Feb 10, 2020 3:48:56 PM hudson.model.AsyncPeriodicWork$1 run
+INFO: Started Download metadata
+Feb 10, 2020 3:48:57 PM jenkins.util.groovy.GroovyHookScript execute
+INFO: Executing /var/jenkins_home/init.groovy.d/tcp-slave-agent-port.groovy
+Feb 10, 2020 3:48:57 PM jenkins.InitReactorRunner$1 onAttained
+INFO: Completed initialization
+Feb 10, 2020 3:48:58 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.web.context.support.StaticWebApplicationContext@67bf6cf: display name [Root WebApplicationContext]; startup date [Mon Feb 10 15:48:58 UTC 2020]; root of context hierarchy
+Feb 10, 2020 3:48:58 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.web.context.support.StaticWebApplicationContext@67bf6cf]: org.springframework.beans.factory.support.DefaultListableBeanFactory@662ab38a
+Feb 10, 2020 3:48:58 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@662ab38a: defining beans [authenticationManager]; root of factory hierarchy
+Feb 10, 2020 3:48:58 PM org.springframework.context.support.AbstractApplicationContext prepareRefresh
+INFO: Refreshing org.springframework.web.context.support.StaticWebApplicationContext@549eeeca: display name [Root WebApplicationContext]; startup date [Mon Feb 10 15:48:58 UTC 2020]; root of context hierarchy
+Feb 10, 2020 3:48:58 PM org.springframework.context.support.AbstractApplicationContext obtainFreshBeanFactory
+INFO: Bean factory for application context [org.springframework.web.context.support.StaticWebApplicationContext@549eeeca]: org.springframework.beans.factory.support.DefaultListableBeanFactory@42e50358
+Feb 10, 2020 3:48:58 PM org.springframework.beans.factory.support.DefaultListableBeanFactory preInstantiateSingletons
+INFO: Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@42e50358: defining beans [filter,legacy]; root of factory hierarchy
+Feb 10, 2020 3:48:58 PM jenkins.install.SetupWizard init
+INFO: 
+
+*************************************************************
+*************************************************************
+*************************************************************
+
+Jenkins initial setup is required. An admin user has been created and a password generated.
+Please use the following password to proceed to installation:
+
+61451664a78a416ab552c04edfbfe6ed
+
+This may also be found at: /var/jenkins_home/secrets/initialAdminPassword
+
+*************************************************************
+*************************************************************
+*************************************************************
+
+--> setting agent port for jnlp
+--> setting agent port for jnlp... done
+Feb 10, 2020 3:49:09 PM hudson.model.UpdateSite updateData
+INFO: Obtained the latest update center data file for UpdateSource default
+Feb 10, 2020 3:49:10 PM hudson.model.DownloadService$Downloadable load
+INFO: Obtained the updated data file for hudson.tasks.Maven.MavenInstaller
+Feb 10, 2020 3:49:10 PM hudson.model.UpdateSite updateData
+INFO: Obtained the latest update center data file for UpdateSource default
+Feb 10, 2020 3:49:10 PM hudson.WebAppMain$3 run
+INFO: Jenkins is fully up and running
+Feb 10, 2020 3:49:12 PM hudson.model.DownloadService$Downloadable load
+INFO: Obtained the updated data file for hudson.tools.JDKInstaller
+Feb 10, 2020 3:49:12 PM hudson.model.AsyncPeriodicWork$1 run
+INFO: Finished Download metadata. 15,994 ms
+^CFeb 10, 2020 3:49:41 PM winstone.Logger logInternal
+INFO: JVM is terminating. Shutting down Winstone
+
+# Terminated by me that’s why it shows Exited
+
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                       PORTS                  NAMES
+5550fb578e60        jenkins             "/bin/tini -- /usr/l…"   59 seconds ago      Exited (130) 3 seconds ago                          friendly_robinson
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   5 minutes ago       Up 2 minutes                 0.0.0.0:8080->80/tcp   trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker run -d -p 8989:80 -p 50000:50000 jenkins 
+89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                        PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   6 seconds ago        Up 4 seconds                  8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+5550fb578e60        jenkins             "/bin/tini -- /usr/l…"   About a minute ago   Exited (130) 36 seconds ago                                                              friendly_robinson
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   6 minutes ago        Up 3 minutes                  0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+
+# pause
+
+ubuntu@ip-172-31-13-237:~$ docker pause 9c
+9c
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                  PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   3 minutes ago       Up 3 minutes            8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   10 minutes ago      Up 7 minutes (Paused)   0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker unpause 9c
+9c
+ubuntu@ip-172-31-13-237:~$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                                      NAMES
+89b83c4bd8c7        jenkins             "/bin/tini -- /usr/l…"   4 minutes ago       Up 4 minutes        8080/tcp, 0.0.0.0:50000->50000/tcp, 0.0.0.0:8989->80/tcp   condescending_pascal
+9c245a37de0c        nginx               "nginx -g 'daemon of…"   10 minutes ago      Up 7 minutes        0.0.0.0:8080->80/tcp                                       trusting_thompson
+ubuntu@ip-172-31-13-237:~$ 
+
+# inspect:
+
+ubuntu@ip-172-31-13-237:~$ docker inspect 89
+[
+    {
+        "Id": "89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd",
+        "Created": "2020-02-10T15:50:12.882604836Z",
+        "Path": "/bin/tini",
+        "Args": [
+            "--",
+            "/usr/local/bin/jenkins.sh"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 4128,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2020-02-10T15:50:13.369006725Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:cd14cecfdb3a657ba7d05bea026e7ac8b9abafc6e5c66253ab327c7211fa6281",
+        "ResolvConfPath": "/var/lib/docker/containers/89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd/hostname",
+        "HostsPath": "/var/lib/docker/containers/89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd/hosts",
+        "LogPath": "/var/lib/docker/containers/89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd/89b83c4bd8c7204c074c9d28173cc00b01141bd47043655811616f31aafa25fd-json.log",
+        "Name": "/condescending_pascal",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {
+                "50000/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "50000"
+                    }
+                ],
+                "80/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8989"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "Capabilities": null,
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/061caba528b9147146506cadb4a08d9b61e3b14597bf74caee30ee6115a0233b-init/diff:/var/lib/docker/overlay2/22b58d89eb40b5695fbb595377301e311e3bda6473aa647c6c30a6cfec867eb3/diff:/var/lib/docker/overlay2/423be55f69fdea9a83737d0a2f4fabf6c36dcc69363deb551b7afb0de5d0aeec/diff:/var/lib/docker/overlay2/4730d74d5faaa6e93dba6214c6c18c8a3176b043491daac1a645fda0adf4f3cc/diff:/var/lib/docker/overlay2/f5613097aca34843215e04c9776010411693907f1cfa8660e6b999bce69c565a/diff:/var/lib/docker/overlay2/3a3dac7140ee6da6de68c0155f0a42fb7e85b12ed300c61766a8415815646c03/diff:/var/lib/docker/overlay2/009325b18e6b8317f462e50bcd4edb35196b75f2975bb416a3b2ef9d03b8e51c/diff:/var/lib/docker/overlay2/9b20da12bdcbb31778364cad22e45da07409cab8a503f98c9e4dead49c5f1f9c/diff:/var/lib/docker/overlay2/ea76fed0b90e1bda458ef34bfc628ff6320e6ebf4e22c37c9ebc5abe994544d1/diff:/var/lib/docker/overlay2/a51a6876fd4d5611e7169e3a90f7f067de19601ee56307ac72dd91b942ab143e/diff:/var/lib/docker/overlay2/1f37ea6eca3a4cb92361e415e8f659d5f8af3251c7c14abe986a81b685990632/diff:/var/lib/docker/overlay2/06b80fc0f5002d6b009572b21a1e4219e7e7cb2a4bdb986b26df03abb8b5abc0/diff:/var/lib/docker/overlay2/1e756955a5a25b87ee1064a1a8e40de03e521829472a41878a63136e78da58b2/diff:/var/lib/docker/overlay2/d6556882e03c54d2dd43bc822a09a807f6b98376062e69fd73f451df7dba5f57/diff:/var/lib/docker/overlay2/6df0a291ffcbee00d177099c343d247c26c3ed946cb2d8f6e15e83e9fd5e1c53/diff:/var/lib/docker/overlay2/52b6506bb3ca958428ad734998362215ac91f2ebafa1217662b2a27f2d38691f/diff:/var/lib/docker/overlay2/a4a58b63a501ccd26e918bcce8d4c13c0f3223d41d42c376636b3a8c2c06ad9d/diff:/var/lib/docker/overlay2/bf75156bb8b88fcd7c5d0e76a641afea6371691a49954d6bd74f7d1dd3ea50a5/diff:/var/lib/docker/overlay2/03de65fb1792de656f7d7f1133eecd038dbb300c5dd79c3223654c33458c7e44/diff:/var/lib/docker/overlay2/babfe4f5687a65276993036ef69d73b90e5a15b7d7514025b8607f366c848148/diff:/var/lib/docker/overlay2/698dc4a3e5104b54dff208c402f542f994d7c7f86c9d132de1dc90d541b0dea6/diff",
+                "MergedDir": "/var/lib/docker/overlay2/061caba528b9147146506cadb4a08d9b61e3b14597bf74caee30ee6115a0233b/merged",
+                "UpperDir": "/var/lib/docker/overlay2/061caba528b9147146506cadb4a08d9b61e3b14597bf74caee30ee6115a0233b/diff",
+                "WorkDir": "/var/lib/docker/overlay2/061caba528b9147146506cadb4a08d9b61e3b14597bf74caee30ee6115a0233b/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "6dfcff9d39f93696249ef22e8d62266d01e388ac2f74ffe6237c21d32f53d886",
+                "Source": "/var/lib/docker/volumes/6dfcff9d39f93696249ef22e8d62266d01e388ac2f74ffe6237c21d32f53d886/_data",
+                "Destination": "/var/jenkins_home",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "89b83c4bd8c7",
+            "Domainname": "",
+            "User": "jenkins",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "50000/tcp": {},
+                "80/tcp": {},
+                "8080/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "LANG=C.UTF-8",
+                "JAVA_HOME=/docker-java-home",
+                "JAVA_VERSION=8u171",
+                "JAVA_DEBIAN_VERSION=8u171-b11-1~deb9u1",
+                "CA_CERTIFICATES_JAVA_VERSION=20170531+nmu1",
+                "JENKINS_HOME=/var/jenkins_home",
+                "JENKINS_SLAVE_AGENT_PORT=50000",
+                "TINI_VERSION=0.14.0",
+                "TINI_SHA=6c41ec7d33e857d4779f14d9c74924cab0c7973485d2972419a3b7c7620ff5fd",
+                "JENKINS_VERSION=2.60.3",
+                "JENKINS_UC=https://updates.jenkins.io",
+                "JENKINS_UC_EXPERIMENTAL=https://updates.jenkins.io/experimental",
+                "COPY_REFERENCE_FILE_LOG=/var/jenkins_home/copy_reference_file.log"
+            ],
+            "Cmd": null,
+            "Image": "jenkins",
+            "Volumes": {
+                "/var/jenkins_home": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/bin/tini",
+                "--",
+                "/usr/local/bin/jenkins.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "17d946253b65bfa1c49dd22bb7dc6a877437bb933f4b5432943e9d1738c73b17",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "50000/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "50000"
+                    }
+                ],
+                "80/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8989"
+                    }
+                ],
+                "8080/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/17d946253b65",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "48a78b778c9d956ad53193081723b726eb5da8918a2e82a26697479e218eb0d4",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.3",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:03",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "098f0487f72ac329e7357944fe5892f2df186e95a7b335cee6ef1272094fd1d3",
+                    "EndpointID": "48a78b778c9d956ad53193081723b726eb5da8918a2e82a26697479e218eb0d4",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:03",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker inspect 89 | grep "IP"
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.3",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+                    "IPAMConfig": null,
+                    "IPAddress": "172.17.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+nginx               latest              2073e0bcb60e        8 days ago          127MB
+ubuntu              latest              ccc6e87d482b        3 weeks ago         64.2MB
+hello-world         latest              fce289e99eb9        13 months ago       1.84kB
+jenkins             latest              cd14cecfdb3a        19 months ago       696MB
+ubuntu@ip-172-31-13-237:~$ 
+ubuntu@ip-172-31-13-237:~$ docker inspect 20 
+[
+    {
+        "Id": "sha256:2073e0bcb60ee98548d313ead5eacbfe16d9054f8800a32bedd859922a99a6e1",
+        "RepoTags": [
+            "nginx:latest"
+        ],
+        "RepoDigests": [
+            "nginx@sha256:ad5552c786f128e389a0263104ae39f3d3c7895579d45ae716f528185b36bc6f"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2020-02-02T08:06:39.475144936Z",
+        "Container": "2031631c1e2733fe658c9c73b89ad8265cacfc5d24c324a10df7e4e3309d5a55",
+        "ContainerConfig": {
+            "Hostname": "2031631c1e27",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.8",
+                "NJS_VERSION=0.3.8",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"nginx\" \"-g\" \"daemon off;\"]"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:22e56df73d2b89fa4706d6c738cfbcc7bf7df19fe763e1ac8cfd6925ccbcdffa",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "DockerVersion": "18.09.7",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.17.8",
+                "NJS_VERSION=0.3.8",
+                "PKG_RELEASE=1~buster"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "ArgsEscaped": true,
+            "Image": "sha256:22e56df73d2b89fa4706d6c738cfbcc7bf7df19fe763e1ac8cfd6925ccbcdffa",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGTERM"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 126698063,
+        "VirtualSize": 126698063,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/f27f230e3741d9f036d8e0adad031b1a890771bd273838d892f240aa00ca574f/diff:/var/lib/docker/overlay2/142b653a9e790460d10f2e82aef0fbf66c22df310f03a45c1c8b400f2598f45f/diff",
+                "MergedDir": "/var/lib/docker/overlay2/850ec0b87344dac219896c0a7e50a20d47c317a2e07fba14610edfd8895c7631/merged",
+                "UpperDir": "/var/lib/docker/overlay2/850ec0b87344dac219896c0a7e50a20d47c317a2e07fba14610edfd8895c7631/diff",
+                "WorkDir": "/var/lib/docker/overlay2/850ec0b87344dac219896c0a7e50a20d47c317a2e07fba14610edfd8895c7631/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:488dfecc21b1bc607e09368d2791cb784cf8c4ec5c05d2952b045b3e0f8cc01e",
+                "sha256:b4a29beac87cb2648ad511811c9c798c2aade5e0d82995a27a5d986ae24898b0",
+                "sha256:22439467ad99389c16d8c9a499ce94cc4cc882d2865b97819213300f2fe0198d"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+ubuntu@ip-172-31-13-237:~$ 
+
+# Till here Completed the docker container flow chart:
+
