@@ -1,0 +1,1737 @@
+Docker Swarm from Scratch:
+
+Lab-1:
+
+What is Docker Swarm ?
+Why we were using it ? 
+How to create and manage Docker Swarm ?
+Create service on docker swarm 
+Scaling services up and down
+Inspecting docker swarm
+
+You have 100 containers
+	Health check on every containers
+	Ensure all containers are u on every system
+	Scaling the containers up or down depending on the load
+	Adding updates/changes to all containers
+
+Orchestration:
+	Managing and controlling multiple docker containers as a single service
+
+Tools Available:
+	Docker Swarm
+	Kubernetes or k8s
+	Apache Mesos
+
+
+On Mac Local: Perfectly worked
+
+
+Install VirtualBox:
+
+# docker-machine installed by default if not install
+
+Install docker machine if not present via link: https://docs.docker.com/machine/install-machine/#installing-machine-directly
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine -v
+docker-machine version 0.16.2, build bd45ab13
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+# docker version verification
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker -v 
+Docker version 19.03.4, build 9013bf5
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME   ACTIVE   DRIVER   STATE   URL   SWARM   DOCKER   ERRORS
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+
+# create a virtual box with manager1 name, error throws 
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine create --driver virtualbox manager1
+Creating CA: /Users/javedalam/.docker/machine/certs/ca.pem
+Creating client certificate: /Users/javedalam/.docker/machine/certs/cert.pem
+Running pre-create checks...
+Error with pre-create check: "exit status 126"
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+# Resolution:
+https://github.com/docker/machine/issues/3628
+
+
+—————————————————————————————————————————————————————————————————————————
+
+# install virtual box
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ brew cask install virtualbox;
+Updating Homebrew...
+
+Fast-forwarded master to origin/master.
+Fast-forwarded master to origin/master.
+==> Downloading https://homebrew.bintray.com/bottles-portable-ruby/portable-ruby-2.6.3.mavericks.bottle.tar.gz
+######################################################################## 100.0%
+==> Pouring portable-ruby-2.6.3.mavericks.bottle.tar.gz
+==> Homebrew has enabled anonymous aggregate formulae and cask analytics.
+Read the analytics documentation (and how to opt-out) here:
+  https://docs.brew.sh/Analytics
+
+==> Auto-updated Homebrew!
+Updated 2 taps (homebrew/core and homebrew/services).
+==> New Formulae
+adios2                              dune                                libdeflate                          pyinstaller
+ahoy                                dust                                libevhtp                            pylint
+aliyun-cli                          dvc                                 libffcall                           pympress
+allureofthestars                    dynet                               libgr                               python@3.8
+alp                                 easyengine                          libgusb                             qalculate-gtk
+anime-downloader                    embree                              libkeccak                           quickjs
+ansible@2.8                         ensmallen                           liblouis                            rakudo
+antibody                            entityx                             libnova                             rargs
+anycable-go                         erlang@21                           libopenmpt                          rav1e
+anyenv                              esptool                             libpulsar                           re-flex
+aom                                 eureka                              libraqm                             react-native-cli
+apollo-cli                          faiss                               libserdes                           redis@4.0
+appium                              fastlane                            libsigc++@2                         reprepro
+appstream-glib                      fastmod                             libsixel                            riff
+arduino-cli                         fasttext                            libspng                             ripgrep-all
+astrometry-net                      faudio                              libtensorflow@1                     ruby@2.5
+asymptote                           faust                               libtorch                            rubyfmt
+asyncplusplus                       fff                                 libvirt-glib                        run
+atasm                               ffsend                              libvncserver                        s2geometry
+atlantis                            ffuf                                libzt                               s3ql
+atomist-cli                         fileicon                            lightgbm                            sampler
+aws-cdk                             findent                             liquidctl                           samurai
+aws-google-auth                     findomain                           lizard                              scala@2.12
+aws-iam-authenticator               flint                               llvm@7                              scc
+awscurl                             frpc                                llvm@8                              scdoc
+awsume                              frps                                lsd                                 scs
+b3sum                               gambit-scheme                       mage                                scws
+baidupcs-go                         gatsby-cli                          man-db                              sd
+bandwhich                           gcc@8                               manticoresearch                     sentencepiece
+base91                              gel                                 mariadb@10.3                        serve
+bazelisk                            gerbil-scheme                       mavsdk                              sha3sum
+benthos                             gh                                  mdbook                              shadowenv
+berglas                             ghc@8.6                             meilisearch                         ship
+bingrep                             ghr                                 minica                              signal-cli
+bitwise                             gimme-aws-creds                     minikube                            simple-scan
+blis                                git-absorb                          minizip2                            sk
+bluetoothconnector                  git-annex-remote-rclone             mlpack                              skymaker
+borgmatic                           git-delta                           mmctl                               sloc
+boringtun                           git-filter-repo                     moarvm                              sn0int
+breezy                              git-gui                             molten-vk                           sng
+broot                               git-remote-gcrypt                   monolith                            sniffglue
+buildkit                            git-revise                          mpi4py                              solr@7.7
+bumpversion                         gitbatch                            msgpack-tools                       spice-gtk
+cacli                               gitleaks                            mysql-client@5.7                    spice-protocol
+cafeobj                             gleam                               mysql-connector-c++@1.1             spirv-cross
+calceph                             glow                                nauty                               spirv-tools
+cargo-c                             gmt@5                               navi                                starship
+cartridge-cli                       gnirehtet                           nbdime                              step
+cassandra-reaper                    gnunet                              nebula                              stolon
+catch2                              go-md2man                           needle                              swagger-codegen@2
+ccfits                              go@1.11                             netlify-cli                         swagger2markup-cli
+ccls                                go@1.12                             newman                              swig@3
+cctz                                goreman                             ngt                                 switch-lan-play
+cedille                             gotop                               nift                                talisman
+celero                              govc                                nlohmann-json                       tass64
+cf-tool                             grex                                node-sass                           tdkjs
+cfn-lint                            grin                                node@12                             tektoncd-cli
+cgns                                grin-wallet                         notifiers                           termshark
+chafa                               grpc-swift                          now-cli                             termtosvg
+cjson                               grpcurl                             nqp                                 terraform@0.11
+clojure-lsp                         gtranslator                         numpy@1.16                          terraformer
+clp                                 h3                                  nushell                             terrahelp
+clzip                               heatshrink                          oauth2l                             terrahub
+cmix                                helib                               octant                              tesseract-lang
+cmt                                 helm@2                              okteto                              texlab
+cmusfm                              helmsman                            onefetch                            tflint
+cobalt                              hexyl                               onnxruntime                         tio
+codespell                           hey                                 opa                                 tmuxinator
+coinutils                           homeassistant-cli                   open-image-denoise                  tmx
+comby                               hpack                               opencv@3                            toast
+contentful-cli                      i386-elf-gdb                        openjdk                             trader
+corral                              i386-elf-grub                       openjdk@11                          traefik@1
+cpl                                 imgproxy                            openjdk@12                          triangle
+cpp-gsl                             include-what-you-use                openkim-models                      tty-share
+cppman                              inlets                              operator-sdk                        ttyplot
+cpu_features                        instalooter                         ospray                              tweak
+cql                                 interactive-rebase-tool             osqp                                ungit
+crc                                 ipopt                               osx-cpu-temp                        uni
+cryptominisat                       istioctl                            otf2                                up
+csound                              itk                                 oxipng                              usbredir
+cstore_fdw                          janet                               pass-otp                            v2ray-plugin
+csvq                                javacc                              pastel                              vale
+cubelib                             jd                                  pdfcpu                              vapoursynth-imwri
+cups                                jinja2-cli                          pdftk-java                          vapoursynth-ocr
+curl-openssl                        jmxterm                             php@7.3                             vapoursynth-sub
+cxxopts                             jp                                  phpmd                               virgil
+cypher-shell                        k3d                                 phpstan                             virustotal-cli
+dafny                               k6                                  pict                                volt
+dav1d                               kahip                               pipx                                vulkan-headers
+db-vcs                              katago                              pnetcdf                             wagyu
+dbmate                              kcov                                pnpm                                wal2json
+deno                                kcptun                              poetry                              wasm3
+detekt                              kepubify                            pokerstove                          wasmer
+devdash                             keydb                               postgresql@10                       websocat
+devspace                            kim-api                             postgresql@11                       whalebrew
+dhall                               kind                                powerline-go                        whistle
+dhall-bash                          komposition                         pprint                              wiiuse
+dhall-lsp-server                    krew                                prestosql                           wordgrinder
+diesel                              ktlint                              procs                               wtfutil
+diffr                               kubeaudit                           proper                              xgboost
+diskus                              kubebuilder                         proteinortho                        xlearn
+dive                                kubeprod                            protobuf@3.6                        yaegi
+dmg2img                             kubeseal                            protobuf@3.7                        yapf
+dnscontrol                          kyma-cli                            protoc-gen-go                       zabbix-cli
+docker-machine-driver-vmware        lazydocker                          prover9                             zrepl
+docker-slim                         lazygit                             psc-package                         zydis
+dockerize                           leela-zero                          pueue
+drone-cli                           lerna                               pulp
+dsvpn                               libb64                              pygments
+==> Updated Formulae
+apr ✔                               flow                                liblunar                            pycodestyle
+apr-util ✔                          flowgrind                           liblwgeom                           pyenv
+argon2 ✔                            fltk                                libmaa                              pygitup
+aspell ✔                            fluent-bit                          libmagic                            pygobject3
+freetds ✔                           fluid-synth                         libmatio                            pyinvoke
+freetype ✔                          flume                               libmatroska                         pypy
+gettext ✔                           fluxctl                             libmaxminddb                        pypy3
+glib ✔                              flyway                              libmicrohttpd                       pyqt
+icu4c ✔                             fmt                                 libming                             pyside
+jpeg ✔                              fn                                  libmodbus                           python
+libidn2 ✔                           fobis                               libmowgli                           python-markdown
+libpng ✔                            folly                               libmp3splt                          python-yq
+libpq ✔                             fontforge                           libmpd                              pyvim
+libsodium ✔                         fonttools                           libmpdclient                        q
+libzip ✔                            fop                                 libmspub                            qbs
+maven ✔                             fork-cleaner                        libmtp                              qca
+openssl@1.1 ✔                       fortio                              libmwaw                             qd
+packer ✔                            fossil                              libmxml                             qemu
+pcre ✔                              fourstore                           libmypaint                          qhull
+php ✔                               fping                               libnfs                              qjackctl
+phpunit ✔                           fpp                                 libngspice                          qmmp
+putty ✔                             fq                                  libnice                             qpdf
+readline ✔                          fragroute                           libnids                             qpid-proton
+sqlite ✔                            freeciv                             libnotify                           qrupdate
+terraform ✔                         freediameter                        libntlm                             qscintilla2
+webp ✔                              freedink                            liboauth                            qsoas
+wget ✔                              freeipmi                            libodfgen                           qstat
+abcde                               freeling                            libofx                              qt
+abcl                                freeradius-server                   libogg                              qtkeychain
+abcm2ps                             freerdp                             libomp                              quantlib
+abcmidi                             freeswitch                          libopendkim                         quazip
+abook                               frei0r                              libosinfo                           quex
+abyss                               fribidi                             libosip                             quicktype
+ace                                 frotz                               libosmium                           quilt
+ack                                 frugal                              libp11                              qwt
+acpica                              fs-uae                              libpcap                             qxmpp
+activemq                            fselect                             libpeas                             r
+activemq-cpp                        fstrm                               libphonenumber                      rabbitmq
+admesh                              fswatch                             libplctag                           rabbitmq-c
+adwaita-icon-theme                  fuse-emulator                       libplist                            radare2
+aescrypt-packetizer                 fuse-zip                            libpointing                         rakudo-star
+aespipe                             fuseki                              libpqxx                             rancher-cli
+afflib                              futhark                             libprotoident                       rancid
+afio                                fwup                                libpsl                              range-v3
+afl-fuzz                            fx                                  libpst                              ranger
+agda                                fzf                                 libqalculate                        rawtoaces
+agedu                               gabedit                             libquicktime                        raylib
+aide                                galen                               librasterlite                       rbenv
+aircrack-ng                         gammaray                            libraw                              rbspy
+akamai                              gammu                               librdkafka                          rc
+akka                                gandi.cli                           libre                               rclone
+alexjs                              gauche                              libreadline-java                    rdesktop
+algernon                            gauge                               librealsense                        rdfind
+allegro                             gawk                                librem                              rdup
+allure                              gbdfed                              libressl                            re2
+alot                                gcab                                librest                             re2c
+alpine                              gcc                                 librsvg                             reattach-to-user-namespace
+alure                               gcc@5                               librsync                            rebar3
+amap                                gcc@6                               libsamplerate                       recode
+amazon-ecs-cli                      gcc@7                               libsass                             recon-ng
+ammonite-repl                       gcsfuse                             libsbol                             recoverjpeg
+ampl-mp                             gdal                                libsecret                           recutils
+amqp-cpp                            gdb                                 libshout                            redex
+amtk                                gdcm                                libsigc++                           redis
+angband                             gdk-pixbuf                          libsignal-protocol-c                redis@3.2
+angle-grinder                       gdl                                 libslax                             redpen
+angular-cli                         gdmap                               libsmf                              redshift
+anjuta                              gdub                                libsoundio                          redsocks
+annie                               geant4                              libsoup                             remarshal
+ansible                             gearboy                             libspatialite                       remctl
+ansible-cmdb                        gearman                             libspectre                          remind
+ansible-lint                        gearsystem                          libspectrum                         reminiscence
+ansifilter                          geckodriver                         libssh                              rename
+ansiweather                         gecode                              libssh2                             renameutils
+ant                                 gedit                               libstatgrab                         reop
+ant@1.9                             geeqie                              libstfl                             repo
+antlr                               gegl                                libstrophe                          reposurgeon
+antlr4-cpp-runtime                  genact                              libsvm                              residualvm
+antlr@2                             gengetopt                           libswiften                          restic
+apache-archiva                      genometools                         libtasn1                            restview
+apache-arrow                        genstats                            libtensorflow                       rethinkdb
+apache-arrow-glib                   geocode-glib                        libtermkey                          rex
+apache-ctakes                       geogram                             libtiff                             rgbds
+apache-drill                        geographiclib                       libtins                             rhash
+apache-flink                        geoipupdate                         libtommath                          rhino
+apache-forrest                      geos                                libtorrent-rasterbar                riemann
+apache-geode                        geoserver                           libtrace                            riemann-client
+apache-opennlp                      gerbv                               libu2f-host                         ripgrep
+apache-spark                        get_iplayer                         libu2f-server                       rke
+apache-zeppelin                     getdns                              libuninameslist                     rlwrap
+apachetop                           getmail                             libusb                              rmlint
+apib                                getxbook                            libuv                               robot-framework
+apibuilder-cli                      gexiv2                              libvirt                             rocksdb
+apktool                             ghc                                 libvisio                            roll
+apollo                              ghc@8.2                             libvmaf                             rom-tools
+app-engine-java                     ghex                                libvoikko                           root
+app-engine-python                   ghostscript                         libvpx                              roswell
+appledoc                            ghq                                 libvterm                            rp
+appscale-tools                      gibo                                libwebsockets                       rpm
+apt-dater                           gif2png                             libwpd                              rpm2cpio
+aptly                               giflib                              libwpg                              rrdtool
+aqbanking                           gifsicle                            libxc                               rsnapshot
+arangodb                            gifski                              libxkbcommon                        rst-lint
+aravis                              ginac                               libxlsxwriter                       rswift
+arcade-learning-environment         git                                 libxml++                            rsyslog
+argus-clients                       git-annex                           libxml++3                           rt-audio
+argyll-cms                          git-archive-all                     libxml2                             rtags
+aria2                               git-cinnabar                        libxmlsec1                          rtmidi
+arm-linux-gnueabihf-binutils        git-cola                            libxo                               rtmpdump
+armadillo                           git-crypt                           libxslt                             rtv
+armor                               git-extras                          libyaml                             ruby
+arp-scan                            git-fixup                           libzdb                              ruby-build
+arpack                              git-flow-avh                        lightning                           ruby@2.4
+arping                              git-fresh                           lighttpd                            rush
+artifactory                         git-ftp                             lilv                                rust
+asciidoctor                         git-lfs                             link-grammar                        rustup-init
+asciidoctorj                        git-open                            linkerd                             s-lang
+asciinema                           git-plus                            links                               s-nail
+asdf                                git-quick-stats                     liquibase                           s-search
+asio                                git-recent                          liquid-dsp                          s3-backer
+ask-cli                             git-remote-hg                       lldpd                               s3cmd
+aspcud                              git-review                          llnode                              s3fs
+aspectj                             git-secret                          llvm                                s6
+assimp                              git-secrets                         llvm@6                              sagittarius-scheme
+atari800                            git-series                          lmdb                                saldl
+atdtool                             git-standup                         lmod                                salt
+atk                                 git-town                            lnav                                samtools
+atkmm                               gitbucket                           log4cplus                           sane-backends
+atlassian-cli                       gitfs                               log4shib                            sassc
+ats2-postiats                       gitg                                logcheck                            saxon
+aubio                               github-keygen                       logrotate                           sbcl
+audacious                           github-markdown-toc                 logstalgia                          sbjson
+auditbeat                           gitlab-gem                          logstash                            sblim-sfcc
+augeas                              gitlab-runner                       logtalk                             sbt
+augustus                            gitless                             lolcat                              sbt@0.13
+aurora                              gitmoji                             lorem                               scala
+autoconf-archive                    gitup                               loudmouth                           scalaenv
+autogen                             gitversion                          lsdvd                               scalapack
+autojump                            gjs                                 lsof                                scalariform
+autopep8                            gkrellm                             ltc-tools                           scamper
+autorest                            glade                               luaradio                            sccache
+autossh                             glances                             luarocks                            sceptre
+avfs                                glassfish                           lumo                                scipy
+avian                               glbinding                           luvit                               scmpuff
+avra                                glew                                lv2                                 scons
+avro-c                              glfw                                lwtools                             scour
+avro-cpp                            glib-networking                     lxc                                 scrcpy
+avro-tools                          glib-openssl                        lynis                               screen
+awf                                 glibmm                              lynx                                screenfetch
+aws-elasticbeanstalk                glide                               lz4                                 scrollkeeper
+aws-es-proxy                        glm                                 lzip                                scrypt
+aws-okta                            global                              lzlib                               scummvm
+aws-sdk-cpp                         globjects                           mackup                              scummvm-tools
+aws-shell                           glog                                macosvpn                            scw
+awscli                              gloox                               macvim                              sdb
+awslogs                             glslang                             mafft                               sdcc
+axel                                glslviewer                          magic-wormhole                      sdcv
+azure-cli                           glui                                magnetix                            sdhash
+azure-storage-cpp                   glyr                                mailutils                           sdl
+b2-tools                            gmic                                make                                sdl2
+babel                               gmime                               makedepend                          sdl2_image
+babeld                              gmsh                                makensis                            sdl2_ttf
+babl                                gmt                                 makepkg                             sdlpop
+backupninja                         gnome-autoar                        mame                                sec
+bacula-fd                           gnome-builder                       mandoc                              securefs
+badtouch                            gnome-latex                         mapcrafter                          ser2net
+ballerina                           gnome-recipes                       mapnik                              serd
+bandcamp-dl                         gnome-themes-standard               mapserver                           serf
+baobab                              gnu-apl                             mariadb                             serveit
+bareos-client                       gnu-chess                           mariadb-connector-c                 serverless
+baresip                             gnu-getopt                          mariadb-connector-odbc              servus
+bartycrouch                         gnu-indent                          mariadb@10.1                        sf-pwgen
+basex                               gnu-sed                             mariadb@10.2                        sfcgal
+bash                                gnu-smalltalk                       mas                                 sfk
+bash-completion@2                   gnu-tar                             mat2                                sflowtool
+bash-snippets                       gnu-typist                          math-comp                           sfml
+bashdb                              gnu-units                           maven@3.2                           sfst
+bat                                 gnumeric                            maven@3.3                           shadowsocks-libev
+batik                               gnupg                               maven@3.5                           shairport
+bazel                               gnupg-pkcs11-scd                    mawk                                shairport-sync
+bbftp-client                        gnuplot                             maxima                              shapelib
+bcal                                gnuplot@4                           maxwell                             shared-mime-info
+bcftools                            gnuradio                            mbedtls                             shc
+bdw-gc                              gnutls                              mcabber                             shellcheck
+beagle                              go                                  md5sha1sum                          shellharden
+beanstalkd                          go-bindata                          mda-lv2                             shellinabox
+bear                                go-jira                             mdbtools                            shellshare
+beast                               go-statik                           mdcat                               shellz
+bedops                              go@1.10                             mdds                                shfmt
+bedtools                            go@1.9                              mdk                                 shibboleth-sp
+bee                                 goaccess                            mdv                                 shmux
+befunge93                           gobby                               media-info                          shogun
+bento4                              gobject-introspection               mediaconch                          shpotify
+berkeley-db                         gobuster                            mednafen                            shyaml
+bettercap                           gocr                                megacmd                             siege
+bgpq3                               gocryptfs                           megatools                           signify-osx
+bgpstream                           godep                               memcached                           sile
+bibtexconv                          goenv                               memcacheq                           silk
+bibutils                            goffice                             menhir                              simgrid
+bigloo                              golang-migrate                      mercurial                           simh
+binaryen                            gollum                              mesa                                simple-mtpfs
+bind                                golo                                meson                               simple-tiles
+bindfs                              gom                                 mesos                               simutrans
+binutils                            gomplate                            metabase                            singular
+binwalk                             goocanvas                           metaproxy                           sip
+biogeme                             goofys                              metashell                           sipp
+bison                               google-authenticator-libpam         metricbeat                          sipsak
+bit                                 google-benchmark                    mfterm                              siril
+bitchx                              google-java-format                  mg                                  sispmctl
+bitcoin                             googler                             mgba                                skaffold
+bitlbee                             gopass                              micro                               skafos
+bitrise                             gor                                 micronaut                           ski
+bitwarden-cli                       goreleaser                          micropython                         skinny
+black                               gosu                                midgard2                            skktools
+blackbox                            goto                                midnight-commander                  skopeo
+blahtexml                           gource                              mighttpd2                           slackcat
+blast                               gowsdl                              mikutter                            sleepwatcher
+blastem                             gox                                 mill                                sleuthkit
+blink1                              gpa                                 miller                              slowhttptest
+blockhash                           gpac                                mimic                               slrn
+bluepill                            gpgme                               minbif                              smali
+blueutil                            gphoto2                             minetest                            smartmontools
+bmake                               gpredict                            mingw-w64                           smimesign
+bnd                                 gpsbabel                            minimal-racket                      snakemake
+bogofilter                          gpsim                               minio                               snapcraft
+bookloupe                           gqlplus                             minio-mc                            snappy
+boost                               gqview                              miniserve                           sngrep
+boost-bcp                           gr-osmosdr                          minizinc                            snort
+boost-build                         gradio                              mint                                snownews
+boost-mpi                           gradle                              mit-scheme                          socat
+boost-python                        gradle-completion                   mitie                               soci
+boost-python3                       grafana                             mitmproxy                           sofia-sip
+boot-clj                            grails                              mk-configure                        softhsm
+botan                               grakn                               mkcert                              solarus
+bower                               graph-tool                          mkclean                             solr
+bowtie2                             graphene                            mkdocs                              sonar-scanner
+boxes                               graphicsmagick                      mkl-dnn                             sonarqube
+braid                               graphite2                           mksh                                sonarqube-lts
+brew-gem                            graphviz                            mktorrent                           sonobuoy
+brew-php-switcher                   grep                                mkvtomp4                            sops
+btfs                                groff                               mkvtoolnix                          sord
+btparse                             grok                                mlkit                               sound-touch
+btpd                                gromacs                             mlt                                 source-highlight
+buildifier                          groonga                             mm-common                           source-to-image
+buku                                groovy                              mmark                               sourcedocs
+bulk_extractor                      groovysdk                           mmseqs2                             sourcekitten
+bullet                              grpc                                mockserver                          sourcery
+bundletool                          grsync                              moco                                sox
+bup                                 grt                                 modd                                spades
+burp                                grv                                 modgit                              sparkey
+bvi                                 gsasl                               modules                             sparse
+bwfmetaedit                         gsettings-desktop-schemas           moe                                 spatialindex
+bwm-ng                              gsl                                 mogenerator                         spatialite-gui
+byacc                               gsmartcontrol                       molecule                            spatialite-tools
+byobu                               gsoap                               monero                              spdlog
+byteman                             gspell                              monetdb                             spdylay
+bzip2                               gssdp                               mongo-c-driver                      speedtest-cli
+bzt                                 gssh                                mongo-cxx-driver                    sphinx
+c-blosc                             gst-editing-services                mongo-orchestration                 sphinx-doc
+cabal-install                       gst-libav                           mongoose                            spidermonkey
+cabextract                          gst-plugins-bad                     monit                               spigot
+cadaver                             gst-plugins-base                    monitoring-plugins                  spim
+caddy                               gst-plugins-good                    monkeysphere                        spin
+caf                                 gst-plugins-ugly                    mono                                spiped
+caffe                               gst-python                          mono-libgdiplus                     spoof-mac
+cairo                               gst-rtsp-server                     moreutils                           spotbugs
+cairomm                             gst-validate                        mosh                                sqlcipher
+cake                                gstreamer                           mosquitto                           sqldiff
+calabash                            gstreamermm                         most                                sqlite-analyzer
+calc                                gtk+                                movgrab                             sqlmap
+calcurse                            gtk+3                               mozjpeg                             sqlparse
+calicoctl                           gtk-chtheme                         mp3cat                              squashfs
+camlp4                              gtk-doc                             mp3splt                             squid
+camlp5                              gtk-gnutella                        mpc                                 sratom
+capnp                               gtk-mac-integration                 mpck                                sratoolkit
+capstone                            gtk-vnc                             mpd                                 src
+cargo-completion                    gtkdatabox                          mpdscribble                         srt
+carla                               gtkextra                            mpfr                                ssh-audit
+carrot2                             gtkglext                            mpg123                              ssh-copy-id
+carthage                            gtkmm                               mpich                               ssh-permit-a38
+cash-cli                            gtkmm3                              mplayer                             ssh-vault
+cassandra                           gtksourceview                       mplayershell                        sshfs
+cassandra@2.1                       gtksourceview3                      mpop                                sshguard
+cassandra@2.2                       gtksourceview4                      mps-youtube                         sshtrix
+castxml                             gtksourceviewmm                     mpv                                 sshuttle
+cataclysm                           gtksourceviewmm3                    mrboom                              ssldump
+catimg                              gtkspell3                           mruby                               sslh
+cattle                              gtmess                              msgpack                             ssllabs-scan
+cayley                              gts                                 msitools                            sslscan
+cc65                                gucharmap                           msktutil                            sslsplit
+ccache                              guile                               msmtp                               sslyze
+ccextractor                         gupnp                               mtools                              sstp-client
+ccm                                 gupnp-av                            mtr                                 stanford-corenlp
+cdk                                 gupnp-tools                         mu                                  stanford-ner
+cdogs-sdl                           gwenhywfar                          mujs                                stanford-parser
+center-im                           gwyddion                            multimarkdown                       statik
+cereal                              gx                                  multitail                           stella
+ceres-solver                        gx-go                               mupdf                               stellar-core
+cern-ndiff                          gxml                                mupdf-tools                         stern
+certbot                             gzip                                mutt                                stgit
+certigo                             h2                                  mvnvm                               stk
+certstrap                           h2o                                 mvtools                             stockfish
+cf4ocl                              hadolint                            mycli                               stone-soup
+cfengine                            hadoop                              mydumper                            storm
+cfitsio                             hamlib                              mypy                                stormssh
+cflow                               handbrake                           mysql                               stout
+cfr-decompiler                      hapi-fhir-cli                       mysql++                             stow
+cfssl                               haproxy                             mysql-client                        streamlink
+cgal                                harfbuzz                            mysql-connector-c++                 streamripper
+cgdb                                hashcat                             mysql@5.6                           stress-ng
+cgit                                hashpump                            mysql@5.7                           strongswan
+cglm                                haskell-stack                       mysqltuner                          stubby
+cgrep                               haste-client                        mytop                               stunnel
+chakra                              hatari                              n                                   stuntman
+chamber                             haxe                                nagios                              subliminal
+chapel                              hbase                               nagios-plugins                      subnetcalc
+charm                               hcloud                              nano                                subversion
+charm-tools                         hdf5                                nanopb-generator                    subversion@1.8
+cheat                               hdf5@1.8                            nasm                                suil
+check                               healpix                             nativefier                          suite-sparse
+check_postgres                      hebcal                              nats-streaming-server               sundials
+checkbashisms                       heimdal                             nave                                superlu
+checkstyle                          helmfile                            ncdc                                supertux
+chezscheme                          help2man                            ncdu                                supervisor
+chicken                             herrie                              ncmpc                               suricata
+chipmunk                            hfstospell                          ncmpcpp                             svgo
+chkrootkit                          hg-fast-export                      nco                                 svtplay-dl
+choose                              hidapi                              ncompress                           swagger-codegen
+chromaprint                         highlight                           ncrack                              swaks
+chrome-cli                          hive                                ncurses                             swi-prolog
+chrome-export                       hivemind                            ncview                              swift
+chronograf                          hledger                             ndpi                                swift-protobuf
+cimg                                hlint                               ne                                  swiftformat
+circleci                            homebank                            neatvi                              swiftgen
+citus                               hopenpgp-tools                      neko                                swiftlint
+cjdns                               howard-hinnant-date                 neo4j                               swig
+ckan                                howdoi                              neofetch                            swimat
+clac                                hqx                                 neomutt                             switchaudio-osx
+clamav                              hss                                 neon                                sxiv
+clang-format                        html-xml-utils                      neovim                              sylpheed
+clblast                             htmlcxx                             nesc                                sync_gateway
+clhep                               htmldoc                             net-snmp                            syncthing
+cli53                               htop                                netcdf                              synfig
+clib                                htpdate                             netdata                             synscan
+click                               htslib                              nethack                             sysbench
+cling                               http-parser                         netpbm                              sysdig
+clingo                              http-server                         nettle                              tag
+clipsafe                            http_load                           newlisp                             takt
+clisp                               httpd                               newsboat                            talloc
+cln                                 httperf                             newt                                tarantool
+cloc                                httpie                              nexus                               tarsnap
+clojure                             httping                             nfdump                              task
+clojurescript                       httrack                             nghttp2                             taskell
+closure-compiler                    hub                                 nginx                               tbb
+clozure-cl                          hugo                                ngircd                              tcc
+clutter                             hunspell                            ngspice                             tcl-tk
+clutter-gst                         hwloc                               nickle                              tcpdump
+clutter-gtk                         hydra                               nicovideo-dl                        tcpflow
+cmake                               hyperfine                           nifi                                tcpreplay
+cmark                               hyperkit                            nifi-registry                       tcsh
+cmark-gfm                           hyperscan                           nim                                 tdlib
+cmatrix                             hypre                               ninja                               tealdeer
+cminpack                            i2p                                 nkf                                 tectonic
+cmocka                              i2pd                                nlopt                               teleconsole
+cmus                                iamy                                nmap                                telegraf
+cnats                               ibex                                nmh                                 telegram-cli
+cocoapods                           ical-buddy                          nng                                 teleport
+codemod                             icarus-verilog                      nnn                                 template-glib
+coffeescript                        icdiff                              node                                temporal_tables
+cogl                                ice                                 node-build                          tenyr
+cointop                             icecast                             node@10                             tepl
+collada-dom                         icecream                            node_exporter                       terminal-notifier
+collectd                            icemon                              nodeenv                             termius
+collector-sidecar                   idnits                              nodenv                              terraform-docs
+commandbox                          idris                               nomad                               terraform-inventory
+compcert                            igraph                              nopoll                              terraform_landscape
+composer                            igv                                 norm                                terraforming
+conan                               ike-scan                            noti                                terragrunt
+configen                            ilmbase                             notmuch                             tesseract
+conjure-up                          imagemagick                         nrpe                                testdisk
+conserver                           imagemagick@6                       nsd                                 testssl
+console_bridge                      imageoptim-cli                      nspr                                texinfo
+consul                              imake                               nsq                                 texmath
+consul-template                     imap-uw                             nss                                 tfenv
+container-diff                      imapfilter                          ntfs-3g                             tgui
+convox                              imapsync                            ntl                                 thefuck
+cookiecutter                        imlib2                              ntopng                              theharvester
+coq                                 immortal                            ntp                                 thors-serializer
+corectl                             inetutils                           nu                                  thrift
+coreutils                           infer                               nuget                               thrift@0.9
+corsixth                            influxdb                            numpy                               tig
+coturn                              inform6                             nut                                 tiger-vnc
+couchdb                             iniparser                           nuxeo                               tika
+cp2k                                innotop                             nvm                                 tile38
+cpanminus                           insect                              nwchem                              timewarrior
+cpansearch                          instead                             nylon                               timidity
+cppad                               intercal                            nyx                                 tinc
+cppcheck                            internetarchive                     nzbget                              tintin
+cppcms                              io                                  oath-toolkit                        tiny-fugue
+cpprestsdk                          ioping                              objc-codegenutils                   tinyxml2
+cppunit                             ios-deploy                          ocaml                               tippecanoe
+cproto                              ios-sim                             ocaml-findlib                       tkdiff
+cquery                              ios-webkit-debug-proxy              ocaml-num                           tmate
+cracklib                            iozone                              ocamlbuild                          tmpreaper
+crc32c                              ipbt                                ocamlsdl                            tmux
+create-dmg                          iperf                               oclgrind                            tmux-mem-cpu-load
+credstash                           iperf3                              ocp                                 tmux-xpanes
+creduce                             ipfs                                ocproxy                             tmuxinator-completion
+cromwell                            ipmitool                            ocrad                               tnef
+crosstool-ng                        ipmiutil                            ocrmypdf                            todoman
+crowdin                             iproute2mac                         octave                              tokei
+cryfs                               ipv6calc                            octomap                             tomcat
+cryptol                             ipython                             ode                                 tomcat-native
+cryptopp                            ircd-hybrid                         odpi                                tomcat@7
+crystal                             ircii                               offlineimap                         tomcat@8
+crystal-icr                         irssi                               ohcount                             tomee-jax-rs
+cscope                              isc-dhcp                            ola                                 tomee-plume
+csfml                               isl                                 omega                               tomee-plus
+csv-fix                             iso-codes                           omniorb                             tomee-webprofile
+csvkit                              ispc                                ompl                                topgit
+csvtomd                             isync                               oniguruma                           topgrade
+ctl                                 itstool                             onioncat                            tor
+ctop                                ivy                                 onscripter                          torsocks
+cucumber-cpp                        ivykis                              ooniprobe                           tox
+curl                                jabba                               opam                                trace2html
+curlftpfs                           jadx                                open-babel                          tracebox
+curlpp                              jailkit                             open-jtalk                          traefik
+cutter                              jansson                             open-mesh                           trafficserver
+cython                              jasper                              open-mpi                            transcrypt
+czmq                                jbake                               open-scene-graph                    translate-shell
+dar                                 jbig2dec                            open-zwave                          translate-toolkit
+darcs                               jboss-forge                         openal-soft                         trash-cli
+dark-mode                           jdnssec-tools                       openapi-generator                   travis
+darksky-weather                     jdupes                              openblas                            treefrog
+dartsim                             jemalloc                            opencascade                         trezor-agent
+dashing                             jena                                opencc                              triton
+dasht                               jenkins                             openclonk                           ttfautohint
+dasm                                jenkins-job-builder                 opencoarrays                        ttyd
+datamash                            jenkins-lts                         opencolorio                         tundra
+datetime-fortran                    jenv                                openconnect                         tunnel
+dateutils                           jetty                               opencv                              tvnamer
+davix                               jetty-runner                        opencv@2                            twarc
+davmail                             jfrog-cli-go                        opendbx                             twemcache
+dbhash                              jhead                               opendetex                           twine-pypi
+dbus                                jhiccup                             openexr                             two-lame
+dbus-glib                           jhipster                            openfortivpn                        twoping
+dbxml                               jid                                 openh264                            twtxt
+dc3dd                               jigdo                               openhmd                             txr
+dcd                                 jing-trang                          openimageio                         typescript
+dcm2niix                            jlog                                openjazz                            u-boot-tools
+dcmtk                               jmeter                              openjpeg                            ubertooth
+dcos-cli                            jnettop                             openldap                            ucloud
+ddgr                                jo                                  openmsx                             udunits
+ddrescue                            john                                openrct2                            ufraw
+deark                               john-jumbo                          opensaml                            uftp
+debianutils                         joplin                              opensc                              uhd
+dehydrated                          jose                                openshift-cli                       um
+deja-gnu                            jp2a                                openslide                           umlet
+dep                                 jpeg-turbo                          openssh                             unbound
+dependency-check                    jrnl                                opensubdiv                          uncrustify
+deployer                            jruby                               opentracing-cpp                     unnethack
+derby                               jsdoc3                              opentsdb                            unoconv
+desktop-file-utils                  json-fortran                        openttd                             unp64
+devd                                json-glib                           openvdb                             unrar
+devtodo                             json11                              openvpn                             unrtf
+dfc                                 json_spirit                         ophcrack                            unshield
+dfmt                                jsoncpp                             opus                                unzip
+dhall-json                          jsonnet                             opusfile                            upscaledb
+dhex                                jsonrpc-glib                        orbit                               uptimed
+di                                  jsonschema2pojo                     orc                                 upx
+dialog                              jsvc                                orc-tools                           urbit
+diamond                             juise                               ori                                 urdfdom
+diceware                            juju                                ortp                                urdfdom_headers
+dieharder                           juju-wait                           osc                                 urh
+diff-pdf                            julius                              oscats                              uriparser
+diff-so-fancy                       jump                                osm-gps-map                         urweb
+diffoscope                          just                                osm-pbf                             userspace-rcu
+diffstat                            jvgrep                              osm2pgrouting                       utf8proc
+diffutils                           kafka                               osm2pgsql                           util-linux
+digdag                              kafkacat                            osmium-tool                         utimer
+direnv                              kakoune                             osmosis                             uwsgi
+direvent                            kallisto                            osquery                             v8
+distcc                              kapacitor                           osrm-backend                        vagrant-completion
+dita-ot                             kawa                                osslsigncode                        vala
+django-completion                   keepkey-agent                       ott                                 valabind
+dlib                                kerl                                overmind                            valgrind
+dmd                                 kettle                              owfs                                vamp-plugin-sdk
+dmenu                               khal                                p11-kit                             vapoursynth
+dmtx-utils                          khard                               p7zip                               varnish
+dnscrypt-proxy                      kibana                              pacapt                              vault
+dnscrypt-wrapper                    kibana@5.6                          pachi                               vault-cli
+dnsperf                             kitchen-sync                        packer-completion                   vaulted
+dnstwist                            klavaro                             packmol                             vc4asm
+dnsviz                              knot                                pacvim                              vcdimager
+docfx                               knot-resolver                       pagmo                               vegeta
+docker                              kobalt                              paket                               verilator
+docker-completion                   kompose                             pam-u2f                             vert.x
+docker-compose                      kops                                pandoc                              vfuse
+docker-compose-completion           kore                                pandoc-citeproc                     vgmstream
+docker-credential-helper            kotlin                              pandoc-crossref                     vice
+docker-credential-helper-ecr        kpcli                               pango                               viewvc
+docker-machine                      krakend                             pangomm                             vifm
+docker-machine-completion           krb5                                paperkey                            vim
+docker-machine-driver-xhyve         ksh                                 paps                                vimpc
+docker-machine-nfs                  ktmpl                               parallel                            vips
+docker-machine-parallels            kube-aws                            parallelstl                         virtuoso
+docker-squash                       kube-ps1                            pari                                visp
+doctl                               kubecfg                             partio                              vit
+docutils                            kubectx                             passenger                           vitetris
+doitlive                            kubeless                            passwdqc                            vmtouch
+dopewars                            kubernetes-cli                      patchelf                            vnstat
+dos2unix                            kubernetes-service-catalog-client   payara                              volatility
+dosbox                              kubespy                             pazpar2                             vowpal-wabbit
+dosbox-x                            kustomize                           pc6001vx                            vsts-cli
+double-conversion                   kvazaar                             pcapplusplus                        vte3
+dovecot                             kyoto-cabinet                       pcb                                 vtk
+doxygen                             kyoto-tycoon                        pcb2gcode                           vttest
+dpkg                                lablgtk                             pce                                 vultr
+draco                               lammps                              pcl                                 w3m
+drafter                             landscaper                          pcre2                               wabt
+dropbear                            languagetool                        pcsc-lite                           wandio
+druid                               lapack                              pdal                                wartremover
+dscanner                            lasi                                pdf-redact-tools                    watch
+dspdfviewer                         lasso                               pdf2htmlex                          watchexec
+dssim                               lastpass-cli                        pdf2json                            watchman
+dtc                                 laszip                              pdf2svg                             watson
+dub                                 latex2html                          pdfcrack                            wavpack
+duc                                 latexml                             pdfgrep                             wcslib
+duck                                launch_socket_server                pdfpc                               wdc
+dungeon                             launchdns                           pdftoipe                            wdfs
+duo_unix                            lbdb                                pdns                                wdiff
+duplicity                           lcdf-typetools                      pdnsrec                             weaver
+duply                               lcm                                 pdsh                                webdis
+dvdauthor                           lcov                                peco                                weboob
+dvdbackup                           ldapvi                              peg-markdown                        webpack
+dvm                                 ldc                                 pegtl                               websocketd
+dwarf                               ldid                                percol                              webtorrent-cli
+dwdiff                              ldns                                percona-server                      weechat
+dwm                                 lean                                percona-toolkit                     wellington
+dxpy                                lean-cli                            percona-xtrabackup                  wgetpaste
+dyld-headers                        ledger                              perl                                whois
+dylibbundler                        legit                               perl-build                          widelands
+dynamips                            lego                                perltidy                            wiggle
+dynare                              leiningen                           peru                                wiki
+e2fsprogs                           lensfun                             petsc                               wildfly-as
+easy-tag                            leptonica                           petsc-complex                       wimlib
+easyrpg-player                      less                                pev                                 winetricks
+ecasound                            leveldb                             pgbadger                            wiredtiger
+eccodes                             lf                                  pgbouncer                           wireguard-go
+ed                                  lftp                                pgcli                               wireguard-tools
+efl                                 lgogdownloader                      pgformatter                         wiremock-standalone
+eg-examples                         libarchive                          pgloader                            wireshark
+eiffelstudio                        libassuan                           pgplot                              with-readline
+eigen                               libatomic_ops                       pgpool-ii                           wla-dx
+ejabberd                            libav                               pgroonga                            wmctrl
+ejdb                                libb2                               pgrouting                           woboq_codebrowser
+ekg2                                libbi                               pgweb                               wolfssl
+elasticsearch                       libbitcoin                          phoronix-test-suite                 wp-cli
+elasticsearch@5.6                   libbitcoin-blockchain               php-code-sniffer                    wp-cli-completion
+elektra                             libbitcoin-client                   php-cs-fixer                        wpscan
+eless                               libbitcoin-consensus                phplint                             wsk
+elinks                              libbitcoin-database                 phpmyadmin                          wskdeploy
+elixir                              libbitcoin-explorer                 physfs                              wtf
+elm                                 libbitcoin-network                  pianobar                            wv
+elm-format                          libbitcoin-node                     pianod                              wxmac
+elvish                              libbitcoin-protocol                 picard-tools                        wxmaxima
+emacs                               libbitcoin-server                   picat                               wxpython
+emacs-clang-complete-async          libbladerf                          pick                                x11vnc
+embulk                              libbluray                           pidgin                              x264
+emscripten                          libbtbb                             pig                                 x265
+encfs                               libcaca                             pijul                               x3270
+enchant                             libcapn                             pilosa                              xa
+enet                                libccd                              pinboard-notes-backup               xalan-c
+enigma                              libcddb                             pinfo                               xapian
+enscript                            libcdio                             pioneer                             xboard
+entr                                libcdr                              pioneers                            xcodegen
+envconsul                           libcds                              pip-completion                      xcproj
+ephemeralpg                         libcec                              pipenv                              xctool
+epic5                               libcerf                             pius                                xdot
+eprover                             libchamplain                        pixman                              xdotool
+epubcheck                           libchaos                            pjproject                           xerces-c
+eralchemy                           libcoap                             pkcs11-helper                       xmake
+erlang                              libcouchbase                        planck                              xml-security-c
+erlang@20                           libcroco                            plank                               xml-tooling-c
+eslint                              libdap                              plantuml                            xmount
+etcd                                libdazzle                           platformio                          xmrig
+ethereum                            libdc1394                           platypus                            xonsh
+etl                                 libde265                            plplot                              xorriso
+etsh                                libdill                             plzip                               xpa
+ettercap                            libdvbpsi                           pmd                                 xpdf
+euler-py                            libdvdnav                           pms                                 xplanet
+evince                              libdvdread                          png++                               xqilla
+exa                                 libebml                             pngquant                            xrootd
+exact-image                         libedit                             poco                                xsane
+exempi                              libepoxy                            pod2man                             xsd
+exercism                            liberasurecode                      podofo                              xsimd
+exiftool                            libestr                             points2grid                         xtensor
+exim                                libetonyek                          polyml                              xvid
+exiv2                               libetpan                            pony-stable                         xxhash
+exomizer                            libev                               ponyc                               yacas
+expat                               libevent                            poppler                             yadm
+exploitdb                           libewf                              postgis                             yaf
+eye-d3                              libexosip                           postgresql                          yafc
+f3                                  libextractor                        postgresql@9.4                      yaml-cpp
+faas-cli                            libfabric                           postgresql@9.5                      yamllint
+fabio                               libfaketime                         postgresql@9.6                      yank
+fabric                              libfixbuf                           postgrest                           yara
+fades                               libfreefare                         potrace                             yarn
+fail2ban                            libfreehand                         povray                              yash
+fastbit                             libftdi                             powerman                            yaws
+fastjar                             libgaiagraphics                     ppsspp                              yaz
+fastme                              libgcrypt                           pqiv                                ydcv
+fastqc                              libgda                              pre-commit                          yelp-tools
+fauna-shell                         libgdata                            precomp                             ykman
+fb-client                           libgee                              prefixsuffix                        ykpers
+fbi-servefiles                      libgeotiff                          prettier                            yle-dl
+fceux                               libgig                              primesieve                          yosys
+fcl                                 libgit2                             prips                               you-get
+fd                                  libgit2-glib                        privoxy                             youtube-dl
+fdk-aac                             libglade                            procyon-decompiler                  yq
+fdk-aac-encoder                     libglademm                          profanity                           yubico-piv-tool
+fdroidserver                        libgnomecanvas                      proftpd                             z3
+feedgnuplot                         libgnomecanvasmm                    proguard                            zabbix
+feh                                 libgosu                             proj                                zbackup
+fetchmail                           libgpg-error                        prometheus                          zbar
+ffe                                 libgphoto2                          proselint                           zboy
+ffmpeg                              libgraphqlparser                    protobuf                            zebra
+ffmpeg2theora                       libgsf                              protobuf-c                          zelda-roth-se
+ffmpeg@2.8                          libgtop                             protobuf-swift                      zenity
+ffmpegthumbnailer                   libgweather                         prototool                           zeromq
+ffms2                               libgxps                             proxychains-ng                      zig
+fftw                                libhdhomerun                        proxytunnel                         zimg
+fibjs                               libheif                             pspg                                zint
+field3d                             libhttpserver                       psql2csv                            zita-convolver
+fifechan                            libhttpseverywhere                  psqlodbc                            zlog
+fig2dev                             libical                             pssh                                zmqpp
+file-formula                        libiconv                            pstoedit                            znc
+file-roller                         libidl                              ptex                                zola
+findutils                           libimagequant                       pugixml                             zookeeper
+fio                                 libimobiledevice                    pulledpork                          zopfli
+firebase-cli                        libinfinity                         pulseaudio                          zorba
+fish                                libiodbc                            pulumi                              zsdx
+fits                                libiptcdata                         pumba                               zsh
+flac                                libiscsi                            pure-ftpd                           zsh-autosuggestions
+flake8                              libjson-rpc-cpp                     purescript                          zsh-completions
+flann                               libjwt                              pushpin                             zsh-history-substring-search
+flashrom                            liblas                              puzzles                             zshdb
+flatbuffers                         liblcf                              pwntools                            zstd
+flatcc                              liblinear                           pwsafe                              zsxd
+flawfinder                          liblockfile                         py2cairo                            zurl
+flex                                liblqr                              py3cairo
+flintrock                           libltc                              pybind11
+==> Renamed Formulae
+ark -> velero                                   i386-elf-binutils -> x86_64-elf-binutils        resin-cli -> balena-cli
+bro -> zeek                                     i386-elf-gcc -> x86_64-elf-gcc                  todolist -> ultralist
+confluent-oss -> confluent-platform             jupyter -> jupyterlab                           transmission -> transmission-cli
+gloo-ctl -> glooctl                             kubernetes-helm -> helm                         usbmuxd -> libusbmuxd
+gnatsd -> nats-server                           php72 -> php@7.2
+hh -> hstr                                      presto -> prestodb
+==> Deleted Formulae
+openssl ✔               ctunnel                 gtk-murrine-engine      lysp                    plan9port               srclib
+aap                     curlish                 guile@2.0               mariadb@10.0            pldebugger              sshconfigfs
+aiccu                   cvs2svn                 gv                      minisat                 postgres-xc             stormpath-cli
+ansible@1.9             dcal                    hana                    mldonkey                pound                   supersonic
+ansible@2.0             ddar                    headphones              monax                   protobuf@2.5            swig@3.04
+apel                    diffuse                 hg-flow                 mongodb                 protobuf@2.6            taisei
+apm-server              docker-cloud            httest                  mongodb@3.0             protobuf@3.1            terminator
+apple-gcc42             dsd                     hyper                   mongodb@3.2             pyexiv2                 thc-pptp-bruter
+aptly-completion        engine_pkcs11           ino                     mongodb@3.4             pygobject               tlsdate
+archivemail             erlang@17               ipython@5               mongodb@3.6             pygtk                   tmux-cssh
+at-spi2-atk             erlang@18               irods                   muttils                 pygtkglext              tn5250
+at-spi2-core            erlang@19               iron-functions          mysql-cluster           pygtksourceview         tnote
+auto-scaling            euca2ools               js-test-driver          mysql-connector-c       python@2                tomcat@6
+aws-elasticache         ffmbc                   konoha                  mysql-utilities         qriollo                 trr
+aws-sns-cli             frag_find               kontena                 mysql@5.5               raine                   typesafe-activator
+bdsup2sub               freetds@0.91            lastfmfpclient          nicotine-plus           redo                    uberftp
+boost-python@1.59       fstar                   ld64                    node@6                  riak                    varnish@4
+borg                    ftimes                  leafnode                node@8                  rlvm                    vim@7.4
+bubbros                 gdnsd                   libagar                 nordugrid-arc           rock                    voms
+bzr-fastimport          globus-toolkit          libggz                  np2                     ruby@1.8                vte
+cclive                  gmt@4                   libguess                packetbeat              ruby@2.0                warp
+cctools                 gmtl                    liblacewing             pbrt                    ruby@2.3                whirr
+cctools-headers         gnome-doc-utils         liblastfm               pdftoedn                safe                    wine
+cherokee                go@1.4                  libopkele               percona-server-mongodb  scala@2.10              xar-mackyle
+closure-linter          go@1.8                  libutf                  percona-server@5.6      shocco                  xmoto
+cockroach               gost                    llvm@3.9                php@5.6                 skipfish                zim
+compose2kube            gradle@2.14             llvm@4                  php@7.0                 smlnj                   zxing-cpp
+cputhrottle             grib-api                llvm@5                  php@7.1                 solr@5.5
+csup                    gtk-engines             logentries              pincaster               solr@6.6
+
+==> Tapping homebrew/cask
+Cloning into '/usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask'...
+remote: Enumerating objects: 1, done.
+remote: Counting objects: 100% (1/1), done.
+remote: Total 413592 (delta 0), reused 0 (delta 0), pack-reused 413591
+Receiving objects: 100% (413592/413592), 188.32 MiB | 710.00 KiB/s, done.
+Resolving deltas: 100% (292158/292158), done.
+Tapped 1 command and 3533 casks (3,649 files, 202MB).
+==> Caveats
+To install and/or use virtualbox you may need to enable its kernel extension in:
+  System Preferences → Security & Privacy → General
+For more information refer to vendor documentation or this Apple Technical Note:
+  https://developer.apple.com/library/content/technotes/tn2459/_index.html
+
+==> Downloading https://download.virtualbox.org/virtualbox/6.1.2/VirtualBox-6.1.2-135662-OSX.dmg
+######################################################################## 100.0%
+==> Verifying SHA-256 checksum for Cask 'virtualbox'.
+==> Installing Cask virtualbox
+==> Creating Caskroom at /usr/local/Caskroom
+==> We'll set permissions properly so we won't need sudo in the future.
+Password:
+Sorry, try again.
+Password:
+==> Running installer for virtualbox; your password may be necessary.
+==> Package installers may write to any location; options such as --appdir are ignored.
+installer: Package name is Oracle VM VirtualBox
+installer: choices changes file '/var/folders/mz/53xm61dj05x40qb1p_cgfz0w0000gn/T/choices20200213-2613-12j69xi.xml' applied
+installer: Upgrading at base path /
+installer: The upgrade was successful.
+==> Changing ownership of paths required by virtualbox; your password may be necessary
+🍺  virtualbox was successfully installed!
+Javeds-MacBook-Air:DevOps-Self javedalam$
+
+—————————————————————————————————————————————————————————————————————————
+
+# Create Docker machines (to act as nodes for Docker Swarm)   
+# Create one machine as manager and others as workers
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine create --driver virtualbox manager1
+Running pre-create checks...
+(manager1) Image cache directory does not exist, creating it at /Users/javedalam/.docker/machine/cache...
+(manager1) No default Boot2Docker ISO found locally, downloading the latest release...
+(manager1) Latest release for github.com/boot2docker/boot2docker is v19.03.5
+(manager1) Downloading /Users/javedalam/.docker/machine/cache/boot2docker.iso from https://github.com/boot2docker/boot2docker/releases/download/v19.03.5/boot2docker.iso...
+(manager1) 0%....10%....20%....30%....40%....50%....60%....70%....80%....90%....100%
+Creating machine...
+(manager1) Copying /Users/javedalam/.docker/machine/cache/boot2docker.iso to /Users/javedalam/.docker/machine/machines/manager1/boot2docker.iso...
+(manager1) Creating VirtualBox VM...
+(manager1) Creating SSH key...
+(manager1) Starting the VM...
+(manager1) Check network to re-create if needed...
+(manager1) Found a new host-only adapter: "vboxnet1"
+(manager1) Waiting for an IP...
+Waiting for machine to be running, this may take a few minutes...
+Detecting operating system of created instance...
+Waiting for SSH to be available...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env manager1
+Javeds-MacBook-Air:DevOps-Self javedalam$
+
+—————————————————————————————————————————————————————————————————————————
+
+# manager1 env details
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine env manager1
+export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/javedalam/.docker/machine/machines/manager1"
+export DOCKER_MACHINE_NAME="manager1"
+# Run this command to configure your shell: 
+# eval $(docker-machine env manager1)
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+# manager1 reflects
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME       ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER     ERRORS
+manager1   -        virtualbox   Running   tcp://192.168.99.100:2376           v19.03.5   
+
+—————————————————————————————————————————————————————————————————————————
+
+# manager1 ip reflects
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip manager1
+192.168.99.100
+Javeds-MacBook-Air:DevOps-Self javedalam$
+
+—————————————————————————————————————————————————————————————————————————
+
+# Create Docker machines (to act as nodes for Docker Swarm)   
+# Create one machine as manager and others as worker1
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine create --driver virtualbox worker1
+Running pre-create checks...
+(worker1) Unable to get the latest Boot2Docker ISO release version:  Get https://api.github.com/repos/boot2docker/boot2docker/releases/latest: dial tcp: lookup api.github.com on [::1]:53: read udp [::1]:49607->[::1]:53: read: connection refused
+Creating machine...
+(worker1) Unable to get the latest Boot2Docker ISO release version:  Get https://api.github.com/repos/boot2docker/boot2docker/releases/latest: dial tcp: lookup api.github.com on [::1]:53: read udp [::1]:63050->[::1]:53: read: connection refused
+(worker1) Copying /Users/javedalam/.docker/machine/cache/boot2docker.iso to /Users/javedalam/.docker/machine/machines/worker1/boot2docker.iso...
+(worker1) Creating VirtualBox VM...
+(worker1) Creating SSH key...
+(worker1) Starting the VM...
+(worker1) Check network to re-create if needed...
+(worker1) Waiting for an IP...
+Waiting for machine to be running, this may take a few minutes...
+Detecting operating system of created instance...
+Waiting for SSH to be available...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env worker1
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+# general commands
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME       ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER     ERRORS
+manager1   -        virtualbox   Running   tcp://192.168.99.100:2376           v19.03.5   
+worker1    -        virtualbox   Running   tcp://192.168.99.101:2376           v19.03.5   
+Javeds-MacBook-Air:DevOps-Self javedalam$
+
+
+—————————————————————————————————————————————————————————————————————————
+
+# Create Docker machines (to act as nodes for Docker Swarm)   
+# Create one machine as manager and others as worker2
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine create --driver virtualbox worker2
+Running pre-create checks...
+Creating machine...
+(worker2) Copying /Users/javedalam/.docker/machine/cache/boot2docker.iso to /Users/javedalam/.docker/machine/machines/worker2/boot2docker.iso...
+(worker2) Creating VirtualBox VM...
+(worker2) Creating SSH key...
+(worker2) Starting the VM...
+(worker2) Check network to re-create if needed...
+(worker2) Waiting for an IP...
+Waiting for machine to be running, this may take a few minutes...
+Detecting operating system of created instance...
+Waiting for SSH to be available...
+Detecting the provisioner...
+Provisioning with boot2docker...
+Copying certs to the local machine directory...
+Copying certs to the remote machine...
+Setting Docker configuration on the remote daemon...
+Checking connection to Docker...
+Docker is up and running!
+To see how to connect your Docker Client to the Docker Engine running on this virtual machine, run: docker-machine env worker2
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+# list the docker machines; 1 manager and 2 workers
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME       ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER     ERRORS
+manager1   -        virtualbox   Running   tcp://192.168.99.100:2376           v19.03.5   
+worker1    -        virtualbox   Running   tcp://192.168.99.101:2376           v19.03.5   
+worker2    -        virtualbox   Running   tcp://192.168.99.102:2376           v19.03.5   
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+# open diff tab and connect to manager and workers independently
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ssh manager1
+   ( '>')
+  /) TC (\   Core is distributed with ABSOLUTELY NO WARRANTY.
+ (/-_--_-\)           www.tinycorelinux.net
+
+docker@manager1:~$ 
+
+Javeds-MacBook-Air:~ javedalam$ docker-machine ssh worker1
+   ( '>')
+  /) TC (\   Core is distributed with ABSOLUTELY NO WARRANTY.
+ (/-_--_-\)           www.tinycorelinux.net
+
+docker@worker1:~$
+
+Javeds-MacBook-Air:~ javedalam$ docker-machine ssh worker2
+   ( '>')
+  /) TC (\   Core is distributed with ABSOLUTELY NO WARRANTY.
+ (/-_--_-\)           www.tinycorelinux.net
+
+docker@worker2:~$
+
+—————————————————————————————————————————————————————————————————————————
+
+# fetch the ip’s of manager and workers from Mac machine
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME       ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER     ERRORS
+manager1   -        virtualbox   Running   tcp://192.168.99.100:2376           v19.03.5   
+worker1    -        virtualbox   Running   tcp://192.168.99.101:2376           v19.03.5   
+worker2    -        virtualbox   Running   tcp://192.168.99.102:2376           v19.03.5   
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip manager1
+192.168.99.100
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip worker1
+192.168.99.101
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip worker2
+192.168.99.102
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+# add manager1 machine into swarm
+
+docker@manager1:~$ docker -v
+Docker version 19.03.5, build 633a0ea838
+
+——
+
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker swarm init --advertise-addr 192.168.99.100
+Swarm initialized: current node (uvushf0ucxm15f3jge95uqu01) is now a manager.
+
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-4uugknse0n9llnwddju1fhw6epyvalqeq3x4cuojrkpwoopaey-23dckmoz711rb1bjdyspttbx7 192.168.99.100:2377
+
+To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
+
+docker@manager1:~$ 
+
+——
+
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+ncbiom3yd3kgzgkvqr3pbr8rn *   manager1            Ready               Active              Leader              19.03.5
+docker@manager1:~$ 
+
+——
+
+docker@worker1:~$ docker -v
+Docker version 19.03.5, build 633a0ea838
+docker@worker1:~$                                                                                                                                            
+docker@worker1:~$ docker node ls
+Error response from daemon: This node is not a swarm manager. Use "docker swarm init" or "docker swarm join" to connect this node to swarm and try again.
+docker@worker1:~$ 
+
+——
+
+docker@manager1:~$ docker swarm join-token worker                   
+To add a worker to this swarm, run the following command:
+
+    docker swarm join --token SWMTKN-1-4uugknse0n9llnwddju1fhw6epyvalqeq3x4cuojrkpwoopaey-23dckmoz711rb1bjdyspttbx7 192.168.99.100:2377
+
+docker@manager1:~$
+
+——
+
+docker@worker1:~$ docker swarm join --token SWMTKN-1-4uugknse0n9llnwddju1fhw6epyvalqeq3x4cuojrkpwoopaey-23dckmoz711rb1bjdyspttbx7 192.168.99.100:2377
+This node joined a swarm as a worker.
+docker@worker1:~$ 
+
+——
+
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker node ls                                   
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Ready               Active                                  19.03.5
+docker@manager1:~$ 
+
+——
+
+docker@worker2:~$ docker -v
+Docker version 19.03.5, build 633a0ea838
+docker@worker2:~$ docker swarm join --token SWMTKN-1-4uugknse0n9llnwddju1fhw6epyvalqeq3x4cuojrkpwoopaey-23dckmoz711rb1bjdyspttbx7 192.168.99.100:2377    
+This node joined a swarm as a worker.
+docker@worker2:~$ 
+
+——
+
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Ready               Active                                  19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Ready               Active                                  19.03.5
+docker@manager1:~$
+
+—————————————————————————————————————————————————————————————————————————
+
+docker@manager1:~$ docker info | grep "Swarm"                                                                                                                
+ Swarm: active
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker info | grep Manager
+  Is Manager: true
+  Managers: 1
+  Autolock Managers: false
+  Manager Addresses:
+docker@manager1:~$ docker info | grep worker                                                                                                                 
+docker@manager1:~$ docker info | grep Nodes                                                                                                                  
+  Nodes: 3
+docker@manager1:~$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+docker@manager1:~$ docker swarm                                                                                                                              
+
+Usage:	docker swarm COMMAND
+
+Manage Swarm
+
+Commands:
+  ca          Display and rotate the root CA
+  init        Initialize a swarm
+  join        Join a swarm as a node and/or manager
+  join-token  Manage join tokens
+  leave       Leave the swarm
+  unlock      Unlock swarm
+  unlock-key  Manage the unlock key
+  update      Update the swarm
+
+Run 'docker swarm COMMAND --help' for more information on a command.
+docker@manager1:~$        
+
+—————————————————————————————————————————————————————————————————————————
+
+# create services
+
+# No services present initially:
+
+docker@manager1:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+docker@manager1:~$  
+
+
+# create services:
+
+docker@manager1:~$ docker service create --replicas 3 -p 80:80 --name webApp nginx
+3ioajz46kj0vvta04tu7pv744
+overall progress: 0 out of 3 tasks 
+overall progress: 0 out of 3 tasks 
+overall progress: 0 out of 3 tasks 
+1/3: preparing [=================================>                 ] 
+2/3: preparing [=================================>                 ] 
+3/3: preparing [=================================>                 ] 
+….
+
+
+
+# Meanwhile check the services from new tab
+
+docker@manager1:~$ docker service ls        
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+3ioajz46kj0v        webApp              replicated          0/3                 nginx:latest        *:80->80/tcp
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker service ps webApp 
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE             ERROR                              PORTS
+uxn4slv75hdx        webApp.1            nginx:latest        manager1            Running             Preparing 3 minutes ago                                      
+rfndvoc2tw6b         \_ webApp.1        nginx:latest        worker1             Shutdown            Rejected 3 minutes ago    "No such image: nginx:latest@s…"   
+pp6h2hofo1d2         \_ webApp.1        nginx:latest        worker1             Shutdown            Rejected 3 minutes ago    "No such image: nginx:latest@s…"   
+3s6qnj8z56js         \_ webApp.1        nginx:latest        worker1             Shutdown            Rejected 3 minutes ago    "No such image: nginx:latest@s…"   
+vso0kzyngtw9         \_ webApp.1        nginx:latest        worker1             Shutdown            Rejected 3 minutes ago    "No such image: nginx:latest@s…"   
+uz7m4l9itvil        webApp.2            nginx:latest        worker2             Running             Preparing 3 minutes ago                                      
+mtnhnzhjhxk0        webApp.3            nginx:latest        manager1            Running             Preparing 3 minutes ago                                      
+docker@manager1:~$  
+
+
+docker@worker1:~$ docker service ls
+Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager.
+docker@worker1:~$  
+
+
+# try again to create services with different name and port
+
+docker@manager1:~$ docker service create --replicas 3 -p 80:80 --name webApp nginx       
+Error response from daemon: rpc error: code = InvalidArgument desc = port '80' is already in use by service 'webApp' (3ioajz46kj0vvta04tu7pv744) as an ingress port
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service create --replicas 3 -p 90:80 --name webApp nginx                                                                           
+Error response from daemon: rpc error: code = AlreadyExists desc = name conflicts with an existing object: service webApp already exists
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+3ioajz46kj0v        webApp              replicated          0/3                 nginx:latest        *:80->80/tcp
+docker@manager1:~$ 
+
+docker@manager1:~$ docker service create --replicas 3 -p 88:80 --name ng-App nginx 
+5kqplkxcpa9wsom8o66h76qr4
+overall progress: 0 out of 3 tasks 
+1/3: preparing [=================================>                 ] 
+2/3: preparing [=================================>                 ] 
+3/3: preparing [=================================>                 ] 
+…..
+
+docker@manager1:~$ docker service ls        
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+5kqplkxcpa9w        ng-App              replicated          0/3                 nginx:latest        *:88->80/tcp
+3ioajz46kj0v        webApp              replicated          0/3                 nginx:latest        *:80->80/tcp
+docker@manager1:~$
+
+docker@manager1:~$ docker service ps ng-App 
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE                  ERROR                              PORTS
+wzmufigqeu50        ng-App.1            nginx:latest        manager1            Running             Preparing about a minute ago                                      
+kxaps9hz9xcb        ng-App.2            nginx:latest        worker2             Running             Preparing 23 seconds ago                                          
+ow4vgzfvh5t7         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 24 seconds ago        "No such image: nginx:latest@s…"   
+lmgg4ae4u1xr         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 34 seconds ago        "No such image: nginx:latest@s…"   
+q4946n91oc2r         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 45 seconds ago        "No such image: nginx:latest@s…"   
+ffd8ecsigkkx         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 55 seconds ago        "No such image: nginx:latest@s…"   
+bwqjxvoho93g        ng-App.3            nginx:latest        worker2             Running             Preparing about a minute ago                                      
+docker@manager1:~$   
+
+
+# Cross verify:
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip manager1
+192.168.99.100
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip worker1
+192.168.99.101
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ip worker2
+192.168.99.102
+
+http://192.168.99.100 | http://192.168.99.101 | http://192.168.99.102 
+
+nginx page should reflect in all machines
+
+—————————————————————————————————————————————————————————————————————————
+
+# scale up 
+
+docker@manager1:~$ docker service scale ng-App=4
+ng-App scaled to 4
+overall progress: 0 out of 4 tasks 
+1/4: preparing [=================================>                 ] 
+2/4: preparing [=================================>                 ] 
+3/4: preparing [=================================>                 ] 
+4/4: preparing [=================================>                 ] 
+…
+
+# check the scale up services
+
+Javeds-MacBook-Air:~ javedalam$ docker-machine ssh manager1
+   ( '>')
+  /) TC (\   Core is distributed with ABSOLUTELY NO WARRANTY.
+ (/-_--_-\)           www.tinycorelinux.net
+
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Ready               Active                                  19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Ready               Active                                  19.03.5
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+5kqplkxcpa9w        ng-App              replicated          0/4                 nginx:latest        *:88->80/tcp
+3ioajz46kj0v        webApp              replicated          0/3                 nginx:latest        *:80->80/tcp
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ps ng-App 
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE              ERROR                              PORTS
+wzmufigqeu50        ng-App.1            nginx:latest        manager1            Running             Preparing 11 minutes ago                                      
+kxaps9hz9xcb        ng-App.2            nginx:latest        worker2             Running             Preparing 10 minutes ago                                      
+ow4vgzfvh5t7         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 10 minutes ago    "No such image: nginx:latest@s…"   
+lmgg4ae4u1xr         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 10 minutes ago    "No such image: nginx:latest@s…"   
+q4946n91oc2r         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 10 minutes ago    "No such image: nginx:latest@s…"   
+ffd8ecsigkkx         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 10 minutes ago    "No such image: nginx:latest@s…"   
+bwqjxvoho93g        ng-App.3            nginx:latest        worker2             Running             Preparing 11 minutes ago                                      
+wo4q8v0do0tg        ng-App.4            nginx:latest        manager1            Running             Preparing 28 seconds ago                                      
+45t47qmduvwr         \_ ng-App.4        nginx:latest        worker1             Shutdown            Rejected 28 seconds ago    "No such image: nginx:latest@s…"   
+6g4vg5gcdete         \_ ng-App.4        nginx:latest        worker1             Shutdown            Rejected 38 seconds ago    "No such image: nginx:latest@s…"   
+46m8lkx626x3         \_ ng-App.4        nginx:latest        worker1             Shutdown            Rejected 48 seconds ago    "No such image: nginx:latest@s…"   
+oqxta5isoea1         \_ ng-App.4        nginx:latest        worker1             Shutdown            Rejected 59 seconds ago    "No such image: nginx:latest@s…"   
+docker@manager1:~$                                                                                                                                           
+
+—————————————————————————————————————————————————————————————————————————
+
+# scale down
+
+docker@manager1:~$ docker service scale ng-App=2  
+ng-App scaled to 2
+overall progress: 0 out of 2 tasks 
+1/2: preparing [=================================>                 ] 
+2/2: preparing [=================================>                 ] 
+…
+
+# try in new tab
+
+docker@manager1:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+5kqplkxcpa9w        ng-App              replicated          0/2                 nginx:latest        *:88->80/tcp
+3ioajz46kj0v        webApp              replicated          0/3                 nginx:latest        *:80->80/tcp
+docker@manager1:~$ docker service ps ng-App                                                                                                                  
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE              ERROR                              PORTS
+wzmufigqeu50        ng-App.1            nginx:latest        manager1            Running             Preparing 20 minutes ago                                      
+kxaps9hz9xcb        ng-App.2            nginx:latest        worker2             Running             Preparing 19 minutes ago                                      
+ow4vgzfvh5t7         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 19 minutes ago    "No such image: nginx:latest@s…"   
+lmgg4ae4u1xr         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 19 minutes ago    "No such image: nginx:latest@s…"   
+q4946n91oc2r         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 19 minutes ago    "No such image: nginx:latest@s…"   
+ffd8ecsigkkx         \_ ng-App.2        nginx:latest        worker1             Shutdown            Rejected 19 minutes ago    "No such image: nginx:latest@s…"   
+docker@manager1:~$      
+
+—————————————————————————————————————————————————————————————————————————
+
+# Finally services created:
+
+docker@manager1:~$ docker service create --replicas 3 -p 80:80 --name web nginx
+rluo30nn594ckrgvvq8acyw16
+overall progress: 3 out of 3 tasks 
+1/3: running   [==================================================>] 
+2/3: running   [==================================================>] 
+3/3: running   [==================================================>] 
+verify: Service converged 
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ls
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+rluo30nn594c        web                 replicated          3/3                 nginx:latest        *:80->80/tcp
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ps web 
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE                 ERROR                              PORTS
+vg7xu7sv793p        web.1               nginx:latest        manager1            Running             Running 55 seconds ago                                           
+kcphw5kowf2t         \_ web.1           nginx:latest        worker1             Shutdown            Rejected about a minute ago   "No such image: nginx:latest@s…"   
+2uiezoqknisq         \_ web.1           nginx:latest        worker1             Shutdown            Rejected about a minute ago   "No such image: nginx:latest@s…"   
+x1rekvvei9ou         \_ web.1           nginx:latest        worker1             Shutdown            Rejected about a minute ago   "No such image: nginx:latest@s…"   
+ph5ae32bmzwg         \_ web.1           nginx:latest        worker1             Shutdown            Rejected 2 minutes ago        "No such image: nginx:latest@s…"   
+in01bf4mde7z        web.2               nginx:latest        worker2             Running             Running about a minute ago                                       
+zgxo4iehfzys        web.3               nginx:latest        manager1            Running             Running 55 seconds ago                                           
+docker@manager1:~$    
+
+—————————————————————————————————————————————————————————————————————————
+
+# inspect, manager can inspect to all nodes as well as self
+
+docker@manager1:~$ docker node inspect self            
+[
+    {
+        "ID": "uvushf0ucxm15f3jge95uqu01",
+        "Version": {
+            "Index": 9
+        },
+        "CreatedAt": "2020-02-13T11:47:24.093502206Z",
+        "UpdatedAt": "2020-02-13T11:47:24.617753328Z",
+        "Spec": {
+            "Labels": {},
+            "Role": "manager",
+            "Availability": "active"
+        },
+        "Description": {
+            "Hostname": "manager1",
+            "Platform": {
+                "Architecture": "x86_64",
+                "OS": "linux"
+            },
+            "Resources": {
+                "NanoCPUs": 1000000000,
+                "MemoryBytes": 1037537280
+            },
+            "Engine": {
+                "EngineVersion": "19.03.5",
+                "Labels": {
+                    "provider": "virtualbox"
+                },
+                "Plugins": [
+                    {
+                        "Type": "Log",
+                        "Name": "awslogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "fluentd"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gcplogs"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "gelf"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "journald"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "json-file"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "local"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "logentries"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "splunk"
+                    },
+                    {
+                        "Type": "Log",
+                        "Name": "syslog"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "bridge"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "host"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "ipvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "macvlan"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "null"
+                    },
+                    {
+                        "Type": "Network",
+                        "Name": "overlay"
+                    },
+                    {
+                        "Type": "Volume",
+                        "Name": "local"
+                    }
+                ]
+            },
+            "TLSInfo": {
+                "TrustRoot": "-----BEGIN CERTIFICATE-----\nMIIBajCCARCgAwIBAgIUGd1ipKtvBYaYKuyfVh6Af7ZCzAkwCgYIKoZIzj0EAwIw\nEzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMjAwMjEzMTE0MjAwWhcNNDAwMjA4MTE0\nMjAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH\nA0IABKekffx5oaVJ1/7Prf8uC9g7BI0m09omimZqbBn42/PYHuVFNLGekYw5DR4N\nBEiX9pJmrkk7ZgB5cd1/VhaAy/OjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB\nAf8EBTADAQH/MB0GA1UdDgQWBBSKaeHMR8Wl8UZEHgst7nQ/9FbhHDAKBggqhkjO\nPQQDAgNIADBFAiEAnXF28bO54deOa+ShFiFAfLD3eM/e5L7UwE/nFHJ5BmoCIG9p\nzJ1RFHfecPXE7uhSykzh0GCWiWo9zHRN92Ptxs9c\n-----END CERTIFICATE-----\n",
+                "CertIssuerSubject": "MBMxETAPBgNVBAMTCHN3YXJtLWNh",
+                "CertIssuerPublicKey": "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEp6R9/HmhpUnX/s+t/y4L2DsEjSbT2iaKZmpsGfjb89ge5UU0sZ6RjDkNHg0ESJf2kmauSTtmAHlx3X9WFoDL8w=="
+            }
+        },
+        "Status": {
+            "State": "ready",
+            "Addr": "192.168.99.100"
+        },
+        "ManagerStatus": {
+            "Leader": true,
+            "Reachability": "reachable",
+            "Addr": "192.168.99.100:2377"
+        }
+    }
+]
+docker@manager1:~$ docker node inspect self | grep Status                                                                                                    
+        "Status": {
+        "ManagerStatus": {
+docker@manager1:~$  
+
+docker@manager1:~$ docker node inspect self | grep State          
+            "State": "ready",
+docker@manager1:~$ docker node inspect worker1 | grep State                                                                                                  
+            "State": "ready",
+docker@manager1:~$ docker node inspect worker2 | grep State                                                                                                  
+            "State": "ready",
+docker@manager1:~$ 
+
+
+# worker can execute inspect to manager as well as self
+
+docker@worker1:~$ docker node inspect self 
+[]
+Status: Error response from daemon: This node is not a swarm manager. Worker nodes can't be used to view or modify cluster state. Please run this command on a manager node or promote the current node to a manager., Code: 1
+docker@worker1:~$
+
+—————————————————————————————————————————————————————————————————————————
+
+# update the image version:
+
+docker@manager1:~$ docker service update --image nginx:1.14.0 web 
+web
+overall progress: 0 out of 3 tasks 
+1/3: preparing [=================================>                 ] 
+2/3:   
+3/3:   
+service update paused: update paused due to failure or early termination of task 6gm97y9bk2wy19t5nf5ts3qo7
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ls                              
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+rluo30nn594c        web                 replicated          2/3                 nginx:1.14.0        *:80->80/tcp
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker service ps web                          
+ID                  NAME                IMAGE               NODE                DESIRED STATE       CURRENT STATE             ERROR                              PORTS
+xq2jlkosfxqh        web.1               nginx:1.14.0        worker1             Ready               Preparing 2 seconds ago                                      
+h08k8oj2jplc         \_ web.1           nginx:1.14.0        worker1             Shutdown            Rejected 2 seconds ago    "No such image: nginx:1.14.0@s…"   
+6gm97y9bk2wy         \_ web.1           nginx:1.14.0        worker1             Shutdown            Rejected 12 seconds ago   "No such image: nginx:1.14.0@s…"   
+vg7xu7sv793p         \_ web.1           nginx:latest        manager1            Shutdown            Shutdown 19 seconds ago                                      
+kcphw5kowf2t         \_ web.1           nginx:latest        worker1             Shutdown            Rejected 3 minutes ago    "No such image: nginx:latest@s…"   
+in01bf4mde7z        web.2               nginx:latest        worker2             Running             Running 3 minutes ago                                        
+zgxo4iehfzys        web.3               nginx:latest        manager1            Running             Running 2 minutes ago                                        
+docker@manager1:~$     
+
+—————————————————————————————————————————————————————————————————————————
+
+# drain the service:
+
+docker@manager1:~$ docker service ls                                                                                                                         
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+rluo30nn594c        web                 replicated          3/3                 nginx:1.14.0        *:80->80/tcp
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker node update --availability drain worker
+worker1  worker2  
+
+docker@manager1:~$ docker node update --availability drain worker1
+worker1
+docker@manager1:~$                                                                                                                                           
+
+docker@manager1:~$ docker node ls 
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Ready               Drain                                   19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Ready               Active                                  19.03.5
+docker@manager1:~$
+
+—————————————————————————————————————————————————————————————————————————
+
+# remove the service
+
+docker@manager1:~$ docker service rm web     
+web
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker service ls     
+ID                  NAME                MODE                REPLICAS            IMAGE               PORTS
+docker@manager1:~$                                                                                                                                           
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Ready               Drain                                   19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Ready               Active                                  19.03.5
+docker@manager1:~$ 
+
+docker@manager1:~$ docker service ps web
+no such service: web
+docker@manager1:~$   
+
+—————————————————————————————————————————————————————————————————————————
+
+# worker left the swarm
+
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Ready               Drain                                   19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Ready               Active                                  19.03.5
+docker@manager1:~$  
+
+
+docker@worker1:~$ docker swarm leave 
+Node left the swarm.
+docker@worker1:~$ 
+
+
+docker@manager1:~$ docker node ls
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Down                Drain                                   19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Ready               Active                                  19.03.5
+docker@manager1:~$ 
+
+
+docker@worker2:~$ docker swarm leave 
+Node left the swarm.
+docker@worker2:~$
+
+
+docker@manager1:~$ docker node ls                                                                                                                            
+ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS      ENGINE VERSION
+uvushf0ucxm15f3jge95uqu01 *   manager1            Ready               Active              Leader              19.03.5
+gbv851io7rnph07fxxps923xz     worker1             Down                Drain                                   19.03.5
+iifw0cd69cjtv6twi8ndmiy9a     worker2             Down                Active                                  19.03.5
+docker@manager1:~$
+
+—————————————————————————————————————————————————————————————————————————
+
+# stop worker1 and worker2
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME       ACTIVE   DRIVER       STATE     URL                         SWARM   DOCKER     ERRORS
+manager1   -        virtualbox   Running   tcp://192.168.99.100:2376           v19.03.5   
+worker1    -        virtualbox   Running   tcp://192.168.99.101:2376           v19.03.5   
+worker2    -        virtualbox   Running   tcp://192.168.99.102:2376           v19.03.5   
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine stop worker1
+Stopping "worker1"...
+Machine "worker1" was stopped.
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine stop worker2
+Stopping "worker2"...
+Machine "worker2" was stopped.
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+
+
+# cross verify:
+
+docker@worker1:~$ Connection to 127.0.0.1 closed by remote host.                                                                                             
+exit status 255
+Javeds-MacBook-Air:~ javedalam$ 
+
+docker@worker2:~$ Connection to 127.0.0.1 closed by remote host.                                                                                             
+exit status 255
+Javeds-MacBook-Air:~ javedalam$
+
+# verify form Mac:
+
+Javeds-MacBook-Air:~ javedalam$ docker-machine ssh worker1
+Docker machine "worker1" does not exist. Use "docker-machine ls" to list machines. Use "docker-machine create" to add a new one.
+Javeds-MacBook-Air:~ javedalam$ 
+
+—————————————————————————————————————————————————————————————————————————
+
+# remove worker1 and worker2 and lastly manager1
+
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine rm worker1
+About to remove worker1
+WARNING: This action will delete both local reference and remote instance.
+Are you sure? (y/n): y
+Successfully removed worker1
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine rm worker2
+About to remove worker2
+WARNING: This action will delete both local reference and remote instance.
+Are you sure? (y/n): y
+Successfully removed worker2
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine rm manager1
+About to remove manager1
+WARNING: This action will delete both local reference and remote instance.
+Are you sure? (y/n): y
+Successfully removed manager1
+Javeds-MacBook-Air:DevOps-Self javedalam$ 
+Javeds-MacBook-Air:DevOps-Self javedalam$ docker-machine ls
+NAME   ACTIVE   DRIVER   STATE   URL   SWARM   DOCKER   ERRORS
+Javeds-MacBook-Air:DevOps-Self javedalam$
+
+—————————————————————————————————————————————————————————————————————————
+
+
