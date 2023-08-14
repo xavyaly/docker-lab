@@ -166,6 +166,103 @@ Untagged: ubuntu@sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1f33a
 Deleted: sha256:37f74891464b2067aacbde60d9e2888e002af047a0d5dfc0b06b701928e0b473
 Deleted: sha256:c5ca84f245d30117a9a2720cb4297cedf3642816471d4d699f4d77e39e13a39c
 
+$ docker inspect 37f
+[
+    {
+        "Id": "sha256:37f74891464b2067aacbde60d9e2888e002af047a0d5dfc0b06b701928e0b473",
+        "RepoTags": [
+            "ubuntu:latest"
+        ],
+        "RepoDigests": [
+            "ubuntu@sha256:0bced47fffa3361afa981854fcabcd4577cd43cebbb808cea2b1f33a3dd7f508"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2023-06-28T08:42:50.42500211Z",
+        "Container": "04787ad63e8502484d39ddc351b44ab742a510855a342b0915491bf3f4cf703d",
+        "ContainerConfig": {
+            "Hostname": "04787ad63e85",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"/bin/bash\"]"
+            ],
+            "Image": "sha256:62d2c268ed32cbee7f6f4e678c086f69f9bf73299221963794e81e93cd3eb6b3",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "DockerVersion": "20.10.21",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/bash"
+            ],
+            "Image": "sha256:62d2c268ed32cbee7f6f4e678c086f69f9bf73299221963794e81e93cd3eb6b3",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "org.opencontainers.image.ref.name": "ubuntu",
+                "org.opencontainers.image.version": "22.04"
+            }
+        },
+        "Architecture": "arm64",
+        "Variant": "v8",
+        "Os": "linux",
+        "Size": 69185429,
+        "VirtualSize": 69185429,
+        "GraphDriver": {
+            "Data": {
+                "MergedDir": "/var/lib/docker/overlay2/188a167283c0346616e8f2e24660a1ce6298360ad3353cc2bbf6f0989af00384/merged",
+                "UpperDir": "/var/lib/docker/overlay2/188a167283c0346616e8f2e24660a1ce6298360ad3353cc2bbf6f0989af00384/diff",
+                "WorkDir": "/var/lib/docker/overlay2/188a167283c0346616e8f2e24660a1ce6298360ad3353cc2bbf6f0989af00384/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:c5ca84f245d30117a9a2720cb4297cedf3642816471d4d699f4d77e39e13a39c"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+$ 
+
 ---------------------------------------------------------------------------------------------
 
 # PULL DOCKER IMAGE FROM AN EXISTING IMAGE FROM DOCKERHUB
