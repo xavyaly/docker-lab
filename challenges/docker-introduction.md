@@ -1,3 +1,5 @@
+# DAY #1 
+
 # Docker Installation on all OS
 
 [Web Emulator For Practice](https://labs.play-with-docker.com)
@@ -26,6 +28,7 @@ $ sudo apt-get update		# This command will connect to the internet and download 
 
 --------------------------------------------------------------------------------------------------------
 
+# DAY #2
 
 # DOCKER ARCHITECTURE DIAGRAM
 
@@ -34,6 +37,7 @@ $ sudo apt-get update		# This command will connect to the internet and download 
 
 --------------------------------------------------------------------------------------------------------
 
+# DAY #2
 
 # DOCKER ARCHITECTURE COMPONENTS 
 
@@ -74,6 +78,8 @@ Docker's architecture involves several components that work together to enable t
 
 --------------------------------------------------------------------------------------------------------
 
+
+# DAY #3
 
 # DOCKER COMMANDS GENERIC SYNTAX
 
@@ -188,6 +194,7 @@ These commands cover a range of Docker operations, from managing containers and 
 
 --------------------------------------------------------------------------------------------------------
 
+# DAY #3
 
 # DOCKER COMMANDS ACTUAL EXECUTION
 
@@ -456,6 +463,8 @@ $
 
 ---------------------------------------------------------------------------------------------
 
+# DAY #4
+
 # PULL DOCKER IMAGE FROM AN EXISTING IMAGE FROM DOCKERHUB
 
 # SIGN UP TO DOCKER HUB: [SIGN UP](https://hub.docker.com/signup)
@@ -480,9 +489,10 @@ Deleted: sha256:7eae73787a4182623347cadec10cc7094b796f30fbed2cdaa751565852de3450
 Deleted: sha256:71dbac2c5f032161d84b20f1a341ff4da3b9d2c1537c7c62b85486631b190be7
 Deleted: sha256:9f54eef412758095c8079ac465d494a2872e02e90bf1fb5f12a1641c0d1bb78b
 
----------------------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------------------------------
+
+# DAY #4
 
 # Docker Installation:
 
@@ -540,6 +550,7 @@ Removing login credentials for https://index.docker.io/v1/
 
 --------------------------------------------------------------------------------------------------------
 
+# DAY #5
 
 # DOCKERFILE COMMANDS
 
