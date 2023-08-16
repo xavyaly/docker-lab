@@ -24,4 +24,9 @@ $ sudo apt-get update		# This command will connect to the internet and download 
 [Install Docker on AWS Machine](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04)
 
 
+# DOCKER ARCHITECTURE DIAGRAM
+
+<img width="508" alt="docker-architecture" src="https://github.com/xavyaly/docker-lab/assets/19641964/6746861e-385f-4071-86e5-3005c64d0d2e">
+
+
 
