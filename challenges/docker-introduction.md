@@ -541,5 +541,16 @@ Removing login credentials for https://index.docker.io/v1/
 --------------------------------------------------------------------------------------------------------
 
 
+# DOCKERFILE COMMANDS
+
+[DOCKERFILE](https://blog.knoldus.com/docker-dockerfile/)
+
+
+# REDUCE DOCKER IMAGE SIZE 
+
+[SLIM DOCKER IAMGES](https://semaphoreci.com/blog/reduce-docker-image-size)
+
+
+--------------------------------------------------------------------------------------------------------
 
 
