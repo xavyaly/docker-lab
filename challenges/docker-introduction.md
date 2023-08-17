@@ -702,6 +702,14 @@ Removing login credentials for https://index.docker.io/v1/
 
 # SAMPLE PROJECT TO UNDERSTAND DOCKER CONTAINER
 
+# Create a directory 
+```
+mkdir python
+cd python
+```
+
+# Follow the below steps 
+
 Certainly, I'll guide you through creating a simple Dockerfile, building an image, and running a container on your Mac. Let's use a basic Python web application as an example.
 
 1. **Create a Dockerfile**:
@@ -754,6 +762,28 @@ Certainly, I'll guide you through creating a simple Dockerfile, building an imag
 
    ```bash
    docker build -t python-web-app .
+
+%  $ docker build -t python-web-app .
+% [+] Building 4.2s (11/11) FINISHED                                                                                          
+%  => [internal] load .dockerignore                                                                                      0.0s
+%  => => transferring context: 2B                                                                                        0.0s
+%  => [internal] load build definition from Dockerfile                                                                   0.0s
+%  => => transferring dockerfile: 213B                                                                                   0.0s
+%  => [internal] load metadata for docker.io/library/python:3.8                                                          4.1s
+%  => [auth] library/python:pull token for registry-1.docker.io                                                          0.0s
+%  => [internal] load build context                                                                                      0.0s
+%  => => transferring context: 394B                                                                                      0.0s
+%  => [1/5] FROM docker.io/library/python:3.8@sha256:445daa405d17b65d0ab3626082691f93637c9aa78aae5e72b5971685716b2e99    0.0s
+%  => => resolve docker.io/library/python:3.8@sha256:445daa405d17b65d0ab3626082691f93637c9aa78aae5e72b5971685716b2e99    0.0s
+%  => CACHED [2/5] WORKDIR /app                                                                                          0.0s
+%  => CACHED [3/5] COPY requirement.txt .                                                                                0.0s
+%  => CACHED [4/5] RUN pip install --no-cache-dir -r requirement.txt                                                     0.0s
+%  => [5/5] COPY . .                                                                                                     0.0s
+%  => exporting to image                                                                                                 0.0s
+%  => => exporting layers                                                                                                0.0s
+%  => => writing image sha256:8dfce5caa92d774c4a8aa814ea8c8129b3be7799cb61f8c840e0d2aa80fd0d84                           0.0s
+%  => => naming to docker.io/library/python-web-app   
+
    ```
 
    This command builds an image named `python-web-app` using the current directory as the build context.
@@ -763,6 +793,18 @@ Certainly, I'll guide you through creating a simple Dockerfile, building an imag
 
    ```bash
    docker run -p 8080:80 python-web-app
+
+ <!-- $ docker run -p 8080:80 python-web-app
+ * Serving Flask app 'app'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:80
+ * Running on http://172.17.0.2:80
+Press CTRL+C to quit
+172.17.0.1 - - [17/Aug/2023 06:55:42] "GET / HTTP/1.1" 200 -
+172.17.0.1 - - [17/Aug/2023 06:57:04] "GET / HTTP/1.1" 200 - -->
+
    ```
 
    This maps port 8080 on your local machine to port 80 inside the container.
