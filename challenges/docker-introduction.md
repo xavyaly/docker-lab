@@ -820,6 +820,96 @@ Remember that this is a simple example to get you started. You can modify the Do
 
 # DOCKER CONTAINER
 
+# Imp point:
+# Container gets attached to a network and gets a virtual IP
+# inside the private network, typically default bridge network 
+# Opens up ports to serve the requests
+
+# REMOVE THE DOCKER MULTIPLE CONTAINERS
+   $ docker rm $(docker ps -a)
+
+# REMOVE THE DOCKER MULTIPLE IMAGES
+    docker rmi $(docker images)
+   
+
+# CREATE A NGINX CONTAINER 
+   $ docker run nginx            # it runs in the foreground and terminal is attached to its process
+   $ docker run --detach nginx   # run the container in detached(background) mode using --detach
+
+   $ docker ps                    # list all running containers
+   $ docker ps -a                 # list all running and exited containers 
+
+   
+   # INSPECT A CONTAINER
+   $ docker inspect container <CONTAINER ID>
+
+   
+   # FETCH THE CONTAINER IP 
+   $ docker container inspect --format "{{.NetworkSettings.IPAddress}}" <CONTAINER ID>
+   172.17.0.2
+   $ curl <IP>:<PORT>
+
+
+   # CONTAINER START AND STOP AND REMOVE 
+   $ docker ps -a
+   CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+   2272c999aa2f   nginx     "/docker-entrypoint.…"   9 minutes ago   Up 9 minutes   80/tcp    charming_meninsky
+   $ docker stop 22
+   22
+   $ docker ps -a
+   CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                     PORTS     NAMES
+   2272c999aa2f   nginx     "/docker-entrypoint.…"   9 minutes ago   Exited (0) 2 seconds ago             charming_meninsky
+   $ docker start 22
+   22
+   $ docker ps -a
+   CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS        PORTS     NAMES
+   2272c999aa2f   nginx     "/docker-entrypoint.…"   10 minutes ago   Up 1 second   80/tcp    charming_meninsky   
+   $ docker rm 22
+   Error response from daemon: You cannot remove a running container 2272c999aa2fad2091dfa45298119803bf0f833b2c9af28a4a90ac80142789c2. Stop the container before attempting removal or force remove
+   $ docker stop 22
+   22
+   $ docker rm 22
+   22
+
+
+   # PORT MAPPING 
+   $ docker run --detach -p 8080:80 nginx 
+   $ docker run --detach -p 8080:80 nginx 
+   Unable to find image 'nginx:latest' locally
+   latest: Pulling from library/nginx
+   4ee097f9a366: Pull complete 
+   6710b2157bb5: Pull complete 
+   76d048093f36: Pull complete 
+   658197f4b592: Pull complete 
+   a2543a59b279: Pull complete 
+   3972a57e5575: Pull complete 
+   82359da50743: Pull complete 
+   Digest: sha256:104c7c5c54f2685f0f46f3be607ce60da7085da3eaa5ad22d3d9f01594295e9c
+   Status: Downloaded newer image for nginx:latest
+   4cc6af0d9e4b80eff4230efe2116662d3b2b2235a11c77b40f7d2c4f7e7b32bd
+   $ docker images -a
+   REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+   nginx        latest    ab73c7fd6723   2 days ago   192MB
+   $ docker ps -a
+   CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                  NAMES
+   4cc6af0d9e4b   nginx     "/docker-entrypoint.…"   13 seconds ago   Up 13 seconds   0.0.0.0:8080->80/tcp   hopeful_stonebraker
+
+   # Try in browser
+      http://localhost:8080
+      Welcome to nginx!
+
+      If you see this page, the nginx web server is successfully installed and working. Further configuration is required.
+
+      For online documentation and support please refer to nginx.org.
+      Commercial support is available at nginx.com.
+
+      Thank you for using nginx.
+
+   # CONTAINER IP
+   $ docker inspect --format "{{.NetworkSettings.IPAddress}}" 4cc
+   172.17.0.2
+   # HOST IP
+   $ docker container inspect 4cc      # HostIp 
 
 
 --------------------------------------------------------------------------------------------------------
