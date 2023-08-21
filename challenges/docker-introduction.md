@@ -874,7 +874,6 @@ Remember that this is a simple example to get you started. You can modify the Do
 
    # PORT MAPPING 
    $ docker run --detach -p 8080:80 nginx 
-   $ docker run --detach -p 8080:80 nginx 
    Unable to find image 'nginx:latest' locally
    latest: Pulling from library/nginx
    4ee097f9a366: Pull complete 
@@ -914,4 +913,245 @@ Remember that this is a simple example to get you started. You can modify the Do
 
 --------------------------------------------------------------------------------------------------------
 
+# DOCKER CONTAINERS 
+
+$ docker images -a
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+
+# remove a running continer forcefully
+$ docker rm <Container ID> -f
+
+
+# Create a new nginx container
+$ docker run -d -p 8080:80 nginx 
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+4ee097f9a366: Pull complete 
+6710b2157bb5: Pull complete 
+76d048093f36: Pull complete 
+658197f4b592: Pull complete 
+a2543a59b279: Pull complete 
+3972a57e5575: Pull complete 
+82359da50743: Pull complete 
+Digest: sha256:104c7c5c54f2685f0f46f3be607ce60da7085da3eaa5ad22d3d9f01594295e9c
+Status: Downloaded newer image for nginx:latest
+77b9a43da5e05d86ec7752aad5a5f3150d99d0ac9237680a70435126f6959519
+
+# rename an existing container 
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                  NAMES
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   6 seconds ago   Up 5 seconds   0.0.0.0:8080->80/tcp   gifted_shockley
+$ docker rename gifted_shockley nginx-0.1
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                  NAMES
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   32 seconds ago   Up 31 seconds   0.0.0.0:8080->80/tcp   nginx-0.1
+
+
+# Stop a running container 
+$ docker stop 77
+77
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                    PORTS     NAMES
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   2 minutes ago   Exited (0) 1 second ago             nginx-0.1
+
+
+# Start a stopped container
+$ docker start 77
+77
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS        PORTS                  NAMES
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   3 minutes ago   Up 1 second   0.0.0.0:8080->80/tcp   nginx-0.1
+
+
+# Container Logs
+$ docker container logs nginx-0.1
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2023/08/21 06:52:08 [notice] 1#1: using the "epoll" event method
+2023/08/21 06:52:08 [notice] 1#1: nginx/1.25.2
+2023/08/21 06:52:08 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2023/08/21 06:52:08 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/21 06:52:08 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/21 06:52:08 [notice] 1#1: start worker processes
+2023/08/21 06:52:08 [notice] 1#1: start worker process 29
+2023/08/21 06:52:08 [notice] 1#1: start worker process 30
+2023/08/21 06:52:08 [notice] 1#1: start worker process 31
+2023/08/21 06:52:08 [notice] 1#1: start worker process 32
+2023/08/21 06:54:43 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/08/21 06:54:43 [notice] 30#30: gracefully shutting down
+2023/08/21 06:54:43 [notice] 29#29: gracefully shutting down
+2023/08/21 06:54:43 [notice] 31#31: gracefully shutting down
+2023/08/21 06:54:43 [notice] 30#30: exiting
+2023/08/21 06:54:43 [notice] 32#32: gracefully shutting down
+2023/08/21 06:54:43 [notice] 30#30: exit
+2023/08/21 06:54:43 [notice] 32#32: exiting
+2023/08/21 06:54:43 [notice] 32#32: exit
+2023/08/21 06:54:43 [notice] 31#31: exiting
+2023/08/21 06:54:43 [notice] 29#29: exiting
+2023/08/21 06:54:43 [notice] 29#29: exit
+2023/08/21 06:54:43 [notice] 31#31: exit
+2023/08/21 06:54:43 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/08/21 06:54:43 [notice] 1#1: worker process 31 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: signal 29 (SIGIO) received
+2023/08/21 06:54:43 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/08/21 06:54:43 [notice] 1#1: worker process 29 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: worker process 32 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: worker process 30 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: exit
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2023/08/21 06:55:38 [notice] 1#1: using the "epoll" event method
+2023/08/21 06:55:38 [notice] 1#1: nginx/1.25.2
+2023/08/21 06:55:38 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2023/08/21 06:55:38 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/21 06:55:38 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/21 06:55:38 [notice] 1#1: start worker processes
+2023/08/21 06:55:38 [notice] 1#1: start worker process 22
+2023/08/21 06:55:38 [notice] 1#1: start worker process 23
+2023/08/21 06:55:38 [notice] 1#1: start worker process 24
+2023/08/21 06:55:38 [notice] 1#1: start worker process 25
+
+$ docker container logs -f nginx-0.1
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2023/08/21 06:52:08 [notice] 1#1: using the "epoll" event method
+2023/08/21 06:52:08 [notice] 1#1: nginx/1.25.2
+2023/08/21 06:52:08 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2023/08/21 06:52:08 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/21 06:52:08 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/21 06:52:08 [notice] 1#1: start worker processes
+2023/08/21 06:52:08 [notice] 1#1: start worker process 29
+2023/08/21 06:52:08 [notice] 1#1: start worker process 30
+2023/08/21 06:52:08 [notice] 1#1: start worker process 31
+2023/08/21 06:52:08 [notice] 1#1: start worker process 32
+2023/08/21 06:54:43 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2023/08/21 06:54:43 [notice] 30#30: gracefully shutting down
+2023/08/21 06:54:43 [notice] 29#29: gracefully shutting down
+2023/08/21 06:54:43 [notice] 31#31: gracefully shutting down
+2023/08/21 06:54:43 [notice] 30#30: exiting
+2023/08/21 06:54:43 [notice] 32#32: gracefully shutting down
+2023/08/21 06:54:43 [notice] 30#30: exit
+2023/08/21 06:54:43 [notice] 32#32: exiting
+2023/08/21 06:54:43 [notice] 32#32: exit
+2023/08/21 06:54:43 [notice] 31#31: exiting
+2023/08/21 06:54:43 [notice] 29#29: exiting
+2023/08/21 06:54:43 [notice] 29#29: exit
+2023/08/21 06:54:43 [notice] 31#31: exit
+2023/08/21 06:54:43 [notice] 1#1: signal 17 (SIGCHLD) received from 31
+2023/08/21 06:54:43 [notice] 1#1: worker process 31 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: signal 29 (SIGIO) received
+2023/08/21 06:54:43 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/08/21 06:54:43 [notice] 1#1: worker process 29 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: worker process 32 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: worker process 30 exited with code 0
+2023/08/21 06:54:43 [notice] 1#1: exit
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: IPv6 listen already enabled
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2023/08/21 06:55:38 [notice] 1#1: using the "epoll" event method
+2023/08/21 06:55:38 [notice] 1#1: nginx/1.25.2
+2023/08/21 06:55:38 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2023/08/21 06:55:38 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/21 06:55:38 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/21 06:55:38 [notice] 1#1: start worker processes
+2023/08/21 06:55:38 [notice] 1#1: start worker process 22
+2023/08/21 06:55:38 [notice] 1#1: start worker process 23
+2023/08/21 06:55:38 [notice] 1#1: start worker process 24
+2023/08/21 06:55:38 [notice] 1#1: start worker process 25
+...
+...
+
+
+# Container processes
+$ docker top 77                     # 77 is container id 
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                97722               97698               0                   06:55               ?                   00:00:00            nginx: master process nginx -g daemon off;
+uuidd               97768               97722               0                   06:55               ?                   00:00:00            nginx: worker process
+uuidd               97769               97722               0                   06:55               ?                   00:00:00            nginx: worker process
+uuidd               97770               97722               0                   06:55               ?                   00:00:00            nginx: worker process
+uuidd               97771               97722               0                   06:55               ?                   00:00:00            nginx: worker process
+
+
+# Containers stats: CPU, Mem usage etc 
+$ docker container stats <container id>
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O    PIDS
+77b9a43da5e0   nginx-0.1   0.00%     4.227MiB / 3.841GiB   0.11%     1.16kB / 0B   0B / 4.1kB   5
+
+
+# Remove a container
+$ docker rm <container id>
+$ docker rm <container id> -f       # for running container
+
+
+# Kill a running container
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS         PORTS                  NAMES
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   10 minutes ago   Up 7 minutes   0.0.0.0:8080->80/tcp   nginx-0.1
+$ docker container kill 77          # 77 is container id 
+77
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                       PORTS     NAMES
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   11 minutes ago   Exited (137) 3 seconds ago             nginx-0.1
+
+--------------------------------------------------------------------------------------------------------
+
+# Docker Container Shell Access: LOGIN TO CONTAINER
+
+-i: INTERACTIVE or STD_IN
+-t: TERMINAL or STD_OUT
+
+$ docker run -it --name ubuntu bash 
+Unable to find image 'bash:latest' locally
+latest: Pulling from library/bash
+9fda8d8052c6: Pull complete 
+8c4de22bc10f: Pull complete 
+d35fda97a14a: Pull complete 
+Digest: sha256:d91f283473ba66c94dbd3b2aaab45cef4d67e65eec107481c2357f15f51a48b8
+Status: Downloaded newer image for bash:latest
+bash-5.2# 
+bash-5.2# hostname
+49a4a26bbed2
+bash-5.2# uname -a
+Linux 49a4a26bbed2 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022 aarch64 Linux
+bash-5.2# exit
+
+$ docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                        PORTS     NAMES
+49a4a26bbed2   bash      "docker-entrypoint.s…"   4 minutes ago    Exited (130) 12 seconds ago             ubuntu
+77b9a43da5e0   nginx     "/docker-entrypoint.…"   18 minutes ago   Exited (0) 5 minutes ago                nginx-0.1
+
+
+# Note: While moving out no need to fire exit command else your container dies
+
+# We will see how to exit from the container without dying 
+
+--------------------------------------------------------------------------------------------------------
 
