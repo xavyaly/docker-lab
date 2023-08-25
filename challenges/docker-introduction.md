@@ -1144,17 +1144,182 @@ Linux 49a4a26bbed2 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022 
 bash-5.2# exit
 
 $ docker ps -a
-CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                        PORTS     NAMES
-49a4a26bbed2   bash      "docker-entrypoint.s…"   4 minutes ago    Exited (130) 12 seconds ago             ubuntu
-77b9a43da5e0   nginx     "/docker-entrypoint.…"   18 minutes ago   Exited (0) 5 minutes ago                nginx-0.1
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                        PORTS     NAMES
+6da7642d1180   bash                                  "docker-entrypoint.s…"   10 minutes ago   Up 7 minutes                            ubuntu
 
 
-# Note: While moving out no need to fire exit command else your container dies
+# Note: Make sure to exit the command so that our container never exited
 
-# We will see how to exit from the container without dying 
+ctrl+P, ctrl+Q
+
+# Login to a running container
+
+$ docker ps -a
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                        PORTS     NAMES
+6da7642d1180   bash                                  "docker-entrypoint.s…"   12 minutes ago   Up 9 minutes                            ubuntu
+
+$ docker exec -it <container-id> bash
+```
+$ docker exec -it 6da7642d1180 bash
+bash-5.2# uname -a
+Linux 6da7642d1180 5.15.49-linuxkit #1 SMP PREEMPT Tue Sep 13 07:51:32 UTC 2022 aarch64 Linux
+```
+
+
+# IMAGE INSPECT 
+
+$ docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+db76c1f8aa17: Pull complete 
+Digest: sha256:ec050c32e4a6085b423d36ecd025c0d3ff00c38ab93a3d71a460ff1c44fa6d77
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+
+$ docker images -a
+REPOSITORY                    TAG       IMAGE ID       CREATED        SIZE
+ubuntu                        latest    a2f229f811bf   3 weeks ago    69.2MB
+
+$ docker image inspect ubuntu | grep "69187939"
+        "Size": 69187939,
+        "VirtualSize": 69187939,
+
+
+# INTERACT WITH CONTAINER
+```
+REFER ABOVE COMMANDS
+```
+
+--------------------------------------------------------------------------------------------------------
+
+# COMMIT CHANGES IN CONTAINER TO A IMAGE
+
+$ docker ps -a
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                        PORTS     NAMES
+6da7642d1180   bash                                  "docker-entrypoint.s…"   22 minutes ago   Up 19 minutes                           ubuntu
+
+$ docker commit 6da7642d1180 jd:0.1
+sha256:304ea80e42a15b3f60af9ea6ce3fd5a1dff912f2dea3cc83140927eb93f7e49e
+
+$ docker images -a
+REPOSITORY                    TAG       IMAGE ID       CREATED          SIZE
+jd                            0.1       304ea80e42a1   21 seconds ago   16.3MB
+
+$ docker run -it 304ea80e42a1  bash 
+bash-5.2# 
+bash-5.2# exit
+
+$ docker ps -a
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                        PORTS     NAMES
+a769463e6e80   304ea80e42a1                          "docker-entrypoint.s…"   11 seconds ago   Exited (0) 3 seconds ago                competent_dijkstra
 
 --------------------------------------------------------------------------------------------------------
 
 [Docker CLI Commands](https://docs.docker.com/engine/reference/run/)
 
 --------------------------------------------------------------------------------------------------------
+
+# DOCKER NETWORKING
+
+$ docker network ls
+NETWORK ID     NAME       DRIVER    SCOPE
+a1de4a47ae08   bridge     bridge    local
+978bc14b731e   host       host      local
+d992199cc5d9   minikube   bridge    local
+48bcb2d731c8   none       null      local
+
+$ docker network inspect bridge
+[
+    {
+        "Name": "bridge",
+        "Id": "a1de4a47ae08ca6409580e99588138027527d2ca153b47fdcb2ca867f96bfe75",
+        "Created": "2023-08-16T10:09:14.975529708Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.17.0.0/16",
+                    "Gateway": "172.17.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {
+            "com.docker.network.bridge.default_bridge": "true",
+            "com.docker.network.bridge.enable_icc": "true",
+            "com.docker.network.bridge.enable_ip_masquerade": "true",
+            "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+            "com.docker.network.bridge.name": "docker0",
+            "com.docker.network.driver.mtu": "65535"
+        },
+        "Labels": {}
+    }
+]
+
+$ docker network inspect host
+[
+    {
+        "Name": "host",
+        "Id": "978bc14b731e92de9c4ff38892a8853a54028f0f8e3b202e22ff67a3018654b2",
+        "Created": "2023-05-06T19:19:58.286646583Z",
+        "Scope": "local",
+        "Driver": "host",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": []
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+$ docker network inspect none
+[
+    {
+        "Name": "none",
+        "Id": "48bcb2d731c841db858c7e88bbb710af5dd3bfc226aa24988852545afc8348cf",
+        "Created": "2023-05-06T19:19:58.277581916Z",
+        "Scope": "local",
+        "Driver": "null",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": []
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {},
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+--------------------------------------------------------------------------------------------------------
+
