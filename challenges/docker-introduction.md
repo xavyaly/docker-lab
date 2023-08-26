@@ -1323,3 +1323,464 @@ $ docker network inspect none
 
 --------------------------------------------------------------------------------------------------------
 
+# BRIDGE NETOWORK
+
+$ docker run -d -it --name c1 ubuntu
+```
+$ docker run -d -it --name c1 ubuntu
+a2d551633af9b16e3c3b26764dc6419519bdeeed0e68bbcab26c0ee3c8c5adb2
+```
+
+$ docker run -d -it --name c2 ubuntu
+```
+$ docker run -d -it --name c2 ubuntu
+aab7309dcc49c09282dd6faf2f1668ad2a715fc09eae862c5a6ac6bc65531ad3
+```
+
+$ docker ps -a
+```
+$ docker ps -a
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                      PORTS     NAMES
+a2d551633af9   ubuntu                                "/bin/bash"              57 seconds ago   Up 56 seconds                         c1
+aab7309dcc49   ubuntu                                "/bin/bash"              8 minutes ago    Up 8 minutes                          c2
+a769463e6e80   304ea80e42a1                          "docker-entrypoint.s…"   24 hours ago     Exited (0) 24 hours ago               competent_dijkstra
+865c325fcef5   gcr.io/k8s-minikube/kicbase:v0.0.39   "/usr/local/bin/entr…"   2 days ago       Exited (130) 24 hours ago             minikube
+```
+
+# LOGIN TO ANY CONTIANER
+$ docker exec -it aa bash
+```
+$ docker exec -it aa bash
+root@aab7309dcc49:/# 
+root@aab7309dcc49:/# hostname
+aab7309dcc49
+root@aab7309dcc49:/# ping c1
+bash: ping: command not found
+
+root@aab7309dcc49:/# ps -ef | grep ping
+root          20       9  0 06:46 pts/1    00:00:00 grep --color=auto ping
+
+root@aab7309dcc49:/# apt-get update
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy InRelease [270 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [119 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-backports InRelease [109 kB]
+Get:4 http://ports.ubuntu.com/ubuntu-ports jammy-security InRelease [110 kB]
+Get:5 http://ports.ubuntu.com/ubuntu-ports jammy/multiverse arm64 Packages [224 kB]
+Get:6 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages [17.2 MB]
+Get:7 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 Packages [1758 kB]
+Get:8 http://ports.ubuntu.com/ubuntu-ports jammy/restricted arm64 Packages [24.2 kB]
+Get:9 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 Packages [1016 kB]
+Get:10 http://ports.ubuntu.com/ubuntu-ports jammy-updates/multiverse arm64 Packages [27.8 kB]
+Get:11 http://ports.ubuntu.com/ubuntu-ports jammy-updates/restricted arm64 Packages [556 kB]
+Get:12 http://ports.ubuntu.com/ubuntu-ports jammy-updates/universe arm64 Packages [1127 kB]
+Get:13 http://ports.ubuntu.com/ubuntu-ports jammy-backports/universe arm64 Packages [23.7 kB]                                                          
+Get:14 http://ports.ubuntu.com/ubuntu-ports jammy-backports/main arm64 Packages [48.8 kB]                                                              
+Get:15 http://ports.ubuntu.com/ubuntu-ports jammy-security/universe arm64 Packages [870 kB]                                                            
+Get:16 http://ports.ubuntu.com/ubuntu-ports jammy-security/restricted arm64 Packages [548 kB]                                                          
+Get:17 http://ports.ubuntu.com/ubuntu-ports jammy-security/multiverse arm64 Packages [23.4 kB]                                                         
+Get:18 http://ports.ubuntu.com/ubuntu-ports jammy-security/main arm64 Packages [748 kB]                                                                
+Fetched 24.8 MB in 7s (3633 kB/s)                                                                                                                      
+Reading package lists... Done
+root@aab7309dcc49:/# 
+
+root@aab7309dcc49:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+Need to get 76.8 kB of archives.
+After this operation, 255 kB of additional disk space will be used.
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 libcap2-bin arm64 1:2.44-1ubuntu0.22.04.1 [25.5 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 iputils-ping arm64 3:20211215-1 [43.3 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 libpam-cap arm64 1:2.44-1ubuntu0.22.04.1 [7968 B]
+Fetched 76.8 kB in 1s (82.7 kB/s)     
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 4389 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.44-1ubuntu0.22.04.1_arm64.deb ...
+Unpacking libcap2-bin (1:2.44-1ubuntu0.22.04.1) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20211215-1_arm64.deb ...
+Unpacking iputils-ping (3:20211215-1) ...
+Selecting previously unselected package libpam-cap:arm64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1ubuntu0.22.04.1_arm64.deb ...
+Unpacking libpam-cap:arm64 (1:2.44-1ubuntu0.22.04.1) ...
+Setting up libcap2-bin (1:2.44-1ubuntu0.22.04.1) ...
+Setting up libpam-cap:arm64 (1:2.44-1ubuntu0.22.04.1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/aarch64-linux-gnu/perl/5.34.0 /usr/local/share/perl/5.34.0 /usr/lib/aarch64-linux-gnu/perl5/5.34 /usr/share/perl5 /usr/lib/aarch64-linux-gnu/perl-base /usr/lib/aarch64-linux-gnu/perl/5.34 /usr/share/perl/5.34 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20211215-1) ...
+root@aab7309dcc49:/# 
+
+root@aab7309dcc49:/# ping c1
+ping: c1: Name or service not known
+```
+
+# CREATE A BRIDGE NETWORK
+
+$ docker network create -d bridge i_net
+```
+$ docker network create -d bridge i_net
+a4a1478bab181997182b1495852a38df533d389ef1f2d868581278fe9c24fb11
+```
+
+$ docker network ls
+```
+$ docker network ls
+NETWORK ID     NAME       DRIVER    SCOPE
+a1de4a47ae08   bridge     bridge    local
+978bc14b731e   host       host      local
+a4a1478bab18   i_net      bridge    local
+d992199cc5d9   minikube   bridge    local
+48bcb2d731c8   none       null      local
+```
+
+$ docker ps -a
+```
+$ docker ps -a
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS                      PORTS     NAMES
+a2d551633af9   ubuntu                                "/bin/bash"              5 minutes ago    Up 5 minutes                          c1
+aab7309dcc49   ubuntu                                "/bin/bash"              12 minutes ago   Up 12 minutes                         c2
+a769463e6e80   304ea80e42a1                          "docker-entrypoint.s…"   24 hours ago     Exited (0) 24 hours ago               competent_dijkstra
+865c325fcef5   gcr.io/k8s-minikube/kicbase:v0.0.39   "/usr/local/bin/entr…"   2 days ago       Exited (130) 24 hours ago             minikube
+```
+
+$ docker run -d -it --net i_net --name c1 ubuntu 
+```
+$ docker run -d -it --net i_net --name c1 ubuntu 
+docker: Error response from daemon: Conflict. The container name "/c1" is already in use by container "a2d551633af9b16e3c3b26764dc6419519bdeeed0e68bbcab26c0ee3c8c5adb2". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+```
+
+$ docker run -d -it --net i_net --name c1 a2
+```
+$ docker run -d -it --net i_net --name c1 a2
+docker: Error response from daemon: Conflict. The container name "/c1" is already in use by container "a2d551633af9b16e3c3b26764dc6419519bdeeed0e68bbcab26c0ee3c8c5adb2". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+```
+
+$ docker rm a2 aa -f
+```
+$ docker rm a2 aa -f
+a2
+aa
+```
+
+$ docker run -d -it --net i_net --name c1 ubuntu
+```
+$ docker run -d -it --net i_net --name c1 ubuntu
+b07bcb07e1146275b5e32a0b96cfef719eca3e8caceae78de849be5e86da0d11
+```
+
+$ docker run -d -it --net i_net --name c2 ubuntu
+```
+$ docker run -d -it --net i_net --name c2 ubuntu
+137b15460b05bfafaa05c6df9816240471154b7610d7c91ea65d11590e6ecc36
+```
+
+
+# Login to c1 container and try ping command to check the connectivity
+```
+$ docker exec -it c1 bash 
+root@b07bcb07e114:/# ping c2
+bash: ping: command not found
+root@b07bcb07e114:/# 
+
+root@b07bcb07e114:/# apt-get update
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy InRelease [270 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [119 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-backports InRelease [109 kB]
+Get:4 http://ports.ubuntu.com/ubuntu-ports jammy-security InRelease [110 kB]
+Get:5 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages [17.2 MB]
+Get:6 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 Packages [1758 kB]
+Get:7 http://ports.ubuntu.com/ubuntu-ports jammy/restricted arm64 Packages [24.2 kB]
+Get:8 http://ports.ubuntu.com/ubuntu-ports jammy/multiverse arm64 Packages [224 kB]
+Get:9 http://ports.ubuntu.com/ubuntu-ports jammy-updates/restricted arm64 Packages [556 kB]
+Get:10 http://ports.ubuntu.com/ubuntu-ports jammy-updates/universe arm64 Packages [1127 kB]
+Get:11 http://ports.ubuntu.com/ubuntu-ports jammy-updates/multiverse arm64 Packages [27.8 kB]
+Get:12 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 Packages [1016 kB]
+Get:13 http://ports.ubuntu.com/ubuntu-ports jammy-backports/universe arm64 Packages [23.7 kB]                                                          
+Get:14 http://ports.ubuntu.com/ubuntu-ports jammy-backports/main arm64 Packages [48.8 kB]                                                              
+Get:15 http://ports.ubuntu.com/ubuntu-ports jammy-security/multiverse arm64 Packages [23.4 kB]                                                         
+Get:16 http://ports.ubuntu.com/ubuntu-ports jammy-security/universe arm64 Packages [870 kB]                                                            
+Get:17 http://ports.ubuntu.com/ubuntu-ports jammy-security/main arm64 Packages [748 kB]                                                                
+Get:18 http://ports.ubuntu.com/ubuntu-ports jammy-security/restricted arm64 Packages [548 kB]                                                          
+Fetched 24.8 MB in 7s (3724 kB/s)                                                                                                                      
+Reading package lists... Done
+root@b07bcb07e114:/# 
+
+root@b07bcb07e114:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+Need to get 76.8 kB of archives.
+After this operation, 255 kB of additional disk space will be used.
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 libcap2-bin arm64 1:2.44-1ubuntu0.22.04.1 [25.5 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 iputils-ping arm64 3:20211215-1 [43.3 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 libpam-cap arm64 1:2.44-1ubuntu0.22.04.1 [7968 B]
+Fetched 76.8 kB in 1s (86.7 kB/s)   
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 4389 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.44-1ubuntu0.22.04.1_arm64.deb ...
+Unpacking libcap2-bin (1:2.44-1ubuntu0.22.04.1) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20211215-1_arm64.deb ...
+Unpacking iputils-ping (3:20211215-1) ...
+Selecting previously unselected package libpam-cap:arm64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1ubuntu0.22.04.1_arm64.deb ...
+Unpacking libpam-cap:arm64 (1:2.44-1ubuntu0.22.04.1) ...
+Setting up libcap2-bin (1:2.44-1ubuntu0.22.04.1) ...
+Setting up libpam-cap:arm64 (1:2.44-1ubuntu0.22.04.1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/aarch64-linux-gnu/perl/5.34.0 /usr/local/share/perl/5.34.0 /usr/lib/aarch64-linux-gnu/perl5/5.34 /usr/share/perl5 /usr/lib/aarch64-linux-gnu/perl-base /usr/lib/aarch64-linux-gnu/perl/5.34 /usr/share/perl/5.34 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20211215-1) ...
+root@b07bcb07e114:/# 
+
+root@b07bcb07e114:/# ping c2
+PING c2 (172.18.0.3) 56(84) bytes of data.
+64 bytes from c2.i_net (172.18.0.3): icmp_seq=1 ttl=64 time=2.06 ms
+64 bytes from c2.i_net (172.18.0.3): icmp_seq=2 ttl=64 time=0.222 ms
+64 bytes from c2.i_net (172.18.0.3): icmp_seq=3 ttl=64 time=0.445 ms
+64 bytes from c2.i_net (172.18.0.3): icmp_seq=4 ttl=64 time=0.490 ms
+^C
+--- c2 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3007ms
+rtt min/avg/max/mdev = 0.222/0.803/2.057/0.730 ms
+root@b07bcb07e114:/# 
+root@b07bcb07e114:/# exit
+exit
+
+```
+
+# Try from another container
+
+```
+$ docker ps -a
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS                      PORTS     NAMES
+137b15460b05   ubuntu                                "/bin/bash"              8 minutes ago   Up 8 minutes                          c2
+b07bcb07e114   ubuntu                                "/bin/bash"              8 minutes ago   Up 8 minutes                          c1
+a769463e6e80   304ea80e42a1                          "docker-entrypoint.s…"   24 hours ago    Exited (0) 24 hours ago               competent_dijkstra
+865c325fcef5   gcr.io/k8s-minikube/kicbase:v0.0.39   "/usr/local/bin/entr…"   2 days ago      Exited (130) 25 hours ago             minikube
+
+$ docker exec -it c2 bash 
+root@137b15460b05:/# ping c1
+bash: ping: command not found
+
+root@137b15460b05:/# apt-get update 
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy InRelease [270 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy-updates InRelease [119 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-backports InRelease [109 kB]
+Get:4 http://ports.ubuntu.com/ubuntu-ports jammy-security InRelease [110 kB]
+Get:5 http://ports.ubuntu.com/ubuntu-ports jammy/restricted arm64 Packages [24.2 kB]
+Get:6 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 Packages [1758 kB]
+Get:7 http://ports.ubuntu.com/ubuntu-ports jammy/universe arm64 Packages [17.2 MB]
+Get:8 http://ports.ubuntu.com/ubuntu-ports jammy/multiverse arm64 Packages [224 kB]
+Get:9 http://ports.ubuntu.com/ubuntu-ports jammy-updates/universe arm64 Packages [1127 kB]
+Get:10 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 Packages [1016 kB]
+Get:11 http://ports.ubuntu.com/ubuntu-ports jammy-updates/restricted arm64 Packages [556 kB]
+Get:12 http://ports.ubuntu.com/ubuntu-ports jammy-updates/multiverse arm64 Packages [27.8 kB]
+Get:13 http://ports.ubuntu.com/ubuntu-ports jammy-backports/main arm64 Packages [48.8 kB]
+Get:14 http://ports.ubuntu.com/ubuntu-ports jammy-backports/universe arm64 Packages [23.7 kB]
+Get:15 http://ports.ubuntu.com/ubuntu-ports jammy-security/universe arm64 Packages [870 kB]
+Get:16 http://ports.ubuntu.com/ubuntu-ports jammy-security/restricted arm64 Packages [548 kB]
+Get:17 http://ports.ubuntu.com/ubuntu-ports jammy-security/multiverse arm64 Packages [23.4 kB]
+Get:18 http://ports.ubuntu.com/ubuntu-ports jammy-security/main arm64 Packages [748 kB]
+Fetched 24.8 MB in 6s (4121 kB/s)                                                                                                                      
+Reading package lists... Done
+root@137b15460b05:/# 
+
+root@137b15460b05:/# apt-get install -y iputils-ping
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2-bin libpam-cap
+0 upgraded, 3 newly installed, 0 to remove and 2 not upgraded.
+Need to get 76.8 kB of archives.
+After this operation, 255 kB of additional disk space will be used.
+Get:1 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 libcap2-bin arm64 1:2.44-1ubuntu0.22.04.1 [25.5 kB]
+Get:2 http://ports.ubuntu.com/ubuntu-ports jammy/main arm64 iputils-ping arm64 3:20211215-1 [43.3 kB]
+Get:3 http://ports.ubuntu.com/ubuntu-ports jammy-updates/main arm64 libpam-cap arm64 1:2.44-1ubuntu0.22.04.1 [7968 B]
+Fetched 76.8 kB in 1s (89.5 kB/s)   
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2-bin.
+(Reading database ... 4389 files and directories currently installed.)
+Preparing to unpack .../libcap2-bin_1%3a2.44-1ubuntu0.22.04.1_arm64.deb ...
+Unpacking libcap2-bin (1:2.44-1ubuntu0.22.04.1) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20211215-1_arm64.deb ...
+Unpacking iputils-ping (3:20211215-1) ...
+Selecting previously unselected package libpam-cap:arm64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1ubuntu0.22.04.1_arm64.deb ...
+Unpacking libpam-cap:arm64 (1:2.44-1ubuntu0.22.04.1) ...
+Setting up libcap2-bin (1:2.44-1ubuntu0.22.04.1) ...
+Setting up libpam-cap:arm64 (1:2.44-1ubuntu0.22.04.1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/aarch64-linux-gnu/perl/5.34.0 /usr/local/share/perl/5.34.0 /usr/lib/aarch64-linux-gnu/perl5/5.34 /usr/share/perl5 /usr/lib/aarch64-linux-gnu/perl-base /usr/lib/aarch64-linux-gnu/perl/5.34 /usr/share/perl/5.34 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20211215-1) ...
+root@137b15460b05:/# 
+
+root@137b15460b05:/# ping c2
+PING c2 (172.18.0.3) 56(84) bytes of data.
+64 bytes from 137b15460b05 (172.18.0.3): icmp_seq=1 ttl=64 time=0.450 ms
+64 bytes from 137b15460b05 (172.18.0.3): icmp_seq=2 ttl=64 time=0.089 ms
+64 bytes from 137b15460b05 (172.18.0.3): icmp_seq=3 ttl=64 time=0.164 ms
+64 bytes from 137b15460b05 (172.18.0.3): icmp_seq=4 ttl=64 time=1.23 ms
+^C
+--- c2 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3048ms
+rtt min/avg/max/mdev = 0.089/0.484/1.233/0.452 ms
+root@137b15460b05:/# 
+
+root@137b15460b05:/# ping c1
+PING c1 (172.18.0.2) 56(84) bytes of data.
+64 bytes from c1.i_net (172.18.0.2): icmp_seq=1 ttl=64 time=1.23 ms
+64 bytes from c1.i_net (172.18.0.2): icmp_seq=2 ttl=64 time=0.531 ms
+64 bytes from c1.i_net (172.18.0.2): icmp_seq=3 ttl=64 time=0.366 ms
+^C
+--- c1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2008ms
+rtt min/avg/max/mdev = 0.366/0.707/1.225/0.372 ms
+root@137b15460b05:/# exit
+exit
+```
+
+--------------------------------------------------------------------------------------------------------
+
+# For reference
+[Link](https://docs.docker.com/engine/reference/commandline/port/)
+
+--------------------------------------------------------------------------------------------------------
+
+# DOCKER NETWORKING: PORT MAPPING -> ??
+
+```
+$ docker run -p 80:5000 nginx 
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+2023/08/26 07:15:35 [notice] 1#1: using the "epoll" event method
+2023/08/26 07:15:35 [notice] 1#1: nginx/1.25.2
+2023/08/26 07:15:35 [notice] 1#1: built by gcc 12.2.0 (Debian 12.2.0-14) 
+2023/08/26 07:15:35 [notice] 1#1: OS: Linux 5.15.49-linuxkit
+2023/08/26 07:15:35 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2023/08/26 07:15:35 [notice] 1#1: start worker processes
+2023/08/26 07:15:35 [notice] 1#1: start worker process 29
+2023/08/26 07:15:35 [notice] 1#1: start worker process 30
+2023/08/26 07:15:35 [notice] 1#1: start worker process 31
+2023/08/26 07:15:35 [notice] 1#1: start worker process 32
+2023/08/26 07:15:38 [notice] 1#1: signal 28 (SIGWINCH) received
+2023/08/26 07:15:38 [notice] 1#1: signal 28 (SIGWINCH) received
+2023/08/26 07:15:46 [notice] 1#1: signal 28 (SIGWINCH) received
+2023/08/26 07:15:46 [notice] 1#1: signal 28 (SIGWINCH) received
+^C2023/08/26 07:16:20 [notice] 1#1: signal 2 (SIGINT) received, exiting
+2023/08/26 07:16:20 [notice] 29#29: exiting
+2023/08/26 07:16:20 [notice] 31#31: exiting
+2023/08/26 07:16:20 [notice] 32#32: exiting
+2023/08/26 07:16:20 [notice] 30#30: exiting
+2023/08/26 07:16:20 [notice] 29#29: exit
+2023/08/26 07:16:20 [notice] 32#32: exit
+2023/08/26 07:16:20 [notice] 31#31: exit
+2023/08/26 07:16:20 [notice] 30#30: exit
+2023/08/26 07:16:20 [notice] 1#1: signal 17 (SIGCHLD) received from 29
+2023/08/26 07:16:20 [notice] 1#1: worker process 29 exited with code 0
+2023/08/26 07:16:20 [notice] 1#1: worker process 31 exited with code 0
+2023/08/26 07:16:20 [notice] 1#1: signal 29 (SIGIO) received
+2023/08/26 07:16:20 [notice] 1#1: signal 17 (SIGCHLD) received from 32
+2023/08/26 07:16:20 [notice] 1#1: worker process 30 exited with code 0
+2023/08/26 07:16:20 [notice] 1#1: worker process 32 exited with code 0
+2023/08/26 07:16:20 [notice] 1#1: exit
+$ docker run -d -p 80:5000 ubuntu 
+cb7fe458a9c1fcbc6dd87908937324714d97301afb1ef91a06371aa6b0148c68
+$ docker ps -a | grep ubuntu
+cb7fe458a9c1   ubuntu                                "/bin/bash"              14 seconds ago   Exited (0) 12 seconds ago               ecstatic_swartz
+137b15460b05   ubuntu                                "/bin/bash"              28 minutes ago   Exited (137) 14 minutes ago             c2
+b07bcb07e114   ubuntu                                "/bin/bash"              28 minutes ago   Exited (137) 14 minutes ago             c1
+$ docker run -d -p 8000:5000 ubuntu 
+e39db49acc1422b00d7a0ea54b94b4356f7fed1babf35b14314b4fd31d15bd08
+$ docker ps -a | grep ubuntu
+e39db49acc14   ubuntu                                "/bin/bash"              4 seconds ago        Exited (0) 3 seconds ago                  great_jepsen
+cb7fe458a9c1   ubuntu                                "/bin/bash"              About a minute ago   Exited (0) About a minute ago             ecstatic_swartz
+137b15460b05   ubuntu                                "/bin/bash"              29 minutes ago       Exited (137) 15 minutes ago               c2
+b07bcb07e114   ubuntu                                "/bin/bash"              29 minutes ago       Exited (137) 15 minutes ago               c1
+$ docker run -d -p 8002:5000 ubuntu 
+fc37422d28cde4dae3de270f8d3450a59d506f4a235dd9920000d9ebe00562ea
+$ docker run -d -p 3306:3306 ubuntu 
+aa696e3e7840ea56bf493c9f1533d27a847a45b45d289c6a61f814a37146e6f7
+$ docker run -d -p 8005:3306 ubuntu 
+8870cc8b3c3a449490c7f4359f4861c2bd22fe6cc6a7dfffdd4e2078ab1b3d09
+$ docker run -d -p 8005:3306 ubuntu 
+735e6479c5b5cfef38e08f3211365b8928552849d8e07014ed8a7ee37a40933a
+$ 
+$ docker ps -a | grep ubuntu
+735e6479c5b5   ubuntu                                "/bin/bash"              15 seconds ago       Exited (0) 14 seconds ago                 festive_bhabha
+8870cc8b3c3a   ubuntu                                "/bin/bash"              35 seconds ago       Exited (0) 34 seconds ago                 nostalgic_mahavira
+aa696e3e7840   ubuntu                                "/bin/bash"              45 seconds ago       Exited (0) 44 seconds ago                 sweet_carson
+fc37422d28cd   ubuntu                                "/bin/bash"              About a minute ago   Exited (0) About a minute ago             blissful_brahmagupta
+e39db49acc14   ubuntu                                "/bin/bash"              About a minute ago   Exited (0) About a minute ago             great_jepsen
+cb7fe458a9c1   ubuntu                                "/bin/bash"              2 minutes ago        Exited (0) 2 minutes ago                  ecstatic_swartz
+137b15460b05   ubuntu                                "/bin/bash"              31 minutes ago       Exited (137) 17 minutes ago               c2
+b07bcb07e114   ubuntu                                "/bin/bash"              31 minutes ago       Exited (137) 17 minutes ago               c1
+$ 
+$ docker run -d -p 8005:3306 ubuntu 
+702b908762e25c211673fc46d8be24b3b44cdf511ab2060cdbe6fe69e26a50e2
+$ docker ps -a | grep ubuntu
+702b908762e2   ubuntu                                "/bin/bash"              3 seconds ago        Exited (0) 2 seconds ago                  trusting_lehmann
+735e6479c5b5   ubuntu                                "/bin/bash"              About a minute ago   Exited (0) About a minute ago             festive_bhabha
+8870cc8b3c3a   ubuntu                                "/bin/bash"              About a minute ago   Exited (0) About a minute ago             nostalgic_mahavira
+aa696e3e7840   ubuntu                                "/bin/bash"              About a minute ago   Exited (0) About a minute ago             sweet_carson
+fc37422d28cd   ubuntu                                "/bin/bash"              2 minutes ago        Exited (0) 2 minutes ago                  blissful_brahmagupta
+e39db49acc14   ubuntu                                "/bin/bash"              2 minutes ago        Exited (0) 2 minutes ago                  great_jepsen
+cb7fe458a9c1   ubuntu                                "/bin/bash"              3 minutes ago        Exited (0) 3 minutes ago                  ecstatic_swartz
+137b15460b05   ubuntu                                "/bin/bash"              32 minutes ago       Exited (137) 18 minutes ago               c2
+b07bcb07e114   ubuntu                                "/bin/bash"              32 minutes ago       Exited (137) 18 minutes ago               c1
+$ 
+```
+
+--------------------------------------------------------------------------------------------------------
+
+# HOST NETWORK
+
+[Link](https://docs.docker.com/network/network-tutorial-host/)
+
+$ docker run --rm -d --network host --name my_nginx nginx
+```
+$ docker run --rm -d --network host --name my_nginx nginx
+20847a3e2b938e0003bd9ccf4ad147f52a67c0b8bcf958b4455e44784f548918
+
+Access: http://localhost:80/
+```
+
+--------------------------------------------------------------------------------------------------------
+
+
