@@ -1767,6 +1767,8 @@ b07bcb07e114   ubuntu                                "/bin/bash"              32
 $ 
 ```
 
+# TRY execution Page #48 
+
 --------------------------------------------------------------------------------------------------------
 
 # HOST NETWORK
@@ -1780,7 +1782,71 @@ $ docker run --rm -d --network host --name my_nginx nginx
 
 Access: http://localhost:80/
 ```
+--------------------------------------------------------------------------------------------------------
+
+# NONE NETOWRK
+
+[Link](https://docs.docker.com/network/drivers/none/)
+
+$ docker run -d --name web --net none nginx 
+```
+$ docker run -d --name web --net none nginx 
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+4ee097f9a366: Pull complete 
+6710b2157bb5: Pull complete 
+76d048093f36: Pull complete 
+658197f4b592: Pull complete 
+a2543a59b279: Pull complete 
+3972a57e5575: Pull complete 
+82359da50743: Pull complete 
+Digest: sha256:104c7c5c54f2685f0f46f3be607ce60da7085da3eaa5ad22d3d9f01594295e9c
+Status: Downloaded newer image for nginx:latest
+0b94c7a2940cd4199f50a15ea77093a5c730019a8529d426cf0f4ae0cfb3b2aa
+```
+
+$ docker container ls
+```
+$ docker container ls
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                                                                                                  NAMES
+0b94c7a2940c   nginx                                 "/docker-entrypoint.…"   28 seconds ago   Up 23 seconds                                                                                                                                          web
+```
+
+$ docker container inspect web | grep ''Port
+```
+$ docker container inspect web | grep ''Port
+            "PortBindings": {},
+            "PublishAllPorts": false,
+            "ExposedPorts": {
+            "Ports": {},
+```
+
+```
+$ docker container inspect web | grep "IPAddress"
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "",
+```
 
 --------------------------------------------------------------------------------------------------------
 
+# OVERLAY NETWORK
 
+# We will deal during docker swarm -> Pending
+
+[Overlay netowrk](https://docs.docker.com/network/network-tutorial-overlay/)
+
+--------------------------------------------------------------------------------------------------------
+
+# MACVLAN NETOWRK
+
+[Macvlan netowkr](https://docs.docker.com/network/network-tutorial-macvlan/)
+
+# We will see in case if we get enough time 
+
+--------------------------------------------------------------------------------------------------------
+
+# VOLUMES
+
+
+--------------------------------------------------------------------------------------------------------
