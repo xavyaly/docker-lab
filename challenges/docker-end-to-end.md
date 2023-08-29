@@ -1848,5 +1848,38 @@ $ docker container inspect web | grep "IPAddress"
 
 # VOLUMES
 
+SKIPPED ATM
+
+--------------------------------------------------------------------------------------------------------
+
+# DOCKER COMPOSE
+
+[Link](https://docs.docker.com/compose/gettingstarted/)
+
+# Install docker and docker-compose
+
+# Mac Details
+
+$ docker --version
+```
+$ docker --version
+Docker version 23.0.5, build bc4487a
+```
+
+$ docker compose version
+```
+$ docker compose version
+Docker Compose version v2.17.3
+```
+
+# For Practice:
+
+# Official Documentation
+
+[Link](https://docs.docker.com/compose/gettingstarted/)
+
+# Github for Practice
+
+[Link](https://github.com/burtonr/Docker-Compose-Examples)
 
 --------------------------------------------------------------------------------------------------------
