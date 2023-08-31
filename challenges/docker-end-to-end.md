@@ -1883,3 +1883,205 @@ Docker Compose version v2.17.3
 [Link](https://github.com/burtonr/Docker-Compose-Examples)
 
 --------------------------------------------------------------------------------------------------------
+
+[Important](https://docs.docker.com/engine/reference/run/)
+
+--------------------------------------------------------------------------------------------------------
+
+# DOCKER VOLUMES:
+
+[Volumes](https://docs.docker.com/storage/volumes/)
+
+
+# Create and Manage Volumes
+
+# Create a volumes
+
+```
+$ docker volume create my-vol
+my-vol
+```
+
+# List the volumes 
+```
+$ docker volume ls
+DRIVER    VOLUME NAME
+local     a4692ca6efc87310ace304eadfb1304674796453ec827c81f06e536b6ef5c7d3
+local     local-cluster
+local     local-cluster-m03
+local     minikube
+local     my-vol
+local     myvol2
+```
+
+# Inspect a volume:
+
+$ docker volume inspect my-vol
+```
+$ docker volume inspect my-vol
+[
+    {
+        "CreatedAt": "2023-08-28T07:03:53Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/my-vol/_data",
+        "Name": "my-vol",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+```
+
+# Remove a volume:
+
+$ docker volume rm my-vol
+```
+$ docker volume rm my-vol
+my-vol
+```
+
+# List all volumes 
+
+$ docker volume ls
+```
+$ docker volume ls
+DRIVER    VOLUME NAME
+local     a4692ca6efc87310ace304eadfb1304674796453ec827c81f06e536b6ef5c7d3
+local     local-cluster
+local     local-cluster-m03
+local     minikube
+local     myvol2
+```
+
+# Start a container with a volume
+
+# --mount option 
+
+```
+$ docker run -d \
+> --name devtest \
+> --mount source=myvol2,target=/app \
+> nginx:latest
+```
+OR
+```
+$ docker run -d --name devtest --mount source=myvol2,target=/app nginx:latest
+Unable to find image 'nginx:latest' locally
+latest: Pulling from library/nginx
+4ee097f9a366: Pull complete 
+6710b2157bb5: Pull complete 
+76d048093f36: Pull complete 
+658197f4b592: Pull complete 
+a2543a59b279: Pull complete 
+3972a57e5575: Pull complete 
+82359da50743: Pull complete 
+Digest: sha256:104c7c5c54f2685f0f46f3be607ce60da7085da3eaa5ad22d3d9f01594295e9c
+Status: Downloaded newer image for nginx:latest
+d68d6add63033b96e6629d6e59a10cafd45f408c2856f9621a1c7dd402a95482
+```
+
+# Inspect devtest container
+
+$ docker inspect devtest
+
+```
+....
+....
+ "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "myvol2",
+                "Source": "/var/lib/docker/volumes/myvol2/_data",
+                "Destination": "/app",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+....
+....
+```
+
+# Stop the container and remove the volume. Note volume removal is a separate step.
+
+# List the container
+
+```
+$ docker container ls
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS         PORTS                                                                                                                                  NAMES
+d68d6add6303   nginx:latest                          "/docker-entrypoint.…"   3 minutes ago   Up 3 minutes   80/tcp                                                                                                                                 devtest
+```
+
+# Additional Steps
+```
+$ docker container stop d6
+$ docker container start  d6
+```
+
+# Login to container and cross check the mount path 
+
+$ docker exec -it devtest /bin/bash
+```
+$ docker exec -it devtest -- bash
+OCI runtime exec failed: exec failed: unable to start container process: exec: "--": executable file not found in $PATH: unknown
+
+$ docker exec -it devtest /bin/bash
+root@d68d6add6303:/# 
+root@d68d6add6303:/# pwd
+/
+root@d68d6add6303:/# cd /app/
+root@d68d6add6303:/app# ls
+```
+
+```
+$ docker container stop d6
+d6
+
+$ docker volume rm myvol2       # Use "-f" forcefully
+Error response from daemon: remove myvol2: volume is in use - [d68d6add63033b96e6629d6e59a10cafd45f408c2856f9621a1c7dd402a95482]
+
+$ docker container rm d6
+d6
+
+$ docker volume rm myvol2
+myvol2
+```
+
+# Start a container with a volume
+
+# -v option
+
+```
+$ docker run -d \
+>   --name devtest \
+>   -v myvol2:/app \
+>   nginx:latest
+```
+
+```
+$ docker inspect devtest
+
+  "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "myvol2",
+                "Source": "/var/lib/docker/volumes/myvol2/_data",
+                "Destination": "/app",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+```
+
+```
+$ docker container stop devtest
+
+$ docker container rm devtest
+devtest
+
+$ docker volume rm myvol2
+myvol2
+```
