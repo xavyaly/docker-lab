@@ -2085,3 +2085,211 @@ devtest
 $ docker volume rm myvol2
 myvol2
 ```
+
+# Start a service with volumes [Link](https://docs.docker.com/storage/volumes/#start-a-service-with-volumes)
+
+$ docker service create -d \
+> --replicas=4 \
+> --name devtest-service \
+> --mount source=myvol2,target=/app \
+> nginx:latest
+Error response from daemon: This node is not a swarm manager. Use "docker swarm init" or "docker swarm join" to connect this node to swarm and try again.
+
+# SKIPPED 
+
+---
+
+# Populate a vloume using a container: [Link](https://docs.docker.com/storage/volumes/#populate-a-volume-using-a-container)
+
+```
+If you start a container which creates a new volume, and the container has files or directories in the directory to be mounted such as 
+/app/, Docker copies the directory's contents into the volume. The container then mounts and uses the volume, and other containers which use the volume also have access to the pre-populated content.
+```
+
+# --mount 
+
+```
+$ docker run -d \
+>   --name=nginxtest \
+>   --mount source=nginx-vol,destination=/usr/share/nginx/html \
+>   nginx:latest
+b4d7840ce59bfe214428094c48cf89ae62bcc59d396b150a53cec2df20812c60
+
+$ docker volume ls
+DRIVER    VOLUME NAME
+local     a4692ca6efc87310ace304eadfb1304674796453ec827c81f06e536b6ef5c7d3
+local     local-cluster
+local     local-cluster-m03
+local     minikube
+local     nginx-vol
+
+$ docker exec -it nginxtest /bin/bash
+root@b4d7840ce59b:/# cd /usr/share/nginx/html/
+root@b4d7840ce59b:/usr/share/nginx/html# ls
+50x.html  index.html                              # Files were copied 
+root@b4d7840ce59b:/usr/share/nginx/html# 
+
+root@b4d7840ce59b:/usr/share/nginx/html# cat index.html 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@b4d7840ce59b:/usr/share/nginx/html# cat 50x.html 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Error</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>An error occurred.</h1>
+<p>Sorry, the page you are looking for is currently unavailable.<br/>
+Please try again later.</p>
+<p>If you are the system administrator of this resource then you should check
+the error log for details.</p>
+<p><em>Faithfully yours, nginx.</em></p>
+</body>
+</html>
+root@b4d7840ce59b:/usr/share/nginx/html# 
+
+$ docker container ls
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS         PORTS                                                                                                                                  NAMES
+b4d7840ce59b   nginx:latest                          "/docker-entrypoint.…"   3 minutes ago   Up 3 minutes   80/tcp                                                                                                                                 nginxtest
+
+$ docker container stop b4
+b4
+
+$ docker container rm b4
+b4
+
+$ docker volume rm nginx-vol
+nginx-vol
+
+$ docker volume ls
+DRIVER    VOLUME NAME
+local     a4692ca6efc87310ace304eadfb1304674796453ec827c81f06e536b6ef5c7d3
+local     local-cluster
+local     local-cluster-m03
+local     minikube
+```
+
+# -v 
+
+```
+$ docker run -d \
+>   --name=nginxtest \
+>   -v nginx-vol:/usr/share/nginx/html \
+>   nginx:latest
+c42b07ad56f289bfa5234c478446a3a4db23a98d2ecc2ef0d6314b397c61bd67
+
+$ docker exec -it nginxtest /bin/bash 
+root@c42b07ad56f2:/# cd /usr/share/nginx/html/
+root@c42b07ad56f2:/usr/share/nginx/html# ls
+50x.html  index.html
+root@c42b07ad56f2:/usr/share/nginx/html# exit
+exit
+
+$ docker container ls
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                                                                                                  NAMES
+c42b07ad56f2   nginx:latest                          "/docker-entrypoint.…"   55 seconds ago   Up 54 seconds   80/tcp                                                                                                                                 nginxtest
+
+$ docker container stop c4
+c4
+
+$ docker container rm c4
+c4
+
+$ docker volume rm nginx-vol
+nginx-vol
+```
+
+---
+
+# Use a read-only volume [Link](https://docs.docker.com/storage/volumes/#use-a-read-only-volume)
+
+# --mount
+
+```
+$ docker run -d \
+>   --name=nginxtest \
+>   --mount source=nginx-vol,destination=/usr/share/nginx/html,readonly \
+>   nginx:latest
+165788c3786c76b1513f7fb1cd52aee7494d0570cb79953b9b509f62f14810a6
+
+$ docker exec -it nginxtest /bin/bash
+root@165788c3786c:/# cd /usr/share/nginx/html/
+root@165788c3786c:/usr/share/nginx/html# ls
+50x.html  index.html
+root@165788c3786c:/usr/share/nginx/html# cat index.html 
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
+root@165788c3786c:/usr/share/nginx/html# 
+root@165788c3786c:/usr/share/nginx/html# exit
+exit
+
+$ docker container ls 
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED          STATUS          PORTS                                                                                                                                  NAMES
+165788c3786c   nginx:latest                          "/docker-entrypoint.…"   57 seconds ago   Up 56 seconds   80/tcp                                                                                                                                 nginxtest
+
+$ docker container stop 16 
+16
+
+$ docker container rm 16
+16
+
+$ docker volume rm nginx-vol
+nginx-vol
+```
+
+---
+
+# -v 
+
+Practice by yourself 
+
+---
+
